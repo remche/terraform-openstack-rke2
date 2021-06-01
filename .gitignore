@@ -1,0 +1,8 @@
+*.tfvars
+.terraform*
+rke2.yaml
+providers.tf
+terraform-provider-rke-*
+terraform.tfstate
+terraform.tfstate.backup
+cinder-pod.yml
