@@ -9,12 +9,12 @@ output "master_nodes" {
   description = "The master nodes"
 }
 
-output "worker_nodes" {
-  value       = module.worker.nodes
-  description = "The worker nodes"
-}
-
 output "nodes_subnet" {
   value       = module.network.nodes_subnet
   description = "The nodes subnet"
+}
+
+output "node_config" {
+  value = local.node_config
+  sensitive = true
 }

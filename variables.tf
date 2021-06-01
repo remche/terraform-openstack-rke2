@@ -61,12 +61,6 @@ variable "dns_domain" {
   description = "DNS domain for DNS integration. DNS domain names must have a dot at the end"
 }
 
-variable "enable_loadbalancer" {
-  type        = bool
-  default     = false
-  description = "Enable Octabia LB for master/edge nodes"
-}
-
 ##################
 # Node variables #
 ##################
@@ -82,33 +76,9 @@ variable "master_count" {
   description = "Number of master nodes (should be odd number...)"
 }
 
-variable "edge_count" {
-  type        = number
-  default     = 0
-  description = "Number of edge nodes"
-}
-
-variable "worker_count" {
-  type        = number
-  default     = 2
-  description = "Number of woker nodes"
-}
-
 variable "master_flavor_name" {
   type        = string
   description = "Master flavor name"
-}
-
-variable "worker_flavor_name" {
-  type        = string
-  description = "Worker flavor name"
-
-}
-
-variable "edge_flavor_name" {
-  type        = string
-  default     = null
-  description = "Edge flavor name. Will use worker_flavor_name if not set"
 }
 
 variable "master_server_affinity" {
@@ -121,12 +91,6 @@ variable "worker_server_affinity" {
   type        = string
   default     = "soft-anti-affinity"
   description = "Worker server group affinity"
-}
-
-variable "edge_server_affinity" {
-  type        = string
-  default     = "soft-anti-affinity"
-  description = "Edge server group affinity"
 }
 
 variable "nodes_config_drive" {
@@ -157,10 +121,4 @@ variable "availability_zones" {
   type        = list(string)
   default     = []
   description = "The list of AZs to deploy nodes into"
-}
-
-variable "use_octavia" {
-  type        = bool
-  default     = false
-  description = "Use Octavia LBaaS instead of Neutron Networking"
 }

@@ -46,7 +46,6 @@ variable "assign_floating_ip" {
 
 variable "floating_ip_pool" {
   type    = string
-  default = null
 }
 
 variable "user_data" {

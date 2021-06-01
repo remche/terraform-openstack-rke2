@@ -1,3 +1,20 @@
+locals {
+  node_config = {
+    cluster_name       = var.cluster_name
+    keypair_name       = module.keypair.keypair_name
+    network_name       = module.network.nodes_net_name
+    secgroup_name      = module.secgroup.secgroup_name
+    server_affinity    = var.worker_server_affinity
+    config_drive       = var.nodes_config_drive
+    floating_ip_pool   = var.public_net_name
+    user_data          = var.user_data_file != null ? file(var.user_data_file) : null
+    boot_from_volume   = var.boot_from_volume
+    boot_volume_size   = var.boot_volume_size
+    availability_zones = var.availability_zones
+    bootstrap_server   = module.master_bootstrap.bootstrap_ip
+  }
+}
+
 module "keypair" {
   source           = "./modules/keypair"
   cluster_name     = var.cluster_name
@@ -63,25 +80,3 @@ module "master" {
   availability_zones = var.availability_zones
   bootstrap_server   = module.master_bootstrap.bootstrap_ip
 }
-
-module "worker" {
-  source             = "./modules/node"
-  node_depends_on    = [module.network.nodes_subnet]
-  name_prefix        = "${var.cluster_name}-worker"
-  nodes_count        = var.worker_count
-  image_name         = var.image_name
-  flavor_name        = var.worker_flavor_name
-  keypair_name       = module.keypair.keypair_name
-  network_name       = module.network.nodes_net_name
-  secgroup_name      = module.secgroup.secgroup_name
-  server_affinity    = var.worker_server_affinity
-  config_drive       = var.nodes_config_drive
-  floating_ip_pool   = var.public_net_name
-  user_data          = var.user_data_file != null ? file(var.user_data_file) : null
-  boot_from_volume   = var.boot_from_volume
-  boot_volume_size   = var.boot_volume_size
-  availability_zones = var.availability_zones
-  is_master          = false
-  bootstrap_server   = module.master_bootstrap.bootstrap_ip
-}
-
