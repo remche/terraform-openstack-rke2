@@ -70,13 +70,13 @@ variable "image_name" {
   description = "Name of image nodes (must fullfill RKE requirements)"
 }
 
-variable "master_count" {
+variable "nodes_count" {
   type        = number
   default     = 1
   description = "Number of master nodes (should be odd number...)"
 }
 
-variable "master_flavor_name" {
+variable "flavor_name" {
   type        = string
   description = "Master flavor name"
 }

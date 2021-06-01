@@ -46,7 +46,7 @@ module "master_bootstrap" {
   name_prefix        = "${var.cluster_name}-master"
   nodes_count        = 1
   image_name         = var.image_name
-  flavor_name        = var.master_flavor_name
+  flavor_name        = var.flavor_name
   keypair_name       = module.keypair.keypair_name
   network_name       = module.network.nodes_net_name
   secgroup_name      = module.secgroup.secgroup_name
@@ -64,9 +64,9 @@ module "master" {
   source             = "./modules/node"
   node_depends_on    = [module.network.nodes_subnet]
   name_prefix        = "${var.cluster_name}-master"
-  nodes_count        = var.master_count - 1
+  nodes_count        = var.nodes_count - 1
   image_name         = var.image_name
-  flavor_name        = var.master_flavor_name
+  flavor_name        = var.flavor_name
   keypair_name       = module.keypair.keypair_name
   network_name       = module.network.nodes_net_name
   secgroup_name      = module.secgroup.secgroup_name

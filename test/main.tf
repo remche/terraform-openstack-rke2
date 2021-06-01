@@ -15,7 +15,7 @@ module "controlplane" {
     { "source" = "0.0.0.0/0", "protocol" = "tcp", "port" = 80 },
     { "source" = "0.0.0.0/0", "protocol" = "tcp", "port" = 443 }
   ]
-  master_flavor_name = "m1.small"
+  flavor_name = "m1.small"
 }
 
 module "blue_node" {
