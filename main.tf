@@ -17,9 +17,9 @@ module "network" {
 }
 
 module "secgroup" {
-  source       = "./modules/secgroup"
-  name_prefix  = var.cluster_name
-  rules        = var.secgroup_rules
+  source      = "./modules/secgroup"
+  name_prefix = var.cluster_name
+  rules       = var.secgroup_rules
   #bastion_host = var.bastion_host != null ? var.bastion_host : values(module.master.nodes)[0].floating_ip
 }
 

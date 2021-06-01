@@ -11,14 +11,14 @@ resource "openstack_networking_secgroup_rule_v2" "default_rule" {
 }
 
 #resource "openstack_networking_secgroup_rule_v2" "tunnel_rule" {
-  #direction         = "ingress"
-  #ethertype         = "IPv4"
-  #remote_ip_prefix  = "${var.bastion_host}/32"
-  #security_group_id = openstack_networking_secgroup_v2.secgroup.id
+#direction         = "ingress"
+#ethertype         = "IPv4"
+#remote_ip_prefix  = "${var.bastion_host}/32"
+#security_group_id = openstack_networking_secgroup_v2.secgroup.id
 #}
 
 resource "openstack_networking_secgroup_rule_v2" "rules" {
-  for_each          = {
+  for_each = {
     for rule in var.rules :
     format("%s-%s-%s", rule["source"], rule["protocol"], rule["port"]) => rule
   }

@@ -54,11 +54,11 @@ variable "user_data" {
 }
 
 variable "boot_from_volume" {
-  type    = bool
+  type = bool
 }
 
 variable "boot_volume_size" {
-  type    = number
+  type = number
 }
 
 variable "availability_zones" {
@@ -66,11 +66,11 @@ variable "availability_zones" {
 }
 
 variable "bootstrap_server" {
-  type = string
+  type    = string
   default = ""
 }
 
 variable "is_master" {
-  type = bool
+  type    = bool
   default = true
 }

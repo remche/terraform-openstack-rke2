@@ -3,9 +3,9 @@ variable "name_prefix" {
 }
 
 variable "rules" {
-  type = list
+  type = list(any)
 }
 
 #variable "bastion_host" {
-  #type = string
+#type = string
 #}

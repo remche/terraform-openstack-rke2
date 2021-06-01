@@ -4,19 +4,19 @@ resource "openstack_compute_servergroup_v2" "servergroup" {
 }
 
 resource "openstack_compute_instance_v2" "instance" {
-  depends_on              = [var.node_depends_on]
-  count                   = var.nodes_count
-  name                    = "${var.name_prefix}-${format("%03d", count.index + 1)}"
-  image_name              = var.boot_from_volume ? null : var.image_name
-  flavor_name             = var.flavor_name
-  key_pair                = var.keypair_name
-  config_drive            = var.config_drive
-  user_data               = base64encode(templatefile(("${path.module}/files/cloud-init.yml.tpl"),
-  {     bootstrap_server = var.bootstrap_server
-  master_public_address = var.is_master ? openstack_networking_floatingip_v2.floating_ip[0].address : ""
-        rke2_cluster_secret = "toto"
-        is_master    = var.is_master
-      }))
+  depends_on   = [var.node_depends_on]
+  count        = var.nodes_count
+  name         = "${var.name_prefix}-${format("%03d", count.index + 1)}"
+  image_name   = var.boot_from_volume ? null : var.image_name
+  flavor_name  = var.flavor_name
+  key_pair     = var.keypair_name
+  config_drive = var.config_drive
+  user_data = base64encode(templatefile(("${path.module}/files/cloud-init.yml.tpl"),
+    { bootstrap_server      = var.bootstrap_server
+      master_public_address = var.is_master ? openstack_networking_floatingip_v2.floating_ip[0].address : ""
+      rke2_cluster_secret   = "toto"
+      is_master             = var.is_master
+  }))
 
   stop_before_destroy     = true
   availability_zone_hints = length(var.availability_zones) > 0 ? var.availability_zones[count.index % length(var.availability_zones)] : null
