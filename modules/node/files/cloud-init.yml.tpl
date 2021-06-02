@@ -12,6 +12,7 @@ write_files:
     write-kubeconfig-mode: "0640"
     tls-san:
       - ${master_public_address}
+    kube-apiserver-arg: "kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname"
     %{ endif }
 runcmd:
   %{ if is_master }
