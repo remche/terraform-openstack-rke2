@@ -80,3 +80,26 @@ module "master" {
   availability_zones = var.availability_zones
   bootstrap_server   = module.master_bootstrap.bootstrap_ip
 }
+
+resource "null_resource" "write_kubeconfig" {
+  count = var.write_kubeconfig ? 1 : 0
+  triggers = {
+    always_run = "${timestamp()}"
+  }
+
+  connection {
+    host        = module.master_bootstrap.floating_ip[0]
+    user        = var.system_user
+    private_key = var.use_ssh_agent ? null : file(var.ssh_key_file)
+    agent       = var.use_ssh_agent
+  }
+
+  provisioner "remote-exec" {
+    inline = ["while [ ! -r /etc/rancher/rke2/rke2.yaml ]; do echo Waiting for rke2 to start && sleep 10; done;"]
+  }
+
+  provisioner "local-exec" {
+    command = var.use_ssh_agent ? "scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ${var.ssh_key_file} ubuntu@${module.master_bootstrap.floating_ip[0]}:/etc/rancher/rke2/rke2.yaml ." : "scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ubuntu@${module.master_bootstrap.floating_ip[0]}:/etc/rancher/rke2/rke2.yaml ."
+
+  }
+}

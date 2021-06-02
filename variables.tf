@@ -20,6 +20,24 @@ variable "ssh_key_file" {
   description = "Local path to SSH key"
 }
 
+variable "system_user" {
+  type        = string
+  default     = "ubuntu"
+  description = "Default OS image user"
+}
+
+variable "use_ssh_agent" {
+  type        = bool
+  default     = "true"
+  description = "Whether to use ssh agent"
+}
+
+variable "write_kubeconfig" {
+  type        = bool
+  default     = "false"
+  description = "Write kubeconfig file to disk"
+}
+
 ######################
 # Secgroup variables #
 ######################
