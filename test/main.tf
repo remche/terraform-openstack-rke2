@@ -1,10 +1,11 @@
 module "controlplane" {
-  source      = "./.."
-  dns_domain  = "u-ga.fr."
-  dns_servers = ["152.77.1.22", "195.83.24.30"]
-  image_name      = "ubuntu-20.04-focal-x86_64+rke2"
-  flavor_name = "m1.small"
-  public_net_name = "public"
+  source           = "./.."
+  dns_domain       = "u-ga.fr."
+  dns_servers      = ["152.77.1.22", "195.83.24.30"]
+  write_kubeconfig = true
+  image_name       = "ubuntu-20.04-focal-x86_64+rke2"
+  flavor_name      = "m1.small"
+  public_net_name  = "public"
   secgroup_rules = [{ "source" = "152.77.119.207/32", "protocol" = "tcp", "port" = 22 },
     { "source" = "152.77.119.207/32", "protocol" = "icmp", port = 0 },
     { "source" = "147.171.168.176/32", "protocol" = "icmp", port = 0 },

@@ -5,6 +5,6 @@ output "keypair_name" {
 }
 
 output "node_config" {
-  value = local.node_config
+  value     = local.node_config
   sensitive = true
 }

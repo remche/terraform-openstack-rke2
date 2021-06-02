@@ -15,6 +15,6 @@ module "worker" {
   boot_from_volume   = var.node_config.boot_from_volume
   boot_volume_size   = var.node_config.boot_volume_size
   availability_zones = var.node_config.availability_zones
-  bootstrap_server   = var.node_config.bootstrap_server 
+  bootstrap_server   = var.node_config.bootstrap_server
   is_master          = false
 }
