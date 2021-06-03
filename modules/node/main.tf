@@ -16,6 +16,8 @@ resource "openstack_compute_instance_v2" "instance" {
       master_public_address = var.is_master ? openstack_networking_floatingip_v2.floating_ip[0].address : ""
       rke2_cluster_secret   = "toto"
       is_master             = var.is_master
+      rke2_conf             = var.rke2_config_file != "" ? file(var.rke2_config_file) : ""
+      additional_san        = var.additional_san
   }))
 
   stop_before_destroy     = true

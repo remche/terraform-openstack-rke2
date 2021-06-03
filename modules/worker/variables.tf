@@ -36,3 +36,8 @@ variable "assign_floating_ip" {
   type    = bool
   default = "false"
 }
+
+variable "rke2_config_file" {
+  type    = string
+  default = ""
+}

@@ -140,3 +140,15 @@ variable "availability_zones" {
   default     = []
   description = "The list of AZs to deploy nodes into"
 }
+
+variable "rke2_config_file" {
+  type        = string
+  default     = ""
+  description = "RKE2 config file for servers"
+}
+
+variable "additional_san" {
+  type = list(string)
+  default = []
+  description = "RKE additional SAN"
+}

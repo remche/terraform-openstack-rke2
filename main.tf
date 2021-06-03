@@ -58,6 +58,8 @@ module "master_bootstrap" {
   boot_from_volume   = var.boot_from_volume
   boot_volume_size   = var.boot_volume_size
   availability_zones = var.availability_zones
+  rke2_config_file   = var.rke2_config_file
+  additional_san     = var.additional_san
 }
 
 module "master" {
@@ -79,6 +81,8 @@ module "master" {
   boot_volume_size   = var.boot_volume_size
   availability_zones = var.availability_zones
   bootstrap_server   = module.master_bootstrap.bootstrap_ip
+  rke2_config_file   = var.rke2_config_file
+  additional_san     = var.additional_san
 }
 
 resource "null_resource" "write_kubeconfig" {

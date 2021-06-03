@@ -64,6 +64,10 @@ variable "availability_zones" {
   type = list(string)
 }
 
+variable "rke2_config_file" {
+  type = string
+}
+
 variable "bootstrap_server" {
   type    = string
   default = ""
@@ -72,4 +76,10 @@ variable "bootstrap_server" {
 variable "is_master" {
   type    = bool
   default = true
+}
+
+variable "additional_san" {
+  type = list(string)
+  default = []
+  description = "RKE additional SAN"
 }
