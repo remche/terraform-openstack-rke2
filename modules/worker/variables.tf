@@ -2,7 +2,8 @@ variable "node_config" {
   type = object({
     cluster_name       = string
     keypair_name       = string
-    network_name       = string
+    subnet_id          = string
+    network_id         = string
     secgroup_name      = string
     server_affinity    = string
     config_drive       = bool

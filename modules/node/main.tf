@@ -6,16 +6,17 @@ resource "openstack_compute_servergroup_v2" "servergroup" {
 resource "openstack_compute_instance_v2" "instance" {
   depends_on   = [var.node_depends_on]
   count        = var.nodes_count
-  name         = var.is_master && var.bootstrap_server != "" ? "${var.name_prefix}-${format("%03d", count.index + 2)}" : "${var.name_prefix}-${format("%03d", count.index + 1)}"
+  name         = "${var.name_prefix}-${format("%03d", count.index + 1)}"
   image_name   = var.boot_from_volume ? null : var.image_name
   flavor_name  = var.flavor_name
   key_pair     = var.keypair_name
   config_drive = var.config_drive
   user_data = base64encode(templatefile(("${path.module}/files/cloud-init.yml.tpl"),
-    { bootstrap_server      = var.bootstrap_server
-      master_public_address = var.is_master ? openstack_networking_floatingip_v2.floating_ip[0].address : ""
+  {   bootstrap_server      = var.is_master && count.index != 0 ? openstack_networking_port_v2.port[0].all_fixed_ips[0] : var.bootstrap_server
+      public_address        = var.is_master ? openstack_networking_floatingip_v2.floating_ip[count.index].address : ""
       rke2_cluster_secret   = "toto"
       is_master             = var.is_master
+      san                   = openstack_networking_floatingip_v2.floating_ip[*].address
       rke2_conf             = var.rke2_config_file != "" ? file(var.rke2_config_file) : ""
       additional_san        = var.additional_san
   }))
@@ -24,7 +25,7 @@ resource "openstack_compute_instance_v2" "instance" {
   availability_zone_hints = length(var.availability_zones) > 0 ? var.availability_zones[count.index % length(var.availability_zones)] : null
 
   network {
-    name = var.network_name
+    port = openstack_networking_port_v2.port[count.index].id
   }
 
   security_groups = [var.secgroup_name]
@@ -46,6 +47,15 @@ resource "openstack_compute_instance_v2" "instance" {
   }
   lifecycle {
     create_before_destroy = true
+  }
+}
+
+resource "openstack_networking_port_v2" "port" {
+  count          = var.nodes_count
+  network_id     = var.network_id
+  admin_state_up = true
+  fixed_ip {
+    subnet_id = var.subnet_id
   }
 }
 

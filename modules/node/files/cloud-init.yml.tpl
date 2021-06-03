@@ -11,18 +11,21 @@ write_files:
     %{~ if is_master ~}
     write-kubeconfig-mode: "0640"
     tls-san:
-      ${indent(6, yamlencode(concat([master_public_address], additional_san)))}
+      ${indent(6, yamlencode(concat(san, additional_san)))}
     kube-apiserver-arg: "kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname"
     %{~ endif ~}
     ${indent(4,rke2_conf)}
 runcmd:
   %{~ if is_master ~}
+    %{~ if bootstrap_server != "" ~}
+  - [ sh,  -c, 'until (nc -z ${bootstrap_server} 6443); do echo Wait for master node && sleep 10; done;']
+    %{~ endif ~}
   - systemctl enable rke2-server.service
   - systemctl start rke2-server.service
   - [ sh, -c, 'while [ ! -f /etc/rancher/rke2/rke2.yaml ]; do echo Waiting for rke2 to start && sleep 10; done;' ]
   - sudo chgrp sudo /etc/rancher/rke2/rke2.yaml
   - KUBECONFIG=/etc/rancher/rke2/rke2.yaml /var/lib/rancher/rke2/bin/kubectl config rename-context default rke2
-  - KUBECONFIG=/etc/rancher/rke2/rke2.yaml /var/lib/rancher/rke2/bin/kubectl config set-cluster default --server https://${master_public_address}:6443
+  - KUBECONFIG=/etc/rancher/rke2/rke2.yaml /var/lib/rancher/rke2/bin/kubectl config set-cluster default --server https://${public_address}:6443
   %{~ else ~}
   - systemctl enable rke2-agent.service
   - systemctl start rke2-agent.service

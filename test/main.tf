@@ -1,5 +1,6 @@
 module "controlplane" {
   source           = "./.."
+  nodes_count      = 3
   dns_domain       = "u-ga.fr."
   dns_servers      = ["152.77.1.22", "195.83.24.30"]
   write_kubeconfig = true

@@ -2,7 +2,8 @@ locals {
   node_config = {
     cluster_name       = var.cluster_name
     keypair_name       = module.keypair.keypair_name
-    network_name       = module.network.nodes_net_name
+    network_id         = module.network.nodes_net_id
+    subnet_id          = module.network.nodes_subnet_id
     secgroup_name      = module.secgroup.secgroup_name
     server_affinity    = var.worker_server_affinity
     config_drive       = var.nodes_config_drive
@@ -11,7 +12,7 @@ locals {
     boot_from_volume   = var.boot_from_volume
     boot_volume_size   = var.boot_volume_size
     availability_zones = var.availability_zones
-    bootstrap_server   = module.master_bootstrap.bootstrap_ip
+    bootstrap_server   = module.master.bootstrap_ip
   }
 }
 
@@ -40,37 +41,15 @@ module "secgroup" {
   #bastion_host = var.bastion_host != null ? var.bastion_host : values(module.master.nodes)[0].floating_ip
 }
 
-module "master_bootstrap" {
-  source             = "./modules/node"
-  node_depends_on    = [module.network.nodes_subnet]
-  name_prefix        = "${var.cluster_name}-master"
-  nodes_count        = 1
-  image_name         = var.image_name
-  flavor_name        = var.flavor_name
-  keypair_name       = module.keypair.keypair_name
-  network_name       = module.network.nodes_net_name
-  secgroup_name      = module.secgroup.secgroup_name
-  server_affinity    = var.master_server_affinity
-  assign_floating_ip = "true"
-  config_drive       = var.nodes_config_drive
-  floating_ip_pool   = var.public_net_name
-  user_data          = var.user_data_file != null ? file(var.user_data_file) : null
-  boot_from_volume   = var.boot_from_volume
-  boot_volume_size   = var.boot_volume_size
-  availability_zones = var.availability_zones
-  rke2_config_file   = var.rke2_config_file
-  additional_san     = var.additional_san
-}
-
 module "master" {
   source             = "./modules/node"
-  node_depends_on    = [module.network.nodes_subnet]
   name_prefix        = "${var.cluster_name}-master"
-  nodes_count        = var.nodes_count - 1
+  nodes_count        = var.nodes_count
   image_name         = var.image_name
   flavor_name        = var.flavor_name
   keypair_name       = module.keypair.keypair_name
-  network_name       = module.network.nodes_net_name
+  network_id         = module.network.nodes_net_id
+  subnet_id          = module.network.nodes_subnet_id
   secgroup_name      = module.secgroup.secgroup_name
   server_affinity    = var.master_server_affinity
   assign_floating_ip = "true"
@@ -80,7 +59,6 @@ module "master" {
   boot_from_volume   = var.boot_from_volume
   boot_volume_size   = var.boot_volume_size
   availability_zones = var.availability_zones
-  bootstrap_server   = module.master_bootstrap.bootstrap_ip
   rke2_config_file   = var.rke2_config_file
   additional_san     = var.additional_san
 }
@@ -92,7 +70,7 @@ resource "null_resource" "write_kubeconfig" {
   }
 
   connection {
-    host        = module.master_bootstrap.floating_ip[0]
+    host        = module.master.floating_ip[0]
     user        = var.system_user
     private_key = var.use_ssh_agent ? null : file(var.ssh_key_file)
     agent       = var.use_ssh_agent
@@ -103,7 +81,7 @@ resource "null_resource" "write_kubeconfig" {
   }
 
   provisioner "local-exec" {
-    command = var.use_ssh_agent ? "scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ${var.ssh_key_file} ubuntu@${module.master_bootstrap.floating_ip[0]}:/etc/rancher/rke2/rke2.yaml ." : "scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ubuntu@${module.master_bootstrap.floating_ip[0]}:/etc/rancher/rke2/rke2.yaml ."
+    command = var.use_ssh_agent ? "scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ${var.ssh_key_file} ubuntu@${module.master.floating_ip[0]}:/etc/rancher/rke2/rke2.yaml ." : "scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ubuntu@${module.master.floating_ip[0]}:/etc/rancher/rke2/rke2.yaml ."
 
   }
 }

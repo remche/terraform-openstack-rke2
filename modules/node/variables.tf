@@ -23,7 +23,11 @@ variable "keypair_name" {
   type = string
 }
 
-variable "network_name" {
+variable "network_id" {
+  type = string
+}
+
+variable "subnet_id" {
   type = string
 }
 
