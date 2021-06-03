@@ -38,3 +38,8 @@ module "green_node" {
   flavor_name = "m1.small"
   node_config = module.controlplane.node_config
 }
+
+output "controlplane_ips" {
+  value     = module.controlplane.controlplane_ips
+  sensitive = true
+}

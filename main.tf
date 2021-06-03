@@ -4,7 +4,7 @@ locals {
     keypair_name       = module.keypair.keypair_name
     network_id         = module.network.nodes_net_id
     subnet_id          = module.network.nodes_subnet_id
-    secgroup_name      = module.secgroup.secgroup_name
+    secgroup_id        = module.secgroup.secgroup_id
     server_affinity    = var.worker_server_affinity
     config_drive       = var.nodes_config_drive
     floating_ip_pool   = var.public_net_name
@@ -50,7 +50,7 @@ module "master" {
   keypair_name       = module.keypair.keypair_name
   network_id         = module.network.nodes_net_id
   subnet_id          = module.network.nodes_subnet_id
-  secgroup_name      = module.secgroup.secgroup_name
+  secgroup_id        = module.secgroup.secgroup_id
   server_affinity    = var.master_server_affinity
   assign_floating_ip = "true"
   config_drive       = var.nodes_config_drive

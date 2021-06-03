@@ -39,7 +39,7 @@ variable "server_affinity" {
   type = string
 }
 
-variable "secgroup_name" {
+variable "secgroup_id" {
   type = string
 }
 
@@ -83,7 +83,7 @@ variable "is_master" {
 }
 
 variable "additional_san" {
-  type = list(string)
-  default = []
+  type        = list(string)
+  default     = []
   description = "RKE additional SAN"
 }

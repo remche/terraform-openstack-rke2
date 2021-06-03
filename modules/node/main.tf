@@ -12,13 +12,13 @@ resource "openstack_compute_instance_v2" "instance" {
   key_pair     = var.keypair_name
   config_drive = var.config_drive
   user_data = base64encode(templatefile(("${path.module}/files/cloud-init.yml.tpl"),
-  {   bootstrap_server      = var.is_master && count.index != 0 ? openstack_networking_port_v2.port[0].all_fixed_ips[0] : var.bootstrap_server
-      public_address        = var.is_master ? openstack_networking_floatingip_v2.floating_ip[count.index].address : ""
-      rke2_cluster_secret   = "toto"
-      is_master             = var.is_master
-      san                   = openstack_networking_floatingip_v2.floating_ip[*].address
-      rke2_conf             = var.rke2_config_file != "" ? file(var.rke2_config_file) : ""
-      additional_san        = var.additional_san
+    { bootstrap_server    = var.is_master && count.index != 0 ? openstack_networking_port_v2.port[0].all_fixed_ips[0] : var.bootstrap_server
+      public_address      = var.is_master ? openstack_networking_floatingip_v2.floating_ip[count.index].address : ""
+      rke2_cluster_secret = "toto"
+      is_master           = var.is_master
+      san                 = openstack_networking_floatingip_v2.floating_ip[*].address
+      rke2_conf           = var.rke2_config_file != "" ? file(var.rke2_config_file) : ""
+      additional_san      = var.additional_san
   }))
 
   stop_before_destroy     = true
@@ -27,8 +27,6 @@ resource "openstack_compute_instance_v2" "instance" {
   network {
     port = openstack_networking_port_v2.port[count.index].id
   }
-
-  security_groups = [var.secgroup_name]
 
   scheduler_hints {
     group = openstack_compute_servergroup_v2.servergroup.id
@@ -51,9 +49,10 @@ resource "openstack_compute_instance_v2" "instance" {
 }
 
 resource "openstack_networking_port_v2" "port" {
-  count          = var.nodes_count
-  network_id     = var.network_id
-  admin_state_up = true
+  count               = var.nodes_count
+  network_id          = var.network_id
+  security_group_ids  = [var.secgroup_id]
+  admin_state_up      = true
   fixed_ip {
     subnet_id = var.subnet_id
   }

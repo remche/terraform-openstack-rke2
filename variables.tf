@@ -148,7 +148,7 @@ variable "rke2_config_file" {
 }
 
 variable "additional_san" {
-  type = list(string)
-  default = []
+  type        = list(string)
+  default     = []
   description = "RKE additional SAN"
 }

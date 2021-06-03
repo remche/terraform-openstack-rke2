@@ -1,7 +1,6 @@
-output "keypair_name" {
-  value       = module.keypair.keypair_name
-  description = "The name of the keypair used for nodes"
-  sensitive   = "true"
+output "controlplane_ips" {
+  value     = module.master.floating_ip
+  sensitive = true
 }
 
 output "node_config" {

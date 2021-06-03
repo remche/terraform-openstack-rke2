@@ -8,7 +8,7 @@ module "worker" {
   keypair_name       = var.node_config.keypair_name
   network_id         = var.node_config.network_id
   subnet_id          = var.node_config.subnet_id
-  secgroup_name      = var.node_config.secgroup_name
+  secgroup_id        = var.node_config.secgroup_id
   server_affinity    = var.node_config.server_affinity
   config_drive       = var.node_config.config_drive
   floating_ip_pool   = var.node_config.floating_ip_pool

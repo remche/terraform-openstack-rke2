@@ -4,7 +4,7 @@ variable "node_config" {
     keypair_name       = string
     subnet_id          = string
     network_id         = string
-    secgroup_name      = string
+    secgroup_id        = string
     server_affinity    = string
     config_drive       = bool
     floating_ip_pool   = string
