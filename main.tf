@@ -77,7 +77,7 @@ resource "null_resource" "write_kubeconfig" {
   }
 
   provisioner "remote-exec" {
-    inline = ["while [ ! -r /etc/rancher/rke2/rke2.yaml ]; do echo Waiting for rke2 to start && sleep 10; done;"]
+    inline = ["until (grep rke2 /etc/rancher/rke2/rke2.yaml); do echo Waiting for rke2 to start && sleep 10; done;"]
   }
 
   provisioner "local-exec" {
