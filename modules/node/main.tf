@@ -19,6 +19,7 @@ resource "openstack_compute_instance_v2" "instance" {
       san                 = openstack_networking_floatingip_v2.floating_ip[*].address
       rke2_conf           = var.rke2_config_file != "" ? file(var.rke2_config_file) : ""
       additional_san      = var.additional_san
+      manifests           = var.manifests_path != "" ? [ for f in fileset(var.manifests_path, "*.{yml,yaml}"): base64gzip(file("${var.manifests_path}/${f}")) ] : []
   }))
 
   availability_zone_hints = length(var.availability_zones) > 0 ? var.availability_zones[count.index % length(var.availability_zones)] : null

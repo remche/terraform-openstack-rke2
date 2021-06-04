@@ -1,5 +1,14 @@
 #cloud-config
 write_files:
+%{ if bootstrap_server == "" ~}
+  %{~ for index, f in manifests ~}
+- path: /var/lib/rancher/rke2/server/manifests/addon-${index}.yaml
+  permissions: "0600"
+  owner: root:root
+  encoding: gz+b64
+  content: ${f}
+  %{~ endfor ~}
+%{~ endif ~}
 - path: /etc/rancher/rke2/config.yaml
   permissions: "0600"
   owner: root:root

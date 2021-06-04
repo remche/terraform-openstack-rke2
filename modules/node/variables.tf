@@ -87,3 +87,9 @@ variable "additional_san" {
   default     = []
   description = "RKE additional SAN"
 }
+
+variable "manifests_path" {
+  type        = string
+  default     = ""
+  description = "RKE2 addons manifests directory"
+}

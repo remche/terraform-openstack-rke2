@@ -150,5 +150,11 @@ variable "rke2_config_file" {
 variable "additional_san" {
   type        = list(string)
   default     = []
-  description = "RKE additional SAN"
+  description = "RKE2 additional SAN"
+}
+
+variable "manifests_path" {
+  type        = string
+  default     = ""
+  description = "RKE2 addons manifests directory"
 }

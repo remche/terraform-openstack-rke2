@@ -60,6 +60,7 @@ module "server" {
   availability_zones = var.availability_zones
   rke2_config_file   = var.rke2_config_file
   additional_san     = var.additional_san
+  manifests_path     = var.manifests_path
 }
 
 resource "null_resource" "write_kubeconfig" {
