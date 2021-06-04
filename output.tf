@@ -1,5 +1,5 @@
 output "controlplane_ips" {
-  value     = module.master.floating_ip
+  value     = module.server.floating_ip
   sensitive = true
 }
 

@@ -5,14 +5,14 @@ locals {
     network_id         = module.network.nodes_net_id
     subnet_id          = module.network.nodes_subnet_id
     secgroup_id        = module.secgroup.secgroup_id
-    server_affinity    = var.worker_server_affinity
+    server_affinity    = var.agent_group_affinity
     config_drive       = var.nodes_config_drive
     floating_ip_pool   = var.public_net_name
     user_data          = var.user_data_file != null ? file(var.user_data_file) : null
     boot_from_volume   = var.boot_from_volume
     boot_volume_size   = var.boot_volume_size
     availability_zones = var.availability_zones
-    bootstrap_server   = module.master.bootstrap_ip
+    bootstrap_server   = module.server.bootstrap_ip
   }
 }
 
@@ -38,12 +38,11 @@ module "secgroup" {
   source      = "./modules/secgroup"
   name_prefix = var.cluster_name
   rules       = var.secgroup_rules
-  #bastion_host = var.bastion_host != null ? var.bastion_host : values(module.master.nodes)[0].floating_ip
 }
 
-module "master" {
+module "server" {
   source             = "./modules/node"
-  name_prefix        = "${var.cluster_name}-master"
+  name_prefix        = "${var.cluster_name}-server"
   nodes_count        = var.nodes_count
   image_name         = var.image_name
   flavor_name        = var.flavor_name
@@ -51,7 +50,7 @@ module "master" {
   network_id         = module.network.nodes_net_id
   subnet_id          = module.network.nodes_subnet_id
   secgroup_id        = module.secgroup.secgroup_id
-  server_affinity    = var.master_server_affinity
+  server_affinity    = var.server_group_affinity
   assign_floating_ip = "true"
   config_drive       = var.nodes_config_drive
   floating_ip_pool   = var.public_net_name
@@ -70,7 +69,7 @@ resource "null_resource" "write_kubeconfig" {
   }
 
   connection {
-    host        = module.master.floating_ip[0]
+    host        = module.server.floating_ip[0]
     user        = var.system_user
     private_key = var.use_ssh_agent ? null : file(var.ssh_key_file)
     agent       = var.use_ssh_agent
@@ -81,7 +80,7 @@ resource "null_resource" "write_kubeconfig" {
   }
 
   provisioner "local-exec" {
-    command = var.use_ssh_agent ? "scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ${var.ssh_key_file} ubuntu@${module.master.floating_ip[0]}:/etc/rancher/rke2/rke2.yaml ." : "scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ubuntu@${module.master.floating_ip[0]}:/etc/rancher/rke2/rke2.yaml ."
+    command = var.use_ssh_agent ? "scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ${var.ssh_key_file} ubuntu@${module.server.floating_ip[0]}:/etc/rancher/rke2/rke2.yaml ." : "scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ubuntu@${module.server.floating_ip[0]}:/etc/rancher/rke2/rke2.yaml ."
 
   }
 }

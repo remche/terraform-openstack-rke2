@@ -9,7 +9,7 @@ module "controlplane" {
 }
 
 module "blue_node" {
-  source           = "./..//modules/worker"
+  source           = "./..//modules/agent"
   image_name       = "ubuntu-20.04-focal-x86_64+rke2"
   nodes_count      = 1
   name_prefix      = "blue"
@@ -19,7 +19,7 @@ module "blue_node" {
 }
 
 module "green_node" {
-  source      = "./..//modules/worker"
+  source      = "./..//modules/agent"
   image_name  = "ubuntu-20.04-focal-x86_64+rke2"
   nodes_count = 1
   name_prefix = "green"

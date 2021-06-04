@@ -4,7 +4,7 @@
 
 variable "cluster_name" {
   type        = string
-  default     = "rke"
+  default     = "rke2"
   description = "Name of the cluster"
 }
 
@@ -91,24 +91,24 @@ variable "image_name" {
 variable "nodes_count" {
   type        = number
   default     = 1
-  description = "Number of master nodes (should be odd number...)"
+  description = "Number of server nodes (should be odd number...)"
 }
 
 variable "flavor_name" {
   type        = string
-  description = "Master flavor name"
+  description = "Server flavor name"
 }
 
-variable "master_server_affinity" {
+variable "server_group_affinity" {
   type        = string
   default     = "soft-anti-affinity"
-  description = "Master server group affinity"
+  description = "Server server group affinity"
 }
 
-variable "worker_server_affinity" {
+variable "agent_group_affinity" {
   type        = string
   default     = "soft-anti-affinity"
-  description = "Worker server group affinity"
+  description = "Agent server group affinity"
 }
 
 variable "nodes_config_drive" {

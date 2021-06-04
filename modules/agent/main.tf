@@ -17,6 +17,6 @@ module "worker" {
   boot_volume_size   = var.node_config.boot_volume_size
   availability_zones = var.node_config.availability_zones
   bootstrap_server   = var.node_config.bootstrap_server
-  is_master          = false
+  is_server          = false
   rke2_config_file   = var.rke2_config_file
 }

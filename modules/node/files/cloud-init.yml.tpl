@@ -8,7 +8,7 @@ write_files:
     %{~ if bootstrap_server != "" ~}
     server: https://${bootstrap_server}:9345
     %{~ endif ~}
-    %{~ if is_master ~}
+    %{~ if is_server ~}
     write-kubeconfig-mode: "0640"
     tls-san:
       ${indent(6, yamlencode(concat(san, additional_san)))}
@@ -16,7 +16,7 @@ write_files:
     %{~ endif ~}
     ${indent(4,rke2_conf)}
 runcmd:
-  %{~ if is_master ~}
+  %{~ if is_server ~}
     %{~ if bootstrap_server != "" ~}
   - [ sh,  -c, 'until (nc -z ${bootstrap_server} 6443); do echo Wait for master node && sleep 10; done;']
     %{~ endif ~}

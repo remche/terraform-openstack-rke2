@@ -77,7 +77,7 @@ variable "bootstrap_server" {
   default = ""
 }
 
-variable "is_master" {
+variable "is_server" {
   type    = bool
   default = true
 }
