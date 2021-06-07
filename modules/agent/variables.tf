@@ -43,6 +43,11 @@ variable "assign_floating_ip" {
   default = "false"
 }
 
+variable "rke2_version" {
+  type    = string
+  default = ""
+}
+
 variable "rke2_config_file" {
   type    = string
   default = ""

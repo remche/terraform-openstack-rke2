@@ -148,6 +148,12 @@ variable "availability_zones" {
   description = "The list of AZs to deploy nodes into"
 }
 
+variable "rke2_version" {
+  type        = string
+  default     = ""
+  description = "RKE2 version"
+}
+
 variable "rke2_config_file" {
   type        = string
   default     = ""

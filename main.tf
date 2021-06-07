@@ -59,6 +59,7 @@ module "server" {
   boot_from_volume   = var.boot_from_volume
   boot_volume_size   = var.boot_volume_size
   availability_zones = var.availability_zones
+  rke2_version       = var.rke2_version
   rke2_config_file   = var.rke2_config_file
   additional_san     = var.additional_san
   manifests_path     = var.manifests_path

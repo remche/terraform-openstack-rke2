@@ -19,5 +19,6 @@ module "worker" {
   availability_zones = var.node_config.availability_zones
   bootstrap_server   = var.node_config.bootstrap_server
   is_server          = false
+  rke2_version       = var.rke2_version
   rke2_config_file   = var.rke2_config_file
 }

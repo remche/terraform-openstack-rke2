@@ -1,5 +1,26 @@
 #cloud-config
 write_files:
+- path: /usr/local/bin/install-or-upgrade-rke2.sh
+  permissions: "755"
+  owner: root:root
+  content: |
+    #!/bin/sh
+    # Install jq if not available
+    JQ_URL=https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64
+    JQ_BIN=/usr/local/bin/jq
+    which jq 2>&1 > /dev/null || sudo curl -sfL $JQ_URL -o $JQ_BIN && sudo chmod +x $JQ_BIN
+
+    # Fetch target and actual version if already installed
+    export INSTALL_RKE2_VERSION=$(curl -s http://169.254.169.254/openstack/2012-08-10/meta_data.json|jq -r '.meta.rke2_version')
+    which rke2 >/dev/null 2>&1 && RKE2_VERSION=$(rke2 --version|head -1|cut -f 3 -d " ")
+
+    # Install or upgrade
+    if [ -z "$INSTALL_RKE2_VERSION" ] || [ "$INSTALL_RKE2_VERSION" != "$RKE2_VERSION" ]; then
+      RKE2_ROLE=$(curl -s http://169.254.169.254/openstack/2012-08-10/meta_data.json|jq -r '.meta.rke2_role')
+      RKE2_SERVICE="rke2-$RKE2_ROLE.service"
+      echo "Will install RKE2 $INSTALL_RKE2_VERSION with $RKE2_ROLE role"
+      curl -sfL https://get.rke2.io | sh -
+    fi
 %{ if bootstrap_server == "" ~}
   %{~ for index, f in manifests ~}
 - path: /var/lib/rancher/rke2/server/manifests/addon-${index}.yaml
@@ -18,6 +39,7 @@ write_files:
     server: https://${bootstrap_server}:9345
     %{~ endif ~}
     %{~ if is_server ~}
+
     write-kubeconfig-mode: "0640"
     tls-san:
       ${indent(6, yamlencode(concat(san, additional_san)))}
@@ -25,6 +47,7 @@ write_files:
     %{~ endif ~}
     ${indent(4,rke2_conf)}
 runcmd:
+  - /usr/local/bin/install-or-upgrade-rke2.sh
   %{~ if is_server ~}
     %{~ if bootstrap_server != "" ~}
   - [ sh,  -c, 'until (nc -z ${bootstrap_server} 6443); do echo Wait for master node && sleep 10; done;']
@@ -33,6 +56,7 @@ runcmd:
   - systemctl start rke2-server.service
   - [ sh, -c, 'until [ -f /etc/rancher/rke2/rke2.yaml ]; do echo Waiting for rke2 to start && sleep 10; done;' ]
   - sudo chgrp sudo /etc/rancher/rke2/rke2.yaml
+  - [ sh, -c, 'until [ -x /var/lib/rancher/rke2/bin/kubectl ]; do echo Waiting for kubectl bin && sleep 10; done;' ]
   - [ sh, -c, 'until [ -x /var/lib/rancher/rke2/bin/kubectl ]; do echo Waiting for kubectl bin && sleep 10; done;' ]
   - KUBECONFIG=/etc/rancher/rke2/rke2.yaml /var/lib/rancher/rke2/bin/kubectl config rename-context default rke2
   - KUBECONFIG=/etc/rancher/rke2/rke2.yaml /var/lib/rancher/rke2/bin/kubectl config set-cluster default --server https://${public_address}:6443

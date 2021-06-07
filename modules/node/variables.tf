@@ -72,6 +72,10 @@ variable "availability_zones" {
   type = list(string)
 }
 
+variable "rke2_version" {
+  type = string
+}
+
 variable "rke2_config_file" {
   type = string
 }

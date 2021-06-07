@@ -22,6 +22,10 @@ resource "openstack_compute_instance_v2" "instance" {
       additional_san      = var.additional_san
       manifests           = var.manifests_path != "" ? [for f in fileset(var.manifests_path, "*.{yml,yaml}") : base64gzip(file("${var.manifests_path}/${f}"))] : []
   }))
+  metadata = {
+    rke2_version = var.rke2_version
+    rke2_role    = var.is_server ? "server" : "agent"
+  }
 
   availability_zone_hints = length(var.availability_zones) > 0 ? var.availability_zones[count.index % length(var.availability_zones)] : null
 
