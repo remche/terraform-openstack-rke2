@@ -30,7 +30,8 @@ variable "image_id" {
 }
 
 variable "image_name" {
-  type = string
+  type    = string
+  default = ""
 }
 
 variable "flavor_name" {

@@ -85,11 +85,13 @@ variable "dns_domain" {
 
 variable "image_id" {
   type        = string
+  default     = ""
   description = "ID of image nodes (must fullfill [RKE2 requirements](https://docs.rke2.io/install/requirements/))"
 }
 
 variable "image_name" {
   type        = string
+  default     = ""
   description = "ID of image nodes (must fullfill [RKE2 requirements](https://docs.rke2.io/install/requirements/))"
 }
 
