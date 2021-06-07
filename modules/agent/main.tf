@@ -2,6 +2,7 @@ module "worker" {
   source             = "../node"
   name_prefix        = "${var.node_config.cluster_name}-${var.name_prefix}"
   nodes_count        = var.nodes_count
+  image_id           = var.image_id
   image_name         = var.image_name
   flavor_name        = var.flavor_name
   assign_floating_ip = var.assign_floating_ip

@@ -83,9 +83,14 @@ variable "dns_domain" {
 # Node variables #
 ##################
 
+variable "image_id" {
+  type        = string
+  description = "ID of image nodes (must fullfill [RKE2 requirements](https://docs.rke2.io/install/requirements/))"
+}
+
 variable "image_name" {
   type        = string
-  description = "Name of image nodes (must fullfill RKE requirements)"
+  description = "ID of image nodes (must fullfill [RKE2 requirements](https://docs.rke2.io/install/requirements/))"
 }
 
 variable "nodes_count" {

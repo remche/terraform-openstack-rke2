@@ -7,6 +7,7 @@ resource "openstack_compute_instance_v2" "instance" {
   depends_on   = [var.node_depends_on]
   count        = var.nodes_count
   name         = "${var.name_prefix}-${format("%03d", count.index + 1)}"
+  image_id     = var.boot_from_volume ? null : var.image_id
   image_name   = var.boot_from_volume ? null : var.image_name
   flavor_name  = var.flavor_name
   key_pair     = var.keypair_name
@@ -19,7 +20,7 @@ resource "openstack_compute_instance_v2" "instance" {
       san                 = openstack_networking_floatingip_v2.floating_ip[*].address
       rke2_conf           = var.rke2_config_file != "" ? file(var.rke2_config_file) : ""
       additional_san      = var.additional_san
-      manifests           = var.manifests_path != "" ? [ for f in fileset(var.manifests_path, "*.{yml,yaml}"): base64gzip(file("${var.manifests_path}/${f}")) ] : []
+      manifests           = var.manifests_path != "" ? [for f in fileset(var.manifests_path, "*.{yml,yaml}") : base64gzip(file("${var.manifests_path}/${f}"))] : []
   }))
 
   availability_zone_hints = length(var.availability_zones) > 0 ? var.availability_zones[count.index % length(var.availability_zones)] : null
@@ -49,10 +50,10 @@ resource "openstack_compute_instance_v2" "instance" {
 }
 
 resource "openstack_networking_port_v2" "port" {
-  count               = var.nodes_count
-  network_id          = var.network_id
-  security_group_ids  = [var.secgroup_id]
-  admin_state_up      = true
+  count              = var.nodes_count
+  network_id         = var.network_id
+  security_group_ids = [var.secgroup_id]
+  admin_state_up     = true
   fixed_ip {
     subnet_id = var.subnet_id
   }

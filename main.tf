@@ -45,6 +45,7 @@ module "server" {
   name_prefix        = "${var.cluster_name}-server"
   nodes_count        = var.nodes_count
   image_name         = var.image_name
+  image_id           = var.image_id
   flavor_name        = var.flavor_name
   keypair_name       = module.keypair.keypair_name
   network_id         = module.network.nodes_net_id
