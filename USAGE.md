@@ -1,6 +1,3 @@
-# Usage
-
-<!--- BEGIN_TF_DOCS --->
 ## Requirements
 
 | Name | Version |
@@ -77,6 +74,3 @@
 | <a name="output_controlplane_ips"></a> [controlplane\_ips](#output\_controlplane\_ips) | n/a |
 | <a name="output_kubernetes_config"></a> [kubernetes\_config](#output\_kubernetes\_config) | n/a |
 | <a name="output_node_config"></a> [node\_config](#output\_node\_config) | n/a |
-
-<!--- END_TF_DOCS --->
-
