@@ -1,3 +1,23 @@
+resource "null_resource" "write_kubeconfig" {
+  count = var.write_kubeconfig ? 1 : 0
+
+  connection {
+    host        = module.server.floating_ip[0]
+    user        = var.system_user
+    private_key = var.use_ssh_agent ? null : file(var.ssh_key_file)
+    agent       = var.use_ssh_agent
+  }
+
+  provisioner "remote-exec" {
+    inline = ["until (grep rke2 /etc/rancher/rke2/rke2-remote.yaml >/dev/null 2>&1); do echo Waiting for rke2 to start && sleep 10; done;"]
+  }
+
+  provisioner "local-exec" {
+    command = var.use_ssh_agent ? " ${local.scp} -i ${var.ssh_key_file} ${local.remote_rke2_yaml} rke2.yaml" : "${local.scp} ${local.remote_rke2_yaml} rke2.yaml"
+
+  }
+}
+
 module "host" {
   source  = "matti/resource/shell"
   count   = var.output_kubernetes_config ? 1 : 0
