@@ -38,6 +38,12 @@ variable "write_kubeconfig" {
   description = "Write kubeconfig file to disk"
 }
 
+variable "output_kubernetes_config" {
+  type        = bool
+  default     = "false"
+  description = "Output Kubernetes config to state (for use with Kubernetes provider)"
+}
+
 ######################
 # Secgroup variables #
 ######################

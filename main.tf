@@ -18,7 +18,10 @@ locals {
     bootstrap_server   = module.server.bootstrap_ip
     bastion_host       = module.server.floating_ip[0]
   }
-  tmpdir = "${path.root}/.terraform/tmp/rke2"
+  tmpdir           = "${path.root}/.terraform/tmp/rke2"
+  ssh              = "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
+  scp              = "scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
+  remote_rke2_yaml = "${var.system_user}@${module.server.floating_ip[0]}:/etc/rancher/rke2/rke2-remote.yaml"
 }
 
 module "keypair" {
@@ -89,7 +92,7 @@ resource "null_resource" "write_kubeconfig" {
   }
 
   provisioner "local-exec" {
-    command = var.use_ssh_agent ? "scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ${var.ssh_key_file} ubuntu@${module.server.floating_ip[0]}:/etc/rancher/rke2/rke2-remote.yaml rke2.yaml" : "scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ubuntu@${module.server.floating_ip[0]}:/etc/rancher/rke2/rke2-remote.yaml rke2.yaml"
+    command = var.use_ssh_agent ? " ${local.scp} -i ${var.ssh_key_file} ${local.remote_rke2_yaml} rke2.yaml" : "${local.scp} ${local.remote_rke2_yaml} rke2.yaml"
 
   }
 }
