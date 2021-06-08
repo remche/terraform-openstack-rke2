@@ -6,7 +6,7 @@
 ## Prerequisites
 
 - [Terraform](https://www.terraform.io/) 0.13+
-- - [OpenStack](https://docs.openstack.org/zh_CN/user-guide/common/cli-set-environment-variables-using-openstack-rc.html) environment properly sourced.
+- [OpenStack](https://docs.openstack.org/zh_CN/user-guide/common/cli-set-environment-variables-using-openstack-rc.html) environment properly sourced.
 - A Openstack image fullfiling [RKE2 requirements](https://docs.rke2.io/install/requirements/).
 - At least one Openstack floating IP.
 
