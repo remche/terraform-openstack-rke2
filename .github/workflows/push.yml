@@ -27,5 +27,5 @@ jobs:
       with:
         working-dir: .
         output-file: USAGE.md
-        output_method: replace
+        output-method: replace
         git-push: 'true'
