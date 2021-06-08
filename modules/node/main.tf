@@ -53,9 +53,6 @@ resource "openstack_compute_instance_v2" "instance" {
       delete_on_termination = true
     }
   }
-  lifecycle {
-    create_before_destroy = true
-  }
 }
 
 resource "openstack_networking_port_v2" "port" {
