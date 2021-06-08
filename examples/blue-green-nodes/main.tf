@@ -1,16 +1,16 @@
 module "controlplane" {
-  source           = "./.."
+  source           = "remche/rke2/openstack"
   nodes_count      = 3
   write_kubeconfig = true
-  image_name       = "ubuntu-20.04-focal-x86_64+rke2"
+  image_name       = "ubuntu-20.04-focal-x86_64"
   flavor_name      = "m1.small"
   public_net_name  = "public"
   rke2_config_file = "server.yaml"
 }
 
 module "blue_node" {
-  source           = "./..//modules/agent"
-  image_name       = "ubuntu-20.04-focal-x86_64+rke2"
+  source           = "remche/rke2/openstack//modules/agent"
+  image_name       = "ubuntu-20.04-focal-x86_64"
   nodes_count      = 1
   name_prefix      = "blue"
   flavor_name      = "m1.small"
@@ -19,15 +19,15 @@ module "blue_node" {
 }
 
 module "green_node" {
-  source      = "./..//modules/agent"
-  image_name  = "ubuntu-20.04-focal-x86_64+rke2"
+  source      = "remche/rke2/openstack//modules/agent"
+  image_name  = "ubuntu-20.04-focal-x86_64"
   nodes_count = 1
   name_prefix = "green"
   flavor_name = "m1.small"
   node_config = module.controlplane.node_config
 }
 
-output "controlplane_ips" {
-  value     = module.controlplane.controlplane_ips
+output "controlplane_floating_ip" {
+  value     = module.controlplane.controlplane_floating_ip
   sensitive = true
 }
