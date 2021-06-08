@@ -31,6 +31,7 @@ variable "name_prefix" {
 
 variable "image_id" {
   type = string
+  default = ""
 }
 
 variable "image_name" {
