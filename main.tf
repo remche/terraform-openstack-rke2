@@ -15,7 +15,7 @@ locals {
     boot_from_volume   = var.boot_from_volume
     boot_volume_size   = var.boot_volume_size
     availability_zones = var.availability_zones
-    bootstrap_server   = module.server.bootstrap_ip
+    bootstrap_server   = module.server.internal_ip[0]
     bastion_host       = module.server.floating_ip[0]
   }
   tmpdir           = "${path.root}/.terraform/tmp/rke2"
