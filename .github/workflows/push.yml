@@ -1,0 +1,33 @@
+name: Actions on push
+on:
+  push:
+    branches:
+      - '**'
+jobs:
+  code-quality:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        ref: ${{ github.event.push.ref }}
+    - uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: 1.0.0
+    - name: Terraform fmt
+      run: terraform fmt
+      continue-on-error: true
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        ref: ${{ github.event.push.ref }}
+    - name: Render terraform docs inside the USAGE.md and push changes back to branch
+      uses: terraform-docs/gh-actions@v0.6.1
+      with:
+        tf_docs_working_dir: .
+        tf_docs_output_file: USAGE.md
+        tf_docs_content_type: document
+        tf_docs_args: '--no-sort --no-providers'
+        tf_docs_output_method: replace
+        tf_docs_git_push: 'true'
