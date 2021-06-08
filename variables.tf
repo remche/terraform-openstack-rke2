@@ -171,3 +171,9 @@ variable "manifests_path" {
   default     = ""
   description = "RKE2 addons manifests directory"
 }
+
+variable "do_upgrade" {
+  type        = bool
+  default     = false
+  description = "Trigger upgrade provisioner"
+}

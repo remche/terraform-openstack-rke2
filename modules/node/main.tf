@@ -1,3 +1,8 @@
+locals {
+  tmpdir = "${path.root}/.terraform/tmp/rke2"
+}
+
+
 resource "openstack_compute_servergroup_v2" "servergroup" {
   name     = "${var.name_prefix}-servergroup"
   policies = [var.server_affinity]
@@ -72,4 +77,37 @@ resource "openstack_compute_floatingip_associate_v2" "associate_floating_ip" {
   count       = var.assign_floating_ip ? var.nodes_count : 0
   floating_ip = openstack_networking_floatingip_v2.floating_ip[count.index].address
   instance_id = openstack_compute_instance_v2.instance[count.index].id
+}
+
+resource "null_resource" "upgrade" {
+  count = var.do_upgrade ? var.nodes_count : 0
+
+  triggers = {
+    rke_version = var.rke2_version
+  }
+
+  connection {
+    bastion_host = var.assign_floating_ip ? "" : var.bastion_host
+    host         = var.assign_floating_ip ? openstack_networking_floatingip_v2.floating_ip[count.index].address : openstack_compute_instance_v2.instance[0].access_ip_v4
+    user         = var.system_user
+    private_key  = var.use_ssh_agent ? null : file(var.ssh_key_file)
+    agent        = var.use_ssh_agent
+  }
+
+  provisioner "local-exec" {
+    command = count.index == 0 ? "true" : "until [ -f ${local.tmpdir}/upgrade-${openstack_compute_instance_v2.instance[count.index - 1].id}-${var.rke2_version} ]; do sleep 10; done;"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo /usr/local/bin/install-or-upgrade-rke2.sh",
+      "sudo systemctl restart %{if var.is_server} rke2-server.service %{else} rke2-agent.service %{endif}",
+      "/usr/local/bin/wait-for-node-ready.sh"
+    ]
+  }
+
+  provisioner "local-exec" {
+    command = "touch ${local.tmpdir}/upgrade-${openstack_compute_instance_v2.instance[count.index].id}-${var.rke2_version}"
+  }
+
 }

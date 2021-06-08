@@ -27,6 +27,24 @@ variable "keypair_name" {
   type = string
 }
 
+variable "ssh_key_file" {
+  type        = string
+  default     = "~/.ssh/id_rsa"
+  description = "Local path to SSH key"
+}
+
+variable "system_user" {
+  type        = string
+  default     = "ubuntu"
+  description = "Default OS image user"
+}
+
+variable "use_ssh_agent" {
+  type        = bool
+  default     = "true"
+  description = "Whether to use ssh agent"
+}
+
 variable "network_id" {
   type = string
 }
@@ -85,6 +103,11 @@ variable "bootstrap_server" {
   default = ""
 }
 
+variable "bastion_host" {
+  type    = string
+  default = ""
+}
+
 variable "is_server" {
   type    = bool
   default = true
@@ -100,4 +123,8 @@ variable "manifests_path" {
   type        = string
   default     = ""
   description = "RKE2 addons manifests directory"
+}
+
+variable "do_upgrade" {
+  type = bool
 }

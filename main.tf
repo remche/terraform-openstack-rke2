@@ -2,6 +2,9 @@ locals {
   node_config = {
     cluster_name       = var.cluster_name
     keypair_name       = module.keypair.keypair_name
+    ssh_key_file       = var.ssh_key_file
+    system_user        = var.system_user
+    use_ssh_agent      = var.use_ssh_agent
     network_id         = module.network.nodes_net_id
     subnet_id          = module.network.nodes_subnet_id
     secgroup_id        = module.secgroup.secgroup_id
@@ -13,7 +16,9 @@ locals {
     boot_volume_size   = var.boot_volume_size
     availability_zones = var.availability_zones
     bootstrap_server   = module.server.bootstrap_ip
+    bastion_host       = module.server.floating_ip[0]
   }
+  tmpdir = "${path.root}/.terraform/tmp/rke2"
 }
 
 module "keypair" {
@@ -48,6 +53,9 @@ module "server" {
   image_id           = var.image_id
   flavor_name        = var.flavor_name
   keypair_name       = module.keypair.keypair_name
+  ssh_key_file       = var.ssh_key_file
+  system_user        = var.system_user
+  use_ssh_agent      = var.use_ssh_agent
   network_id         = module.network.nodes_net_id
   subnet_id          = module.network.nodes_subnet_id
   secgroup_id        = module.secgroup.secgroup_id
@@ -63,13 +71,11 @@ module "server" {
   rke2_config_file   = var.rke2_config_file
   additional_san     = var.additional_san
   manifests_path     = var.manifests_path
+  do_upgrade         = var.do_upgrade
 }
 
 resource "null_resource" "write_kubeconfig" {
   count = var.write_kubeconfig ? 1 : 0
-  triggers = {
-    always_run = "${timestamp()}"
-  }
 
   connection {
     host        = module.server.floating_ip[0]
@@ -79,11 +85,16 @@ resource "null_resource" "write_kubeconfig" {
   }
 
   provisioner "remote-exec" {
-    inline = ["until (grep rke2 /etc/rancher/rke2/rke2.yaml >/dev/null 2>&1); do echo Waiting for rke2 to start && sleep 10; done;"]
+    inline = ["until (grep rke2 /etc/rancher/rke2/rke2-remote.yaml >/dev/null 2>&1); do echo Waiting for rke2 to start && sleep 10; done;"]
   }
 
   provisioner "local-exec" {
-    command = var.use_ssh_agent ? "scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ${var.ssh_key_file} ubuntu@${module.server.floating_ip[0]}:/etc/rancher/rke2/rke2.yaml ." : "scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ubuntu@${module.server.floating_ip[0]}:/etc/rancher/rke2/rke2.yaml ."
+    command = var.use_ssh_agent ? "scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ${var.ssh_key_file} ubuntu@${module.server.floating_ip[0]}:/etc/rancher/rke2/rke2-remote.yaml rke2.yaml" : "scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ubuntu@${module.server.floating_ip[0]}:/etc/rancher/rke2/rke2-remote.yaml rke2.yaml"
 
   }
+}
+
+resource "local_file" "tmpdirfile" {
+  content  = ""
+  filename = "${local.tmpdir}/placeholder"
 }

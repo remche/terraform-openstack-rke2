@@ -1,7 +1,14 @@
 #cloud-config
 write_files:
+- path: /usr/local/bin/wait-for-node-ready.sh
+  permissions: "0755"
+  owner: root:root
+  content: |
+    #!/bin/sh
+    until (curl -sL http://localhost:10248/healthz) && [ $(curl -sL http://localhost:10248/healthz) = "ok" ];
+      do sleep 10 && echo "Wait for $(hostname) kubelet to be ready"; done;
 - path: /usr/local/bin/install-or-upgrade-rke2.sh
-  permissions: "755"
+  permissions: "0755"
   owner: root:root
   content: |
     #!/bin/sh
@@ -55,11 +62,11 @@ runcmd:
   - systemctl enable rke2-server.service
   - systemctl start rke2-server.service
   - [ sh, -c, 'until [ -f /etc/rancher/rke2/rke2.yaml ]; do echo Waiting for rke2 to start && sleep 10; done;' ]
-  - sudo chgrp sudo /etc/rancher/rke2/rke2.yaml
   - [ sh, -c, 'until [ -x /var/lib/rancher/rke2/bin/kubectl ]; do echo Waiting for kubectl bin && sleep 10; done;' ]
-  - [ sh, -c, 'until [ -x /var/lib/rancher/rke2/bin/kubectl ]; do echo Waiting for kubectl bin && sleep 10; done;' ]
-  - KUBECONFIG=/etc/rancher/rke2/rke2.yaml /var/lib/rancher/rke2/bin/kubectl config rename-context default rke2
-  - KUBECONFIG=/etc/rancher/rke2/rke2.yaml /var/lib/rancher/rke2/bin/kubectl config set-cluster default --server https://${public_address}:6443
+  - cp /etc/rancher/rke2/rke2.yaml /etc/rancher/rke2/rke2-remote.yaml
+  - sudo chgrp sudo /etc/rancher/rke2/rke2-remote.yaml
+  - KUBECONFIG=/etc/rancher/rke2/rke2-remote.yaml /var/lib/rancher/rke2/bin/kubectl config set-cluster default --server https://${public_address}:6443
+  - KUBECONFIG=/etc/rancher/rke2/rke2-remote.yaml /var/lib/rancher/rke2/bin/kubectl config rename-context default rke2
   %{~ else ~}
   - systemctl enable rke2-agent.service
   - systemctl start rke2-agent.service

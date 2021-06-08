@@ -2,6 +2,9 @@ variable "node_config" {
   type = object({
     cluster_name       = string
     keypair_name       = string
+    ssh_key_file       = string
+    system_user        = string
+    use_ssh_agent      = bool
     subnet_id          = string
     network_id         = string
     secgroup_id        = string
@@ -13,6 +16,7 @@ variable "node_config" {
     boot_volume_size   = number
     availability_zones = list(string)
     bootstrap_server   = string
+    bastion_host       = string
   })
 
 }
@@ -51,4 +55,9 @@ variable "rke2_version" {
 variable "rke2_config_file" {
   type    = string
   default = ""
+}
+
+variable "do_upgrade" {
+  type    = bool
+  default = false
 }
