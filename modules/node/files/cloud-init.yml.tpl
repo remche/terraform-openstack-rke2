@@ -22,7 +22,7 @@ write_files:
     which rke2 >/dev/null 2>&1 && RKE2_VERSION=$(rke2 --version|head -1|cut -f 3 -d " ")
 
     # Install or upgrade
-    if [ -z "$INSTALL_RKE2_VERSION" ] || [ "$INSTALL_RKE2_VERSION" != "$RKE2_VERSION" ]; then
+    if ([ -z "$RKE2_VERSION" ]) || ([ -n "$INSTALL_RKE2_VERSION" ] && [ "$INSTALL_RKE2_VERSION" != "$RKE2_VERSION" ]); then
       RKE2_ROLE=$(curl -s http://169.254.169.254/openstack/2012-08-10/meta_data.json|jq -r '.meta.rke2_role')
       RKE2_SERVICE="rke2-$RKE2_ROLE.service"
       echo "Will install RKE2 $INSTALL_RKE2_VERSION with $RKE2_ROLE role"
