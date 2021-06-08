@@ -29,12 +29,12 @@ write_files:
       curl -sfL https://get.rke2.io | sh -
     fi
 %{ if bootstrap_server == "" ~}
-  %{~ for index, f in manifests ~}
-- path: /var/lib/rancher/rke2/server/manifests/addon-${index}.yaml
+  %{~ for f in manifests ~}
+- path: /var/lib/rancher/rke2/server/manifests/${f[0]}.yaml
   permissions: "0600"
   owner: root:root
   encoding: gz+b64
-  content: ${f}
+  content: ${f[1]}
   %{~ endfor ~}
 %{~ endif ~}
 - path: /etc/rancher/rke2/config.yaml
