@@ -23,8 +23,7 @@ jobs:
     - name: Render terraform docs inside the USAGE.md and push changes back to PR branch
       uses: terraform-docs/gh-actions@v0.6.1
       with:
-        tf_docs_working_dir: .
-        tf_docs_output_file: USAGE.md
-        tf_docs_content_type: document
-        tf_docs_output_method: replace
-        tf_docs_git_push: 'true'
+        working-dir: .
+        output-file: USAGE.md
+        output_method: replace
+        git-push: 'true'
