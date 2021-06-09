@@ -1,0 +1,5 @@
+# Add edge role to edge node
+# Cant use node-role.kubernetes.io/edge because of https://github.com/kubernetes/kubernetes/issues/75457
+node-label:
+  - "node-role/edge=true"
+

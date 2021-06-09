@@ -1,0 +1,13 @@
+# Use Daemonset on all nodes with edge role
+# Cant use node-role.kubernetes.io/edge because of https://github.com/kubernetes/kubernetes/issues/75457
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: rke2-ingress-nginx
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    controller:
+      kind: DaemonSet
+      nodeSelector:
+        node-role/edge: "true"

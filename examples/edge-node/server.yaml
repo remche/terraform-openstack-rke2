@@ -1,0 +1,3 @@
+# Control plane wont execute regular workloads
+node-taint:
+  - "CriticalAddonsOnly=true:NoExecute"
