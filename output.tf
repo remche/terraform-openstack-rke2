@@ -1,9 +1,9 @@
-output "controlplane_floating_ip" {
+output "floating_ip" {
   value     = module.server.floating_ip
   sensitive = true
 }
 
-output "controlplane_internal_ip" {
+output "internal_ip" {
   value     = module.server.floating_ip
   sensitive = true
 }

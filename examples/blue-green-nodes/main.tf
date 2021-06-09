@@ -29,6 +29,6 @@ module "green_node" {
 }
 
 output "controlplane_floating_ip" {
-  value     = module.controlplane.controlplane_floating_ip
+  value     = module.controlplane.floating_ip
   sensitive = true
 }
