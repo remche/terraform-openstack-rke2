@@ -1,0 +1,40 @@
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: jupyterhub
+  namespace: kube-system
+spec:
+  chart: jupyterhub
+  repo: https://jupyterhub.github.io/helm-chart/
+  targetNamespace: default
+  valuesContent: |-
+    cull:
+      users: False
+    hub:
+      redirectToServer: false
+      db:
+        type: sqlite-memory
+      nodeSelector:
+        node-role.kubernetes.io/master: "true"
+      tolerations:
+       - effect: NoExecute
+         key: CriticalAddonsOnly
+         operator: "Exists"
+    proxy:
+      secretToken: "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      service:
+        type: ClusterIP
+      chp:
+        tolerations:
+          - effect: NoExecute
+            key: CriticalAddonsOnly
+            operator: "Exists"
+        nodeSelector:
+          node-role.kubernetes.io/master: "true"
+    ingress:
+      enabled: true
+    singleuser:
+      events: true
+      defaultUrl: "/lab"
+      storage:
+        type: none
