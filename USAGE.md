@@ -71,7 +71,7 @@
 
 | Name | Description |
 |------|-------------|
-| <a name="output_controlplane_floating_ip"></a> [controlplane\_floating\_ip](#output\_controlplane\_floating\_ip) | n/a |
-| <a name="output_controlplane_internal_ip"></a> [controlplane\_internal\_ip](#output\_controlplane\_internal\_ip) | n/a |
+| <a name="output_floating_ip"></a> [floating\_ip](#output\_floating\_ip) | n/a |
+| <a name="output_internal_ip"></a> [internal\_ip](#output\_internal\_ip) | n/a |
 | <a name="output_kubernetes_config"></a> [kubernetes\_config](#output\_kubernetes\_config) | n/a |
 | <a name="output_node_config"></a> [node\_config](#output\_node\_config) | n/a |
