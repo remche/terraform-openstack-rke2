@@ -6,6 +6,7 @@ module "controlplane" {
   flavor_name      = "m1.small"
   public_net_name  = "public"
   rke2_config_file = "server.yaml"
+  manifests_path   = "./manifests"
 }
 
 module "blue_node" {
