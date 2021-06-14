@@ -8,14 +8,98 @@ Unlike [RKE version](https://github.com/remche/terraform-openstack-rke) this mod
 ## Prerequisites
 
 - [Terraform](https://www.terraform.io/) 0.13+
-- [OpenStack](https://docs.openstack.org/zh_CN/user-guide/common/cli-set-environment-variables-using-openstack-rc.html) environment properly sourced.
-- A Openstack image fullfiling [RKE2 requirements](https://docs.rke2.io/install/requirements/).
-- At least one Openstack floating IP.
+- [OpenStack](https://docs.openstack.org/zh_CN/user-guide/common/cli-set-environment-variables-using-openstack-rc.html) environment properly sourced
+- A Openstack image fullfiling [RKE2 requirements](https://docs.rke2.io/install/requirements/) and featuring curl and nc
+- At least one Openstack floating IP
 
 ## Features
 
 - HA controlplane
 - Multiple agent node pools
-- Upgrade
+- Upgrade mechanism
 
-More soon... See [USAGE](./USAGE.md) and [examples](./examples) dir if you feel adventurous !
+## Examples
+
+See [examples](./examples) directory.
+
+
+## Documentation
+
+See [USAGE.md](USAGE.md) for all available options.
+
+### Keypair
+
+You can either specify a ssh key file to generate new keypair via `ssh_key_file` (default) or specify already existent keypair via `ssh_keypair_name`.
+
+> :warning: Default config will try to use  [ssh agent](https://linux.die.net/man/1/ssh-agent) for ssh connections to the nodes. Add `use_ssh_agent = false` if you don't use it.
+
+### Secgroup
+
+You can define your own rules (e.g. limiting port 22 and 6443 to admin box).
+
+```hcl
+secgroup_rules      = [ { "source" = "x.x.x.x", "protocol" = "tcp", "port" = 22 },
+                        { "source" = "x.x.x.x", "protocol" = "tcp", "port" = 6443 },
+                        { "source" = "0.0.0.0/0", "protocol" = "tcp", "port" = 80 },
+                        { "source" = "0.0.0.0/0", "protocol" = "tcp", "port" = 443}
+                      ]
+```
+
+### Nodes
+
+Default config will deploy one master and two worker nodes. It will use Traefik (nginx not supported in this case).
+You can define edge nodes (see [above](#minimal-example-with-two-egde-nodes-and-one-worker-nodes)).
+
+You can set [affinity policy](https://www.terraform.io/docs/providers/openstack/r/compute_servergroup_v2.html#policies) for each nodes group (master, worker, edge) via `{master,worker,edge}_server_affinity`. Default is `soft-anti-affinity`.
+
+> :warning: `soft-anti-affinity` and `soft-affinity` needs Compute service API 2.15 or above.
+
+#### Boot from volume
+
+Some providers require to boot the instances from an attached boot volume instead of the nova ephemeral volume.
+To enable this feature, provide the variables to the config file:
+
+```hcl
+boot_from_volume = true
+boot_volume_size = 20
+
+```
+
+### Kubernetes version
+
+You can specify rke2 version with `rke2_version` variables. Refer to RKE2 supported version.
+
+Upgrade by setting the new version and `do_upgrade = true`. It will upgrade the nodes one-by-one. Upgrade the controlplane first, then the nodes pools.
+
+### Addons
+
+Set the `manifests_path` variable to point out the directory containing your [manifests and HelmChart](https://docs.rke2.io/helm.html#automatically-deploying-manifests-and-helm-charts).
+
+### Usage with [Terraform Kubernetes Provider](https://www.terraform.io/docs/providers/kubernetes/index.html) and [Helm Provider](https://www.terraform.io/docs/providers/helm/index.html)
+
+You can tell the module to output kubernetes config by setting `output_kubernetes_config = true`.
+
+> :warning: **Interpolating provider variables from module output is not the recommended way to achieve integration**. See [here](https://www.terraform.io/docs/providers/kubernetes/index.html) and [here](https://www.terraform.io/docs/configuration/providers.html#provider-configuration).
+>
+> Use of a data sources is recommended.
+
+(Not recommended) You can use this module to populate [Terraform Kubernetes Provider](https://www.terraform.io/docs/providers/kubernetes/index.html) :
+
+```hcl
+provider "kubernetes" {
+  host     = module.controlplane.kubernetes_config.host
+  client_certificate     = module.controlplane.kubernetes_config.client_certificate
+  client_key             = module.controlplane.kubernetes_config.client_key
+  cluster_ca_certificate = module.controlplane.kubernetes_config.cluster_ca_certificate
+}
+```
+
+Recommended way needs two `apply` operations, and setting the proper `terraform_remote_state` data source :
+
+```hcl
+provider "kubernetes" {
+  host     = data.terraform_remote_state.rke2.outputs.kubernetes_config.host
+  client_certificate     = data.terraform_remote_state.rke2.outputs.kubernetes_config.client_certificate
+  client_key             = data.terraform_remote_state.rke2.outputs.kubernetes_config.client_key
+  cluster_ca_certificate = data.terraform_remote_state.rke2.outputs.kubernetes_config.cluster_ca_certificate
+}
