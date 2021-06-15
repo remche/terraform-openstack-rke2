@@ -73,7 +73,9 @@ Upgrade by setting the new version and `do_upgrade = true`. It will upgrade the 
 
 ### Addons
 
-Set the `manifests_path` variable to point out the directory containing your [manifests and HelmChart](https://docs.rke2.io/helm.html#automatically-deploying-manifests-and-helm-charts).
+Set the `manifests_path` variable to point out the directory containing your [manifests and HelmChart](https://docs.rke2.io/helm.html#automatically-deploying-manifests-and-helm-charts) (see [JupyterHub example](./examples/jupyterhub/)).
+
+If you need a template step for your manifests, you can use `manifests_gzb64` (see [cinder-csi-plugin example](./examples/cinder-csi-plugin)).
 
 ### Usage with [Terraform Kubernetes Provider](https://www.terraform.io/docs/providers/kubernetes/index.html) and [Helm Provider](https://www.terraform.io/docs/providers/helm/index.html)
 
