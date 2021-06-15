@@ -30,7 +30,7 @@ variable "name_prefix" {
 }
 
 variable "image_id" {
-  type = string
+  type    = string
   default = ""
 }
 
