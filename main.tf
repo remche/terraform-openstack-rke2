@@ -74,6 +74,7 @@ module "server" {
   rke2_config_file   = var.rke2_config_file
   additional_san     = var.additional_san
   manifests_path     = var.manifests_path
+  manifests_gzb64    = var.manifests_gzb64
   do_upgrade         = var.do_upgrade
 }
 

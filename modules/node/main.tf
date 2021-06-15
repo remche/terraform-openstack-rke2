@@ -25,7 +25,8 @@ resource "openstack_compute_instance_v2" "instance" {
       san                 = openstack_networking_floatingip_v2.floating_ip[*].address
       rke2_conf           = var.rke2_config_file != "" ? file(var.rke2_config_file) : ""
       additional_san      = var.additional_san
-      manifests           = var.manifests_path != "" ? [for f in fileset(var.manifests_path, "*.{yml,yaml}") : [f, base64gzip(file("${var.manifests_path}/${f}"))]] : []
+      manifests_files     = var.manifests_path != "" ? [for f in fileset(var.manifests_path, "*.{yml,yaml}") : [f, base64gzip(file("${var.manifests_path}/${f}"))]] : []
+      manifests_gzb64     = var.manifests_gzb64
   }))
   metadata = {
     rke2_version = var.rke2_version

@@ -125,6 +125,11 @@ variable "manifests_path" {
   description = "RKE2 addons manifests directory"
 }
 
+variable "manifests_gzb64" {
+  type    = map(string)
+  default = {}
+}
+
 variable "do_upgrade" {
   type = bool
 }
