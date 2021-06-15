@@ -50,6 +50,7 @@
 | <a name="input_flavor_name"></a> [flavor\_name](#input\_flavor\_name) | Server flavor name | `string` | n/a | yes |
 | <a name="input_image_id"></a> [image\_id](#input\_image\_id) | ID of image nodes (must fullfill [RKE2 requirements](https://docs.rke2.io/install/requirements/)) | `string` | `""` | no |
 | <a name="input_image_name"></a> [image\_name](#input\_image\_name) | ID of image nodes (must fullfill [RKE2 requirements](https://docs.rke2.io/install/requirements/)) | `string` | `""` | no |
+| <a name="input_manifests_gzb64"></a> [manifests\_gzb64](#input\_manifests\_gzb64) | RKE2 addons manifests in gz+b64 in the form { "addon\_name": "gzb64\_manifests" } | `map(string)` | `{}` | no |
 | <a name="input_manifests_path"></a> [manifests\_path](#input\_manifests\_path) | RKE2 addons manifests directory | `string` | `""` | no |
 | <a name="input_nodes_config_drive"></a> [nodes\_config\_drive](#input\_nodes\_config\_drive) | Whether to use the config\_drive feature to configure the instances | `bool` | `"false"` | no |
 | <a name="input_nodes_count"></a> [nodes\_count](#input\_nodes\_count) | Number of server nodes (should be odd number...) | `number` | `1` | no |
