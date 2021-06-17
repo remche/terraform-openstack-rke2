@@ -23,10 +23,10 @@ jobs:
         terraform_version: 1.0.0
     - name: Using local module source
       run: sed -i "s+remche/rke2/openstack+./../..+" main.tf
-        working-directory: ${{ env.WORKING_DIR }}
+      working-directory: ${{ env.WORKING_DIR }}
     - name: Terraform init
       run: terraform init
-        working-directory: ${{ env.WORKING_DIR }}
+      working-directory: ${{ env.WORKING_DIR }}
     - name: Terraform apply
       run: terraform apply -auto-approve
-        working-directory: ${{ env.WORKING_DIR }}
+      working-directory: ${{ env.WORKING_DIR }}
