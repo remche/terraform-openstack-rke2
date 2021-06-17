@@ -23,6 +23,8 @@ jobs:
         terraform_version: 1.0.0
     - name: Using local module source
       run: sed -i "s+remche/rke2/openstack+./../..+" main.tf
+    - name: Using local module source
+      run: echo $OS_REGION_NAME
       working-directory: ${{ env.WORKING_DIR }}
     - name: Terraform init
       run: terraform init
