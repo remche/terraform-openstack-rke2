@@ -15,6 +15,15 @@ jobs:
     runs-on: ubuntu-latest
     env:
       WORKING_DIR: "examples/minimal"
+      OS_AUTH_URL: ${{ secrets.OS_AUTH_URL }}
+      OS_IDENTITY_API_VERSION:  ${{ secrets.OS_IDENTITY_API_VERSION }}
+      OS_PASSWORD:  ${{ secrets.OS_PASSWORD }}
+      OS_PROJECT_ID:  ${{ secrets.OS_PROJECT_ID }}
+      OS_PROJECT_NAME:  ${{ secrets.OS_PROJECT_NAME }}
+      OS_REGION_NAME:  ${{ secrets.OS_REGION_NAME }}
+      OS_USERNAME:  ${{ secrets.OS_USERNAME }}
+      OS_USER_DOMAIN_NAME:  ${{ secrets.OS_USER_DOMAIN_NAME }}
+      TF_VAR_DNS_SERVERS:  ${{ secrets.TF_VAR_DNS_SERVERS }}
     environment: nova
     steps:
     - uses: actions/checkout@v2
@@ -23,9 +32,6 @@ jobs:
         terraform_version: 1.0.0
     - name: Using local module source
       run: sed -i "s+remche/rke2/openstack+./../..+" main.tf
-    - name: Using local module source
-      run: echo $OS_REGION_NAME
-      working-directory: ${{ env.WORKING_DIR }}
     - name: Terraform init
       run: terraform init
       working-directory: ${{ env.WORKING_DIR }}
