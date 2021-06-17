@@ -1,10 +1,9 @@
 name: Generate USAGE.md
 on:
   push:
-    paths-ignore:
-      - "**.md"
-      - ".github/workflows/*"
-      - "!.github/workflows/doc.yaml"
+    paths:
+      - "**.tf"
+      - ".github/workflows/doc.yaml"
 jobs:
   docs:
     runs-on: ubuntu-latest
