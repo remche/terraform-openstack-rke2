@@ -1,0 +1,19 @@
+name: Generate USAGE.md
+on:
+  push:
+    paths-ignore:
+      - "**.md"
+      - ".github/workflows/*"
+      - "!.github/workflows/doc.yaml"
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Render terraform docs inside the USAGE.md and push changes back to branch
+      uses: terraform-docs/gh-actions@v0.6.1
+      with:
+        working-dir: .
+        output-file: USAGE.md
+        output-method: replace
+        git-push: 'true'
