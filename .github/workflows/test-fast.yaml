@@ -30,6 +30,10 @@ jobs:
     - uses: hashicorp/setup-terraform@v1
       with:
         terraform_version: 1.0.0
+    - name: Set up ssh-agent
+      run: ssh-agent  -s |grep -E '^(SSH_AUTH_SOCK|SSH_AGENT_PID)'|cut -f1 -d ';' >> $GITHUB_ENV
+    - name: Create and add key to ssh-agent
+      run: ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa && ssh-add
     - name: Using local module source
       run: sed -i "s+remche/rke2/openstack+./../..+" main.tf
     - name: Terraform init
@@ -37,4 +41,8 @@ jobs:
       working-directory: ${{ env.WORKING_DIR }}
     - name: Terraform apply
       run: terraform apply -auto-approve
+      working-directory: ${{ env.WORKING_DIR }}
+    - name: Terraform destroy
+      if: ${{ always() }}
+      run: terraform destroy -auto-approve
       working-directory: ${{ env.WORKING_DIR }}
