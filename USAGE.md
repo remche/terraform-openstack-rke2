@@ -5,7 +5,6 @@
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >=0.13.1 |
 | <a name="requirement_local"></a> [local](#requirement\_local) | >=1.4.0 |
 | <a name="requirement_null"></a> [null](#requirement\_null) | >=2.1.2 |
-| <a name="requirement_openstack"></a> [openstack](#requirement\_openstack) | >=1.24.0 |
 
 ## Providers
 
@@ -72,7 +71,7 @@
 
 | Name | Description |
 |------|-------------|
-| <a name="output_floating_ip"></a> [floating\_ip](#output\_floating\_ip) | n/a |
-| <a name="output_internal_ip"></a> [internal\_ip](#output\_internal\_ip) | n/a |
-| <a name="output_kubernetes_config"></a> [kubernetes\_config](#output\_kubernetes\_config) | n/a |
-| <a name="output_node_config"></a> [node\_config](#output\_node\_config) | n/a |
+| <a name="output_floating_ip"></a> [floating\_ip](#output\_floating\_ip) | Nodes floating IP |
+| <a name="output_internal_ip"></a> [internal\_ip](#output\_internal\_ip) | Nodes internal IP |
+| <a name="output_kubernetes_config"></a> [kubernetes\_config](#output\_kubernetes\_config) | Kubernetes config to feed Kubernetes or Helm provider |
+| <a name="output_node_config"></a> [node\_config](#output\_node\_config) | Nodes config |
