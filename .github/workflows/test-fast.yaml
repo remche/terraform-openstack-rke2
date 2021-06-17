@@ -1,0 +1,32 @@
+name: Minimal tests
+on:
+  pull_request:
+    paths-ignore:
+      - "**.md"
+      - ".github/workflows/*"
+      - "!.github/workflows/test-fast.yaml"
+  push:
+    paths-ignore:
+      - "**.md"
+      - ".github/workflows/*"
+      - "!.github/workflows/test-fast.yaml"
+jobs:
+  minimal:
+    runs-on: ubuntu-latest
+    env:
+      WORKING_DIR: "examples/minimal"
+    environment: nova
+    steps:
+    - uses: actions/checkout@v2
+    - uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: 1.0.0
+    - name: Using local module source
+      run: sed -i "s+remche/rke2/openstack+./../..+" main.tf
+        working-directory: ${{ env.WORKING_DIR }}
+    - name: Terraform init
+      run: terraform init
+        working-directory: ${{ env.WORKING_DIR }}
+    - name: Terraform apply
+      run: terraform apply -auto-approve
+        working-directory: ${{ env.WORKING_DIR }}
