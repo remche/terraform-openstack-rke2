@@ -40,9 +40,9 @@ jobs:
       run: terraform init
       working-directory: ${{ env.WORKING_DIR }}
     - name: Terraform apply
-      run: terraform apply -auto-approve
+      run: TF_VAR_cluster_name=${{ env.GITHUB_RUN_ID }} terraform apply -auto-approve
       working-directory: ${{ env.WORKING_DIR }}
     - name: Terraform destroy
       if: ${{ always() }}
-      run: terraform destroy -auto-approve
+      run: tTF_VAR_cluster_name=${{ env.GITHUB_RUN_ID }} erraform destroy -auto-approve
       working-directory: ${{ env.WORKING_DIR }}
