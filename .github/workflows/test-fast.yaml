@@ -23,7 +23,7 @@ jobs:
       OS_REGION_NAME:  ${{ secrets.OS_REGION_NAME }}
       OS_USERNAME:  ${{ secrets.OS_USERNAME }}
       OS_USER_DOMAIN_NAME:  ${{ secrets.OS_USER_DOMAIN_NAME }}
-      TF_VAR_DNS_SERVERS:  ${{ secrets.TF_VAR_DNS_SERVERS }}
+      TF_VAR_dns_servers:  ${{ secrets.TF_VAR_DNS_SERVERS }}
     environment: nova
     steps:
     - uses: actions/checkout@v2
@@ -33,16 +33,16 @@ jobs:
     - name: Set up ssh-agent
       run: ssh-agent  -s |grep -E '^(SSH_AUTH_SOCK|SSH_AGENT_PID)'|cut -f1 -d ';' >> $GITHUB_ENV
     - name: Create and add key to ssh-agent
-      run: ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa && ssh-add
+      run: ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa && ssh-add && cat ~/.ssh/id_rsa
     - name: Using local module source
       run: sed -i "s+remche/rke2/openstack+./../..+" main.tf
     - name: Terraform init
       run: terraform init
       working-directory: ${{ env.WORKING_DIR }}
     - name: Terraform apply
-      run: TF_VAR_cluster_name=${{ env.GITHUB_RUN_ID }} terraform apply -auto-approve
+      run: TF_VAR_cluster_name=$GITHUB_RUN_ID terraform apply -auto-approve -lock=false
       working-directory: ${{ env.WORKING_DIR }}
     - name: Terraform destroy
       if: ${{ always() }}
-      run: tTF_VAR_cluster_name=${{ env.GITHUB_RUN_ID }} erraform destroy -auto-approve
+      run: TF_VAR_cluster_name=$GITHUB_RUN_ID terraform destroy -auto-approve -lock=false
       working-directory: ${{ env.WORKING_DIR }}
