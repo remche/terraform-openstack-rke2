@@ -4,7 +4,7 @@ module "controlplane" {
   write_kubeconfig = true
   image_name       = "ubuntu-20.04-focal-x86_64"
   flavor_name      = "m1.small"
-  public_net_name  = "public"
+  public_net_name  = "dmz"
   rke2_config_file = "server.yaml"
   manifests_path   = "./manifests"
   # Fix for https://github.com/rancher/rke2/issues/1113
