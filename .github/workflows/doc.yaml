@@ -4,6 +4,7 @@ on:
     paths:
       - "**.tf"
       - ".github/workflows/doc.yaml"
+      - "!examples/**"
 jobs:
   docs:
     runs-on: ubuntu-latest
