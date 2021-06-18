@@ -30,12 +30,14 @@ jobs:
     - uses: hashicorp/setup-terraform@v1
       with:
         terraform_version: 1.0.0
+        terraform_wrapper: false
     - name: Set up ssh-agent
       run: ssh-agent  -s |grep -E '^(SSH_AUTH_SOCK|SSH_AGENT_PID)'|cut -f1 -d ';' >> $GITHUB_ENV
     - name: Create and add key to ssh-agent
       run: ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa && ssh-add && cat ~/.ssh/id_rsa
     - name: Using local module source
       run: sed -i "s+remche/rke2/openstack+./../..+" main.tf
+      working-directory: ${{ env.WORKING_DIR }}
     - name: Terraform init
       run: terraform init
       working-directory: ${{ env.WORKING_DIR }}
@@ -44,12 +46,18 @@ jobs:
       working-directory: ${{ env.WORKING_DIR }}
     - name: Wait for cluster to be available
       run: |
-        $K8S_API_SERVER=$(terraform output -raw server_ip) 
+        K8S_API_SERVER=$(terraform output -raw server_ip)
         until (nc -z $K8S_API_SERVER 6443); do echo Wait for master node && sleep 10; done;
+      working-directory: ${{ env.WORKING_DIR }}
+    - uses: azure/setup-kubectl@v1
+    - name: Wait for nodes to be ready
+      run: kubectl wait nodes --all --for=condition=ready --kubeconfig $(pwd)/rke2.yaml --timeout -1s
+      working-directory: ${{ env.WORKING_DIR }}
     - name: Download and run Sonobuoy
       run: |
         curl -L https://github.com/vmware-tanzu/sonobuoy/releases/download/v0.51.0/sonobuoy_0.51.0_linux_amd64.tar.gz -o -| tar xvz sonobuoy
         ./sonobuoy run --kubeconfig $(pwd)/rke2.yaml --wait --mode quick
+      working-directory: ${{ env.WORKING_DIR }}
     - name: Terraform destroy
       if: ${{ always() }}
       run: TF_VAR_cluster_name=$GITHUB_RUN_ID terraform destroy -auto-approve -lock=false
