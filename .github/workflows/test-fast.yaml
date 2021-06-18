@@ -42,7 +42,7 @@ jobs:
       run: terraform init
       working-directory: ${{ env.WORKING_DIR }}
     - name: Terraform apply
-      run: TF_VAR_cluster_name=$GITHUB_RUN_ID terraform apply -auto-approve -lock=false | grep -v remote-exec
+      run: TF_VAR_cluster_name=$GITHUB_JOB terraform apply -auto-approve -lock=false | grep -v remote-exec
       working-directory: ${{ env.WORKING_DIR }}
     - name: Wait for cluster to be available
       run: |
@@ -60,5 +60,5 @@ jobs:
       working-directory: ${{ env.WORKING_DIR }}
     - name: Terraform destroy
       if: ${{ always() }}
-      run: TF_VAR_cluster_name=$GITHUB_RUN_ID terraform destroy -auto-approve -lock=false
+      run: TF_VAR_cluster_name=$GITHUB_JOB terraform destroy -auto-approve -lock=false
       working-directory: ${{ env.WORKING_DIR }}
