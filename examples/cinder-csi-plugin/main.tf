@@ -17,7 +17,7 @@ data "openstack_identity_auth_scope_v3" "scope" {
 }
 
 resource "openstack_identity_application_credential_v3" "rke2_csi" {
-  name = "rke2-csi-credentials"
+  name = "${var.cluster_name}-csi-credentials"
 }
 
 module "controlplane" {
