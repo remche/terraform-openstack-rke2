@@ -42,6 +42,14 @@ jobs:
     - name: Terraform apply
       run: TF_VAR_cluster_name=$GITHUB_RUN_ID terraform apply -auto-approve -lock=false | grep -v remote-exec
       working-directory: ${{ env.WORKING_DIR }}
+    - name: Wait for cluster to be available
+      run: |
+        $K8S_API_SERVER=$(terraform output -raw server_ip) 
+        until (nc -z $K8S_API_SERVER 6443); do echo Wait for master node && sleep 10; done;
+    - name: Download and run Sonobuoy
+      run: |
+        curl -L https://github.com/vmware-tanzu/sonobuoy/releases/download/v0.51.0/sonobuoy_0.51.0_linux_amd64.tar.gz -o -| tar xvz sonobuoy
+        ./sonobuoy run --kubeconfig $(pwd)/rke2.yaml --wait --mode quick
     - name: Terraform destroy
       if: ${{ always() }}
       run: TF_VAR_cluster_name=$GITHUB_RUN_ID terraform destroy -auto-approve -lock=false
