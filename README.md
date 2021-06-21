@@ -45,12 +45,9 @@ secgroup_rules      = [ { "source" = "x.x.x.x", "protocol" = "tcp", "port" = 22 
                       ]
 ```
 
-### Nodes
+### Nodes affinity
 
-Default config will deploy one master and two worker nodes. It will use Traefik (nginx not supported in this case).
-You can define edge nodes (see [above](#minimal-example-with-two-egde-nodes-and-one-worker-nodes)).
-
-You can set [affinity policy](https://www.terraform.io/docs/providers/openstack/r/compute_servergroup_v2.html#policies) for each nodes group (master, worker, edge) via `{master,worker,edge}_server_affinity`. Default is `soft-anti-affinity`.
+You can set [affinity policy](https://www.terraform.io/docs/providers/openstack/r/compute_servergroup_v2.html#policies) for controlplane and each nodes pool `server_group_affinity`. Default is `soft-anti-affinity`.
 
 > :warning: `soft-anti-affinity` and `soft-affinity` needs Compute service API 2.15 or above.
 

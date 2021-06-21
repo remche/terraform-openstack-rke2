@@ -115,13 +115,7 @@ variable "flavor_name" {
 variable "server_group_affinity" {
   type        = string
   default     = "soft-anti-affinity"
-  description = "Server server group affinity"
-}
-
-variable "agent_group_affinity" {
-  type        = string
-  default     = "soft-anti-affinity"
-  description = "Agent server group affinity"
+  description = "Server group affinity"
 }
 
 variable "nodes_config_drive" {

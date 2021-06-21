@@ -13,7 +13,7 @@ module "agent" {
   network_id         = var.node_config.network_id
   subnet_id          = var.node_config.subnet_id
   secgroup_id        = var.node_config.secgroup_id
-  server_affinity    = var.node_config.server_affinity
+  server_affinity    = var.server_group_affinity
   config_drive       = var.node_config.config_drive
   floating_ip_pool   = var.node_config.floating_ip_pool
   user_data          = var.node_config.user_data

@@ -8,7 +8,6 @@ variable "node_config" {
     subnet_id          = string
     network_id         = string
     secgroup_id        = string
-    server_affinity    = string
     config_drive       = bool
     floating_ip_pool   = string
     user_data          = string
@@ -41,6 +40,12 @@ variable "image_name" {
 
 variable "flavor_name" {
   type = string
+}
+
+variable "server_group_affinity" {
+  type        = string
+  default     = "soft-anti-affinity"
+  description = "Server group affinity"
 }
 
 variable "assign_floating_ip" {
