@@ -40,7 +40,7 @@ jobs:
       run: terraform init
       working-directory: examples/${{ matrix.TEST }}
     - name: Terraform apply
-      run: TF_VAR_cluster_name=$GITHUB_RUN_ID-${{ matrix.TEST }} terraform apply -auto-approve -lock=false | grep -v remote-exec
+      run: TF_VAR_cluster_name=$GITHUB_RUN_ID-${{ matrix.TEST }} terraform apply -auto-approve -lock=false
       working-directory: examples/${{ matrix.TEST }}
     - name: Wait for cluster to be available
       run: |
