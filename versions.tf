@@ -5,6 +5,10 @@ terraform {
       source  = "hashicorp/local"
       version = ">=1.4.0"
     }
+    random = {
+      source  = "hashicorp/random"
+      version = ">=3.1.0"
+    }
     null = {
       source  = "hashicorp/null"
       version = ">=2.1.2"
