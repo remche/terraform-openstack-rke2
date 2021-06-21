@@ -12,6 +12,7 @@
 |------|---------|
 | <a name="provider_local"></a> [local](#provider\_local) | >=1.4.0 |
 | <a name="provider_null"></a> [null](#provider\_null) | >=2.1.2 |
+| <a name="provider_random"></a> [random](#provider\_random) | n/a |
 
 ## Modules
 
@@ -32,6 +33,7 @@
 |------|------|
 | [local_file.tmpdirfile](https://registry.terraform.io/providers/hashicorp/local/latest/docs/resources/file) | resource |
 | [null_resource.write_kubeconfig](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
+| [random_string.rke2_token](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string) | resource |
 
 ## Inputs
 
