@@ -1,15 +1,5 @@
 name: Full tests
-on:
-  pull_request:
-    paths-ignore:
-      - "**.md"
-      - ".github/workflows/*"
-      - "!.github/workflows/test-full.yaml"
-  push:
-    paths-ignore:
-      - "**.md"
-      - ".github/workflows/*"
-      - "!.github/workflows/test-full.yaml"
+on: workflow_dispatch:
 jobs:
   full:
     runs-on: ubuntu-latest
