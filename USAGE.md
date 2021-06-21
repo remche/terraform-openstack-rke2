@@ -5,6 +5,7 @@
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >=0.13.1 |
 | <a name="requirement_local"></a> [local](#requirement\_local) | >=1.4.0 |
 | <a name="requirement_null"></a> [null](#requirement\_null) | >=2.1.2 |
+| <a name="requirement_random"></a> [random](#requirement\_random) | >=3.1.0 |
 
 ## Providers
 
@@ -12,7 +13,7 @@
 |------|---------|
 | <a name="provider_local"></a> [local](#provider\_local) | >=1.4.0 |
 | <a name="provider_null"></a> [null](#provider\_null) | >=2.1.2 |
-| <a name="provider_random"></a> [random](#provider\_random) | n/a |
+| <a name="provider_random"></a> [random](#provider\_random) | >=3.1.0 |
 
 ## Modules
 
@@ -22,7 +23,6 @@
 | <a name="module_client_key"></a> [client\_key](#module\_client\_key) | matti/resource/shell |  |
 | <a name="module_cluster_ca_certificate"></a> [cluster\_ca\_certificate](#module\_cluster\_ca\_certificate) | matti/resource/shell |  |
 | <a name="module_host"></a> [host](#module\_host) | matti/resource/shell |  |
-| <a name="module_keypair"></a> [keypair](#module\_keypair) | ./modules/keypair |  |
 | <a name="module_network"></a> [network](#module\_network) | ./modules/network |  |
 | <a name="module_secgroup"></a> [secgroup](#module\_secgroup) | ./modules/secgroup |  |
 | <a name="module_server"></a> [server](#module\_server) | ./modules/node |  |
