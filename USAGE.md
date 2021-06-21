@@ -38,7 +38,6 @@
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_additional_san"></a> [additional\_san](#input\_additional\_san) | RKE2 additional SAN | `list(string)` | `[]` | no |
-| <a name="input_agent_group_affinity"></a> [agent\_group\_affinity](#input\_agent\_group\_affinity) | Agent server group affinity | `string` | `"soft-anti-affinity"` | no |
 | <a name="input_availability_zones"></a> [availability\_zones](#input\_availability\_zones) | The list of AZs to deploy nodes into | `list(string)` | `[]` | no |
 | <a name="input_boot_from_volume"></a> [boot\_from\_volume](#input\_boot\_from\_volume) | Boot nodes from volume | `bool` | `false` | no |
 | <a name="input_boot_volume_size"></a> [boot\_volume\_size](#input\_boot\_volume\_size) | The size of the boot volume | `number` | `20` | no |
@@ -59,7 +58,7 @@
 | <a name="input_rke2_config_file"></a> [rke2\_config\_file](#input\_rke2\_config\_file) | RKE2 config file for servers | `string` | `""` | no |
 | <a name="input_rke2_version"></a> [rke2\_version](#input\_rke2\_version) | RKE2 version | `string` | `""` | no |
 | <a name="input_secgroup_rules"></a> [secgroup\_rules](#input\_secgroup\_rules) | Security group rules | `list(any)` | <pre>[<br>  {<br>    "port": 22,<br>    "protocol": "tcp",<br>    "source": "0.0.0.0/0"<br>  },<br>  {<br>    "port": 6443,<br>    "protocol": "tcp",<br>    "source": "0.0.0.0/0"<br>  },<br>  {<br>    "port": 80,<br>    "protocol": "tcp",<br>    "source": "0.0.0.0/0"<br>  },<br>  {<br>    "port": 443,<br>    "protocol": "tcp",<br>    "source": "0.0.0.0/0"<br>  }<br>]</pre> | no |
-| <a name="input_server_group_affinity"></a> [server\_group\_affinity](#input\_server\_group\_affinity) | Server server group affinity | `string` | `"soft-anti-affinity"` | no |
+| <a name="input_server_group_affinity"></a> [server\_group\_affinity](#input\_server\_group\_affinity) | Server group affinity | `string` | `"soft-anti-affinity"` | no |
 | <a name="input_ssh_key_file"></a> [ssh\_key\_file](#input\_ssh\_key\_file) | Local path to SSH key | `string` | `"~/.ssh/id_rsa"` | no |
 | <a name="input_ssh_keypair_name"></a> [ssh\_keypair\_name](#input\_ssh\_keypair\_name) | SSH keypair name | `string` | `null` | no |
 | <a name="input_system_user"></a> [system\_user](#input\_system\_user) | Default OS image user | `string` | `"ubuntu"` | no |
