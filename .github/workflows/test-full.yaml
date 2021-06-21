@@ -63,7 +63,7 @@ jobs:
     - name: Download and run Sonobuoy
       run: |
         curl -L https://github.com/vmware-tanzu/sonobuoy/releases/download/v0.51.0/sonobuoy_0.51.0_linux_amd64.tar.gz -o -| tar xvz sonobuoy
-        ./sonobuoy run --kubeconfig $(pwd)/rke2.yaml --wait --mode quick
+        ./sonobuoy run --kubeconfig $(pwd)/rke2.yaml --wait --mode quick --plugin-env e2e.E2E_EXTRA_ARGS=--non-blocking-taints=CriticalAddonsOnly
       working-directory: examples/${{ matrix.TEST }}
     - name: Terraform destroy
       if: ${{ always() }}
