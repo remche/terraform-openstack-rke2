@@ -8,7 +8,7 @@ locals {
     network_id         = module.network.nodes_net_id
     subnet_id          = module.network.nodes_subnet_id
     secgroup_id        = module.secgroup.secgroup_id
-    server_affinity    = var.agent_group_affinity
+    server_affinity    = var.server_group_affinity
     config_drive       = var.nodes_config_drive
     floating_ip_pool   = var.public_net_name
     user_data          = var.user_data_file != null ? file(var.user_data_file) : null
