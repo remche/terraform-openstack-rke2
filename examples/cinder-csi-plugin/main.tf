@@ -17,14 +17,16 @@ data "openstack_identity_auth_scope_v3" "scope" {
 }
 
 resource "openstack_identity_application_credential_v3" "rke2_csi" {
-  name = "rke2-csi-credentials"
+  name = "${var.cluster_name}-csi-credentials"
 }
 
 module "controlplane" {
   source           = "remche/rke2/openstack"
+  cluster_name     = var.cluster_name
+  dns_servers      = var.dns_servers
   write_kubeconfig = true
   image_name       = "ubuntu-20.04-focal-x86_64"
   flavor_name      = "m1.small"
-  public_net_name  = "public"
+  public_net_name  = "dmz"
   manifests_gzb64  = { "cinder-csi-plugin" : local.manifests_b64 }
 }

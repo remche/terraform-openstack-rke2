@@ -1,5 +1,5 @@
 # terraform-openstack-rke2
-[![Terraform Registry](https://img.shields.io/badge/terraform-registry-blue.svg)](https://registry.terraform.io/modules/remche/rke2/openstack)
+[![Terraform Registry](https://img.shields.io/badge/terraform-registry-blue.svg)](https://registry.terraform.io/modules/remche/rke2/openstack) ![test-fast](https://github.com/remche/terraform-openstack-rke2/actions/workflows/test-fast.yaml/badge.svg)
 
 [Terraform](https://www.terraform.io/) module to deploy [Kubernetes](https://kubernetes.io) with [RKE2](https://docs.rke2.io/) on [OpenStack](https://www.openstack.org/).
 
