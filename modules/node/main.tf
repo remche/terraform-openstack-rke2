@@ -32,6 +32,10 @@ resource "openstack_compute_instance_v2" "instance" {
     rke2_version = var.rke2_version
     rke2_role    = var.is_server ? "server" : "agent"
   }
+  # We use this tags workaround because of https://github.com/hashicorp/terraform/issues/23679
+  tags = [
+    var.is_server ? "bootstrap" : "${var.system_user}@${var.bastion_host}"
+  ]
 
   availability_zone_hints = length(var.availability_zones) > 0 ? var.availability_zones[count.index % length(var.availability_zones)] : null
 
@@ -53,6 +57,18 @@ resource "openstack_compute_instance_v2" "instance" {
       destination_type      = "volume"
       delete_on_termination = true
     }
+  }
+
+  # We use this workaround because of https://github.com/hashicorp/terraform/issues/23679
+  provisioner "local-exec" {
+    when    = destroy
+    command =  tolist(self.tags)[0] == "bootstrap" ? "echo Do not downscale control plane" : "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${tolist(self.tags)[0]} sudo KUBECONFIG=/etc/rancher/rke2/rke2.yaml /var/lib/rancher/rke2/bin/kubectl drain ${self.name} --force --ignore-daemonsets --delete-emptydir-data"
+  }
+
+  # We use this workaround because of https://github.com/hashicorp/terraform/issues/23679
+  provisioner "local-exec" {
+    when    = destroy
+    command = tolist(self.tags)[0] == "bootstrap" ? "echo Do not downscale control plane" : "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${tolist(self.tags)[0]} sudo KUBECONFIG=/etc/rancher/rke2/rke2.yaml /var/lib/rancher/rke2/bin/kubectl delete node ${self.name} --wait"
   }
 }
 
