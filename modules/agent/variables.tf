@@ -15,6 +15,7 @@ variable "node_config" {
     boot_volume_size   = number
     availability_zones = list(string)
     bootstrap_server   = string
+    rke2_token         = string
     bastion_host       = string
   })
 

@@ -113,6 +113,11 @@ variable "is_server" {
   default = true
 }
 
+variable "rke2_token" {
+  type    = string
+  default = ""
+}
+
 variable "additional_san" {
   type        = list(string)
   default     = []

@@ -48,7 +48,7 @@ write_files:
   permissions: "0600"
   owner: root:root
   content: |
-    token: ${rke2_cluster_secret}
+    token: ${rke2_token}
     %{~ if bootstrap_server != "" ~}
     server: https://${bootstrap_server}:9345
     %{~ endif ~}
