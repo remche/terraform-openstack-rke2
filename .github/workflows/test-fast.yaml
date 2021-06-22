@@ -14,6 +14,7 @@ jobs:
   minimal:
     runs-on: ubuntu-latest
     env:
+      SONOBUOY_VERSION: 0.51.0
       WORKING_DIR: "examples/minimal"
       OS_AUTH_URL: ${{ secrets.OS_AUTH_URL }}
       OS_IDENTITY_API_VERSION:  ${{ secrets.OS_IDENTITY_API_VERSION }}
@@ -55,7 +56,7 @@ jobs:
       working-directory: ${{ env.WORKING_DIR }}
     - name: Download and run Sonobuoy
       run: |
-        curl -L https://github.com/vmware-tanzu/sonobuoy/releases/download/v0.51.0/sonobuoy_0.51.0_linux_amd64.tar.gz -o -| tar xvz sonobuoy
+        curl -L https://github.com/vmware-tanzu/sonobuoy/releases/download/v{$SONOBUOY_VERSION}/sonobuoy_${SONOBUOY_VERSION}_linux_amd64.tar.gz -o -| tar xvz sonobuoy
         ./sonobuoy run --kubeconfig $(pwd)/rke2.yaml --wait --mode quick
       working-directory: ${{ env.WORKING_DIR }}
     - name: Terraform destroy
