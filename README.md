@@ -77,6 +77,10 @@ Set the `manifests_path` variable to point out the directory containing your [ma
 
 If you need a template step for your manifests, you can use `manifests_gzb64` (see [cinder-csi-plugin example](./examples/cinder-csi-plugin)).
 
+### Downscale
+
+You need to manually drain and remove node before downscaling a pool nodes.
+
 ### Usage with [Terraform Kubernetes Provider](https://www.terraform.io/docs/providers/kubernetes/index.html) and [Helm Provider](https://www.terraform.io/docs/providers/helm/index.html)
 
 You can tell the module to output kubernetes config by setting `output_kubernetes_config = true`.
