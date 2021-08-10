@@ -1,3 +1,6 @@
+# Usage
+
+<!--- BEGIN_TF_DOCS --->
 ## Requirements
 
 | Name | Version |
@@ -19,14 +22,14 @@
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_client_certificate"></a> [client\_certificate](#module\_client\_certificate) | matti/resource/shell |  |
-| <a name="module_client_key"></a> [client\_key](#module\_client\_key) | matti/resource/shell |  |
-| <a name="module_cluster_ca_certificate"></a> [cluster\_ca\_certificate](#module\_cluster\_ca\_certificate) | matti/resource/shell |  |
-| <a name="module_host"></a> [host](#module\_host) | matti/resource/shell |  |
-| <a name="module_keypair"></a> [keypair](#module\_keypair) | ./modules/keypair |  |
-| <a name="module_network"></a> [network](#module\_network) | ./modules/network |  |
-| <a name="module_secgroup"></a> [secgroup](#module\_secgroup) | ./modules/secgroup |  |
-| <a name="module_server"></a> [server](#module\_server) | ./modules/node |  |
+| <a name="module_client_certificate"></a> [client\_certificate](#module\_client\_certificate) | matti/resource/shell | n/a |
+| <a name="module_client_key"></a> [client\_key](#module\_client\_key) | matti/resource/shell | n/a |
+| <a name="module_cluster_ca_certificate"></a> [cluster\_ca\_certificate](#module\_cluster\_ca\_certificate) | matti/resource/shell | n/a |
+| <a name="module_host"></a> [host](#module\_host) | matti/resource/shell | n/a |
+| <a name="module_keypair"></a> [keypair](#module\_keypair) | ./modules/keypair | n/a |
+| <a name="module_network"></a> [network](#module\_network) | ./modules/network | n/a |
+| <a name="module_secgroup"></a> [secgroup](#module\_secgroup) | ./modules/secgroup | n/a |
+| <a name="module_server"></a> [server](#module\_server) | ./modules/node | n/a |
 
 ## Resources
 
@@ -77,3 +80,6 @@
 | <a name="output_internal_ip"></a> [internal\_ip](#output\_internal\_ip) | Nodes internal IP |
 | <a name="output_kubernetes_config"></a> [kubernetes\_config](#output\_kubernetes\_config) | Kubernetes config to feed Kubernetes or Helm provider |
 | <a name="output_node_config"></a> [node\_config](#output\_node\_config) | Nodes config |
+
+<!--- END_TF_DOCS --->
+
