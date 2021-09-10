@@ -4,6 +4,6 @@ module "controlplane" {
   dns_servers      = var.dns_servers
   write_kubeconfig = true
   image_name       = "ubuntu-20.04-focal-x86_64"
-  flavor_name      = "m1.small"
+  flavor_name      = "cpuX2"
   public_net_name  = "dmz"
 }
