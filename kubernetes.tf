@@ -20,24 +20,28 @@ resource "null_resource" "write_kubeconfig" {
 
 module "host" {
   source  = "matti/resource/shell"
+  version = "1.5.0"
   count   = var.output_kubernetes_config ? 1 : 0
   command = "${local.ssh} ${var.system_user}@${module.server.floating_ip[0]} sudo KUBECONFIG=/etc/rancher/rke2/rke2-remote.yaml /var/lib/rancher/rke2/bin/kubectl config view --raw=true -o jsonpath='{.clusters[0].cluster.server}'"
 }
 
 module "client_certificate" {
   source  = "matti/resource/shell"
+  version = "1.5.0"
   count   = var.output_kubernetes_config ? 1 : 0
   command = "${local.ssh} ${var.system_user}@${module.server.floating_ip[0]} sudo KUBECONFIG=/etc/rancher/rke2/rke2-remote.yaml /var/lib/rancher/rke2/bin/kubectl config view --raw=true -o jsonpath='{.users[0].user.client-certificate-data}'"
 }
 
 module "client_key" {
   source  = "matti/resource/shell"
+  version = "1.5.0"
   count   = var.output_kubernetes_config ? 1 : 0
   command = "${local.ssh} ${var.system_user}@${module.server.floating_ip[0]} sudo KUBECONFIG=/etc/rancher/rke2/rke2-remote.yaml /var/lib/rancher/rke2/bin/kubectl config view --raw=true -o jsonpath='{.users[0].user.client-key-data}'"
 }
 
 module "cluster_ca_certificate" {
   source  = "matti/resource/shell"
+  version = "1.5.0"
   count   = var.output_kubernetes_config ? 1 : 0
   command = "${local.ssh} ${var.system_user}@${module.server.floating_ip[0]} sudo KUBECONFIG=/etc/rancher/rke2/rke2-remote.yaml /var/lib/rancher/rke2/bin/kubectl config view --raw=true -o jsonpath='{.clusters[0].cluster.certificate-authority-data}'"
 }
