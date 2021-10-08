@@ -11,7 +11,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Render terraform docs inside the USAGE.md and push changes back to branch
-      uses: terraform-docs/gh-actions@v0.10.0
+      uses: terraform-docs/gh-actions@v0.11.0
       with:
         working-dir: .
         output-file: USAGE.md
