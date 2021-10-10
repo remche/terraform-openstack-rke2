@@ -8,6 +8,11 @@ resource "openstack_compute_servergroup_v2" "servergroup" {
   policies = [var.server_affinity]
 }
 
+data "openstack_images_image_v2" "image" {
+  name        = var.image_name
+  most_recent = true
+}
+
 resource "openstack_compute_instance_v2" "instance" {
   depends_on   = [var.node_depends_on]
   count        = var.nodes_count
