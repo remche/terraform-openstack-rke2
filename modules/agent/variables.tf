@@ -16,6 +16,7 @@ variable "node_config" {
     availability_zones = list(string)
     bootstrap_server   = string
     rke2_token         = string
+    registries_conf    = string
     bastion_host       = string
   })
 

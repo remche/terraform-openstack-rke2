@@ -160,6 +160,12 @@ variable "rke2_config_file" {
   description = "RKE2 config file for servers"
 }
 
+variable "registries_conf" {
+  type        = string
+  default     = ""
+  description = "RKE2 config file for servers"
+}
+
 variable "additional_san" {
   type        = list(string)
   default     = []

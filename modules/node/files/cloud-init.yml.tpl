@@ -44,6 +44,13 @@ write_files:
   content: ${v}
   %{~ endfor ~}
 %{~ endif ~}
+%{~ if registries_conf != "" ~}
+- path: /etc/rancher/rke2/registries.yaml
+  permissions: "0600"
+  owner: root:root
+  encoding: gz+b64
+  content: ${registries_conf}
+%{ endif ~}
 - path: /etc/rancher/rke2/config.yaml
   permissions: "0600"
   owner: root:root

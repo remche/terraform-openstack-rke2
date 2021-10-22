@@ -18,6 +18,7 @@ locals {
     bootstrap_server   = module.server.internal_ip[0]
     bastion_host       = module.server.floating_ip[0]
     rke2_token         = random_string.rke2_token.result
+    registries_conf    = var.registries_conf
   }
   tmpdir           = "${path.root}/.terraform/tmp/rke2"
   ssh              = "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
@@ -73,6 +74,7 @@ module "server" {
   availability_zones = var.availability_zones
   rke2_version       = var.rke2_version
   rke2_config_file   = var.rke2_config_file
+  registries_conf    = var.registries_conf
   rke2_token         = random_string.rke2_token.result
   additional_san     = var.additional_san
   manifests_path     = var.manifests_path

@@ -98,6 +98,10 @@ variable "rke2_config_file" {
   type = string
 }
 
+variable "registries_conf" {
+  type = string
+}
+
 variable "bootstrap_server" {
   type    = string
   default = ""
