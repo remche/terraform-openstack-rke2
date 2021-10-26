@@ -163,7 +163,7 @@ variable "rke2_config_file" {
 variable "registries_conf" {
   type        = string
   default     = ""
-  description = "RKE2 config file for servers"
+  description = "Containerd registries config in gz+b64"
 }
 
 variable "additional_san" {
