@@ -61,7 +61,7 @@
 | <a name="input_nodes_net_cidr"></a> [nodes\_net\_cidr](#input\_nodes\_net\_cidr) | Neutron network CIDR | `string` | `"192.168.42.0/24"` | no |
 | <a name="input_output_kubernetes_config"></a> [output\_kubernetes\_config](#input\_output\_kubernetes\_config) | Output Kubernetes config to state (for use with Kubernetes provider) | `bool` | `"false"` | no |
 | <a name="input_public_net_name"></a> [public\_net\_name](#input\_public\_net\_name) | External network name | `string` | n/a | yes |
-| <a name="input_registries_conf"></a> [registries\_conf](#input\_registries\_conf) | RKE2 config file for servers | `string` | `""` | no |
+| <a name="input_registries_conf"></a> [registries\_conf](#input\_registries\_conf) | Containerd registries config in gz+b64 | `string` | `""` | no |
 | <a name="input_rke2_config_file"></a> [rke2\_config\_file](#input\_rke2\_config\_file) | RKE2 config file for servers | `string` | `""` | no |
 | <a name="input_rke2_version"></a> [rke2\_version](#input\_rke2\_version) | RKE2 version | `string` | `""` | no |
 | <a name="input_secgroup_rules"></a> [secgroup\_rules](#input\_secgroup\_rules) | Security group rules | `list(any)` | <pre>[<br>  {<br>    "port": 22,<br>    "protocol": "tcp",<br>    "source": "0.0.0.0/0"<br>  },<br>  {<br>    "port": 6443,<br>    "protocol": "tcp",<br>    "source": "0.0.0.0/0"<br>  },<br>  {<br>    "port": 80,<br>    "protocol": "tcp",<br>    "source": "0.0.0.0/0"<br>  },<br>  {<br>    "port": 443,<br>    "protocol": "tcp",<br>    "source": "0.0.0.0/0"<br>  }<br>]</pre> | no |
