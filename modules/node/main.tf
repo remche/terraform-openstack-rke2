@@ -28,6 +28,7 @@ resource "openstack_compute_instance_v2" "instance" {
       rke2_token       = var.rke2_token
       is_server        = var.is_server
       san              = openstack_networking_floatingip_v2.floating_ip[*].address
+      system_user      = var.system_user
       rke2_conf        = var.rke2_config_file != "" ? file(var.rke2_config_file) : ""
       registries_conf  = var.registries_conf
       additional_san   = var.additional_san
