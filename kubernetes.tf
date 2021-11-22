@@ -13,7 +13,7 @@ resource "null_resource" "write_kubeconfig" {
   }
 
   provisioner "local-exec" {
-    command = var.use_ssh_agent ? " ${local.scp} -i ${var.ssh_key_file} ${local.remote_rke2_yaml} rke2.yaml" : "${local.scp} ${local.remote_rke2_yaml} rke2.yaml"
+    command = var.use_ssh_agent ? "${local.scp} ${local.remote_rke2_yaml} rke2.yaml" : "${local.scp} -i ${var.ssh_key_file} ${local.remote_rke2_yaml} rke2.yaml"
 
   }
 }
