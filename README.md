@@ -109,3 +109,4 @@ provider "kubernetes" {
   client_key             = data.terraform_remote_state.rke2.outputs.kubernetes_config.client_key
   cluster_ca_certificate = data.terraform_remote_state.rke2.outputs.kubernetes_config.cluster_ca_certificate
 }
+```
