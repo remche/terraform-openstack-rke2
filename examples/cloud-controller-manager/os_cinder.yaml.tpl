@@ -20,4 +20,4 @@ spec:
          application-credential-id=${app_id}
          application-credential-secret=${app_secret}
          region=${region}
-         tenant-id=${project_id} 
+         tenant-id=${project_id}
