@@ -18,20 +18,23 @@ locals {
     project_id          = openstack_identity_application_credential_v3.rke2_csi.project_id
     app_id              = openstack_identity_application_credential_v3.rke2_csi.id
     app_secret          = openstack_identity_application_credential_v3.rke2_csi.secret
-    floating_network_id = "ee54f79e-d33a-4866-8df0-4a4576d70243"
-    floating_subnet_id  = "80a79c2a-b462-478e-9b92-f022fe799535"
-    subnet_id           = "78abbf30-e895-4eee-a457-dbfa3efb838d"
+    floating_network_id = data.openstack_networking_subnet_v2.public_subnet.network_id
+    floating_subnet_id  = data.openstack_networking_subnet_v2.public_subnet.id
+    subnet_id           = module.controlplane.subnet_id
   }))
 }
 
 data "openstack_identity_auth_scope_v3" "scope" {
   name = "auth_scope"
 }
-
 resource "openstack_identity_application_credential_v3" "rke2_csi" {
   name = "${var.cluster_name}-csi-credentials"
 }
-
+data "openstack_networking_subnet_v2" "public_subnet" {
+  # You MUST update this to match your cloud
+  # do: `openstack subnet list`
+  name = "external"
+}
 module "controlplane" {
   source           = "remche/rke2/openstack"
   cluster_name     = var.cluster_name

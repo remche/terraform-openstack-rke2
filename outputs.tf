@@ -16,6 +16,12 @@ output "node_config" {
   description = "Nodes config"
 }
 
+output "subnet_id" {
+  value       = module.network.nodes_subnet_id
+  sensitive   = true
+  description = "Nodes Subnet ID"
+}
+
 output "kubernetes_config" {
   value = var.output_kubernetes_config ? {
     host                   = module.host[0].stdout
