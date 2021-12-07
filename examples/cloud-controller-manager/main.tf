@@ -27,14 +27,31 @@ locals {
 data "openstack_identity_auth_scope_v3" "scope" {
   name = "auth_scope"
 }
-resource "openstack_identity_application_credential_v3" "rke2_csi" {
-  name = "${var.cluster_name}-csi-credentials"
+
+data "openstack_networking_subnet_v2" "nodes_subnet" {
+  subnet_id = module.controlplane.subnet_id
 }
+
 data "openstack_networking_subnet_v2" "public_subnet" {
   # You MUST update this to match your cloud
   # do: `openstack subnet list`
   name = "external"
 }
+
+resource "openstack_identity_application_credential_v3" "rke2_csi" {
+  name = "${var.cluster_name}-csi-credentials"
+}
+
+resource "openstack_networking_secgroup_rule_v2" "nodeport" {
+  direction         = "ingress"
+  ethertype         = "IPv4"
+  protocol          = "tcp"
+  port_range_min    = 30000
+  port_range_max    = 32768
+  remote_ip_prefix  = data.openstack_networking_subnet_v2.nodes_subnet.cidr
+  security_group_id = module.controlplane.node_config.secgroup_id
+}
+
 module "controlplane" {
   source           = "remche/rke2/openstack"
   cluster_name     = var.cluster_name
