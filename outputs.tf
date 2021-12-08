@@ -1,12 +1,10 @@
 output "floating_ip" {
   value       = module.server.floating_ip
-  sensitive   = true
   description = "Nodes floating IP"
 }
 
 output "internal_ip" {
   value       = module.server.internal_ip
-  sensitive   = true
   description = "Nodes internal IP"
 }
 
@@ -18,7 +16,6 @@ output "node_config" {
 
 output "subnet_id" {
   value       = module.network.nodes_subnet_id
-  sensitive   = true
   description = "Nodes Subnet ID"
 }
 
