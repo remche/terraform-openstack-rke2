@@ -5,7 +5,7 @@ output "floating_ip" {
 }
 
 output "internal_ip" {
-  value       = module.server.floating_ip
+  value       = module.server.internal_ip
   sensitive   = true
   description = "Nodes internal IP"
 }
