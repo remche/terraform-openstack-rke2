@@ -64,7 +64,7 @@ variable "secgroup_rules" {
 
 variable "nodes_net_cidr" {
   type        = string
-  default     = "192.168.42.0/24"
+  default     = "193.48.86.0/24"
   description = "Neutron network CIDR"
 }
 
