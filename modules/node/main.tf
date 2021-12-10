@@ -61,6 +61,12 @@ resource "openstack_compute_instance_v2" "instance" {
       delete_on_termination = true
     }
   }
+
+  lifecycle {
+    ignore_changes = [
+      user_data
+    ]
+  }
 }
 
 resource "openstack_networking_port_v2" "port" {
