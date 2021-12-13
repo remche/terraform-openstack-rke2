@@ -1,0 +1,16 @@
+# Use Daemonset on all nodes with master role
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: rke2-ingress-nginx
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    controller:
+      kind: DaemonSet
+      nodeSelector:
+        node-role.kubernetes.io/master: "true"
+      tolerations:
+        - effect: NoExecute
+          key: CriticalAddonsOnly
+          operator: "Exists"
