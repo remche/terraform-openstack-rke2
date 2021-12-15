@@ -77,6 +77,8 @@ Set the `manifests_path` variable to point out the directory containing your [ma
 
 If you need a template step for your manifests, you can use `manifests_gzb64` (see [cinder-csi-plugin example](./examples/cinder-csi-plugin)).
 
+> :warning: Modifications made to manifests after cluster deployement wont have any effect.
+
 ### Downscale
 
 You need to manually drain and remove node before downscaling a pool nodes.
