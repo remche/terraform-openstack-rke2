@@ -9,7 +9,7 @@ resource "null_resource" "write_kubeconfig" {
   }
 
   provisioner "remote-exec" {
-    inline = ["until (grep rke2 /etc/rancher/rke2/rke2-remote.yaml >/dev/null 2>&1); do echo Waiting for rke2 to start && sleep 10; done;"]
+    inline = ["until (grep ${var.cluster_name} /etc/rancher/rke2/rke2-remote.yaml >/dev/null 2>&1); do echo Waiting for rke2 to start && sleep 10; done;"]
   }
 
   provisioner "local-exec" {

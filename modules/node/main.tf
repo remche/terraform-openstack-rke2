@@ -23,7 +23,8 @@ resource "openstack_compute_instance_v2" "instance" {
   key_pair     = var.keypair_name
   config_drive = var.config_drive
   user_data = base64encode(templatefile(("${path.module}/files/cloud-init.yml.tpl"),
-    { bootstrap_server = var.is_server && count.index != 0 ? openstack_networking_port_v2.port[0].all_fixed_ips[0] : var.bootstrap_server
+    { cluster_name     = var.cluster_name
+      bootstrap_server = var.is_server && count.index != 0 ? openstack_networking_port_v2.port[0].all_fixed_ips[0] : var.bootstrap_server
       public_address   = var.is_server ? openstack_networking_floatingip_v2.floating_ip[count.index].address : ""
       rke2_token       = var.rke2_token
       is_server        = var.is_server

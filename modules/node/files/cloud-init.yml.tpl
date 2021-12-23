@@ -80,7 +80,7 @@ runcmd:
   - cp /etc/rancher/rke2/rke2.yaml /etc/rancher/rke2/rke2-remote.yaml
   - sudo chgrp ${system_user} /etc/rancher/rke2/rke2-remote.yaml
   - KUBECONFIG=/etc/rancher/rke2/rke2-remote.yaml /var/lib/rancher/rke2/bin/kubectl config set-cluster default --server https://${public_address}:6443
-  - KUBECONFIG=/etc/rancher/rke2/rke2-remote.yaml /var/lib/rancher/rke2/bin/kubectl config rename-context default rke2
+  - KUBECONFIG=/etc/rancher/rke2/rke2-remote.yaml /var/lib/rancher/rke2/bin/kubectl config rename-context default ${cluster_name}
   %{~ else ~}
   - systemctl enable rke2-agent.service
   - systemctl start rke2-agent.service

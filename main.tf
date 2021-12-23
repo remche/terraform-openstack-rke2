@@ -52,6 +52,7 @@ module "secgroup" {
 
 module "server" {
   source             = "./modules/node"
+  cluster_name       = var.cluster_name
   name_prefix        = "${var.cluster_name}-server"
   nodes_count        = var.nodes_count
   image_name         = var.image_name
