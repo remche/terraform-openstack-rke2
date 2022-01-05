@@ -5,7 +5,7 @@ module "controlplane" {
   image_name       = "ubuntu-20.04-focal-x86_64"
   flavor_name      = "cpuX2"
   public_net_name  = "dmz"
-  rke2_config_file = "server.yaml"
+  rke2_config      = file("server.yaml")
   manifests_path   = "./manifests"
   # Fix for https://github.com/rancher/rke2/issues/1113
   additional_san = ["kubernetes.default.svc"]

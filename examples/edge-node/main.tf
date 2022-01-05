@@ -5,7 +5,7 @@ module "controlplane" {
   image_name       = "ubuntu-20.04-focal-x86_64"
   flavor_name      = "cpuX2"
   public_net_name  = "dmz"
-  rke2_config_file = "server.yaml"
+  rke2_config      = file("server.yaml")
   manifests_path   = "./manifests"
 }
 
@@ -17,7 +17,7 @@ module "edge_node" {
   flavor_name        = "cpuX2"
   assign_floating_ip = true
   node_config        = module.controlplane.node_config
-  rke2_config_file   = "edge.yaml"
+  rke2_config        = file("edge.yaml")
 }
 
 module "worker_node" {

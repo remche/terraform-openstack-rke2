@@ -4,7 +4,7 @@ module "controlplane" {
   image_name       = "fg-services-ubuntu-20.04-x86_64.raw"
   flavor_name      = "m1.large-2d"
   public_net_name  = "public"
-  rke2_config_file = "server.yaml"
+  rke2_config      = file("server.yaml")
   manifests_path   = "./manifests"
   # Fix for https://github.com/rancher/rke2/issues/1113
   additional_san = ["kubernetes.default.svc"]
