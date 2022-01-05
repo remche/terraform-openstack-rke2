@@ -154,10 +154,10 @@ variable "rke2_version" {
   description = "RKE2 version"
 }
 
-variable "rke2_config_file" {
+variable "rke2_config" {
   type        = string
   default     = ""
-  description = "RKE2 config file for servers"
+  description = "RKE2 config contents"
 }
 
 variable "registries_conf" {

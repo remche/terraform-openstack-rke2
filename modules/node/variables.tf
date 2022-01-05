@@ -98,8 +98,9 @@ variable "rke2_version" {
   type = string
 }
 
-variable "rke2_config_file" {
-  type = string
+variable "rke2_config" {
+  type    = string
+  default = ""
 }
 
 variable "registries_conf" {
