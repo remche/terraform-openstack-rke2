@@ -17,7 +17,9 @@ module "blue_node" {
   name_prefix = "blue"
   flavor_name = "cpuX2"
   node_config = module.controlplane.node_config
-  rke2_config = file("agent.yaml")
+  rke2_config = templatefile("${path.module}/agent.yaml.tpl", {
+    app_name = "blue"
+  })
 }
 
 module "green_node" {
@@ -27,6 +29,9 @@ module "green_node" {
   name_prefix = "green"
   flavor_name = "cpuX2"
   node_config = module.controlplane.node_config
+  rke2_config = templatefile("${path.module}/agent.yaml.tpl", {
+    app_name = "green"
+  })
 }
 
 output "controlplane_floating_ip" {
