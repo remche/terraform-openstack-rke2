@@ -60,7 +60,7 @@ module "controlplane" {
   flavor_name      = "ec1.medium"
   public_net_name  = "external"
   nodes_count      = 1
-  rke2_config_file = "rke2_config.yaml"
+  rke2_config      = file("rke2_config.yaml")
   manifests_gzb64 = {
     "cinder-csi-plugin" : local.os_cinder_b64
     "openstack-controller-manager" : local.os_ccm_b64

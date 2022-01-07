@@ -30,7 +30,7 @@ resource "openstack_compute_instance_v2" "instance" {
       is_server        = var.is_server
       san              = openstack_networking_floatingip_v2.floating_ip[*].address
       system_user      = var.system_user
-      rke2_conf        = var.rke2_config_file != "" ? file(var.rke2_config_file) : ""
+      rke2_conf        = var.rke2_config
       registries_conf  = var.registries_conf
       additional_san   = var.additional_san
       manifests_files  = var.manifests_path != "" ? [for f in fileset(var.manifests_path, "*.{yml,yaml}") : [f, base64gzip(file("${var.manifests_path}/${f}"))]] : []

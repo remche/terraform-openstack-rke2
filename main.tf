@@ -74,7 +74,7 @@ module "server" {
   boot_volume_size   = var.boot_volume_size
   availability_zones = var.availability_zones
   rke2_version       = var.rke2_version
-  rke2_config_file   = var.rke2_config_file
+  rke2_config        = var.rke2_config
   registries_conf    = var.registries_conf
   rke2_token         = random_string.rke2_token.result
   additional_san     = var.additional_san

@@ -60,7 +60,7 @@ variable "rke2_version" {
   default = ""
 }
 
-variable "rke2_config_file" {
+variable "rke2_config" {
   type    = string
   default = ""
 }
