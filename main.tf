@@ -14,6 +14,7 @@ locals {
     user_data          = var.user_data_file != null ? file(var.user_data_file) : null
     boot_from_volume   = var.boot_from_volume
     boot_volume_size   = var.boot_volume_size
+    boot_volume_type   = var.boot_volume_type
     availability_zones = var.availability_zones
     bootstrap_server   = module.server.internal_ip[0]
     bastion_host       = module.server.floating_ip[0]
@@ -72,6 +73,7 @@ module "server" {
   user_data          = var.user_data_file != null ? file(var.user_data_file) : null
   boot_from_volume   = var.boot_from_volume
   boot_volume_size   = var.boot_volume_size
+  boot_volume_type   = var.boot_volume_type
   availability_zones = var.availability_zones
   rke2_version       = var.rke2_version
   rke2_config        = var.rke2_config
