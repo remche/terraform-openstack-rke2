@@ -90,6 +90,10 @@ variable "boot_volume_size" {
   type = number
 }
 
+variable "boot_volume_type" {
+  type = string
+}
+
 variable "availability_zones" {
   type = list(string)
 }

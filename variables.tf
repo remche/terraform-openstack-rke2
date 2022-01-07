@@ -28,13 +28,13 @@ variable "system_user" {
 
 variable "use_ssh_agent" {
   type        = bool
-  default     = "true"
+  default     = "false"
   description = "Whether to use ssh agent"
 }
 
 variable "write_kubeconfig" {
   type        = bool
-  default     = "false"
+  default     = "true"
   description = "Write kubeconfig file to disk"
 }
 
@@ -140,6 +140,12 @@ variable "boot_volume_size" {
   type        = number
   default     = 20
   description = "The size of the boot volume"
+}
+
+variable "boot_volume_type" {
+  type        = string
+  default     = "rbd-2-ssd"
+  description = "The type of the boot volume"
 }
 
 variable "availability_zones" {

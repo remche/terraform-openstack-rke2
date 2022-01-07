@@ -69,3 +69,15 @@ variable "do_upgrade" {
   type    = bool
   default = false
 }
+
+variable "boot_from_volume" {
+  type = bool
+}
+
+variable "boot_volume_size" {
+  type = number
+}
+
+variable "boot_volume_type" {
+  type = string
+}

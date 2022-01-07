@@ -18,8 +18,9 @@ module "agent" {
   config_drive       = var.node_config.config_drive
   floating_ip_pool   = var.node_config.floating_ip_pool
   user_data          = var.node_config.user_data
-  boot_from_volume   = var.node_config.boot_from_volume
-  boot_volume_size   = var.node_config.boot_volume_size
+  boot_from_volume   = var.boot_from_volume
+  boot_volume_size   = var.boot_volume_size
+  boot_volume_type   = var.boot_volume_type
   availability_zones = var.node_config.availability_zones
   bootstrap_server   = var.node_config.bootstrap_server
   bastion_host       = var.node_config.bastion_host
