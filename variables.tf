@@ -166,6 +166,12 @@ variable "rke2_config" {
   description = "RKE2 config contents"
 }
 
+variable "containerd_config_file" {
+  type        = string
+  default     = ""
+  description = "containerd config file for servers"
+}
+
 variable "registries_conf" {
   type        = string
   default     = ""

@@ -51,6 +51,13 @@ write_files:
   encoding: gz+b64
   content: ${registries_conf}
 %{ endif ~}
+%{~ if containerd_conf != "" ~}
+- path: /var/lib/rancher/rke2/agent/etc/containerd/config.toml.tmpl
+  permissions: "0600"
+  owner: root:root
+  encoding: b64
+  content: ${containerd_conf}
+%{ endif ~}
 - path: /etc/rancher/rke2/config.yaml
   permissions: "0600"
   owner: root:root
