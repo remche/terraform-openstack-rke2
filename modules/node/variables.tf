@@ -107,6 +107,10 @@ variable "rke2_config" {
   default = ""
 }
 
+variable "containerd_config_file" {
+  type = string
+}
+
 variable "registries_conf" {
   type = string
 }

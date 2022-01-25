@@ -65,6 +65,11 @@ variable "rke2_config" {
   default = ""
 }
 
+variable "containerd_config_file" {
+  type    = string
+  default = ""
+}
+
 variable "do_upgrade" {
   type    = bool
   default = false

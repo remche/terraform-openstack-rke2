@@ -77,6 +77,7 @@ module "server" {
   availability_zones = var.availability_zones
   rke2_version       = var.rke2_version
   rke2_config        = var.rke2_config
+  containerd_config_file   = var.containerd_config_file
   registries_conf    = var.registries_conf
   rke2_token         = random_string.rke2_token.result
   additional_san     = var.additional_san

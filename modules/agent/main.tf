@@ -27,6 +27,7 @@ module "agent" {
   is_server          = false
   rke2_version       = var.rke2_version
   rke2_config        = var.rke2_config
+  containerd_config_file   = var.containerd_config_file
   registries_conf    = var.node_config.registries_conf
   rke2_token         = var.node_config.rke2_token
   do_upgrade         = var.do_upgrade
