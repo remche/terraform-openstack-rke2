@@ -34,7 +34,7 @@ variable "use_ssh_agent" {
 
 variable "write_kubeconfig" {
   type        = bool
-  default     = "true"
+  default     = "false"
   description = "Write kubeconfig file to disk"
 }
 
@@ -144,7 +144,7 @@ variable "boot_volume_size" {
 
 variable "boot_volume_type" {
   type        = string
-  default     = "rbd-2-ssd"
+  default     = ""
   description = "The type of the boot volume"
 }
 
