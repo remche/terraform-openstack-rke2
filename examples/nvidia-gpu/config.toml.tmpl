@@ -1,0 +1,15 @@
+version = 2
+[plugins]
+  [plugins."io.containerd.grpc.v1.cri"]
+    enable_selinux = false
+    sandbox_image = "index.docker.io/rancher/pause:3.2"
+    stream_server_address = "127.0.0.1"
+    stream_server_port = "10010"
+    [plugins."io.containerd.grpc.v1.cri".containerd]
+      disable_snapshot_annotations = true
+      snapshotter = "overlayfs"
+      [plugins."io.containerd.grpc.v1.cri".containerd.runtimes]
+        [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
+          runtime_type = "io.containerd.runc.v2"
+  [plugins."io.containerd.internal.v1.opt"]
+    path = "/data/rancher/rke2/agent/containerd"
