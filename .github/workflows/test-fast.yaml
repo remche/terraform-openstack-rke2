@@ -3,11 +3,13 @@ on:
   pull_request:
     paths-ignore:
       - "**.md"
+      - "examples/**"
       - ".github/workflows/*"
       - "!.github/workflows/test-fast.yaml"
   push:
     paths-ignore:
       - "**.md"
+      - "examples/**"
       - ".github/workflows/*"
       - "!.github/workflows/test-fast.yaml"
 jobs:
