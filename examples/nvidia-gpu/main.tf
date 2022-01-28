@@ -64,7 +64,7 @@ module "controlplane" {
   manifests_path   = "./manifests"
   server_group_affinity = "affinity"
   containerd_config_file = local.containerd_config_b64
-  rke2_config_file = "rke2_config.yaml"
+  rke2_config      = file("server.yaml")
   manifests_gzb64 = {
     "cinder-csi-plugin" : local.os_cinder_b64
     "openstack-controller-manager" : local.os_ccm_b64
