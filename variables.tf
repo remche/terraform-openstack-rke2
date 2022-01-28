@@ -28,7 +28,7 @@ variable "system_user" {
 
 variable "use_ssh_agent" {
   type        = bool
-  default     = "false"
+  default     = "true"
   description = "Whether to use ssh agent"
 }
 
