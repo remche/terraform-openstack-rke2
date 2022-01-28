@@ -51,35 +51,35 @@ resource "openstack_networking_secgroup_rule_v2" "nodeport" {
 
 
 module "controlplane" {
-  source           = "git::https://github.com/compendius/terraform-openstack-rke2.git"
-  cluster_name     = var.cluster_name
-  write_kubeconfig = true
-  boot_from_volume = true
-  boot_volume_size = var.master_volume_size
-  boot_volume_type = var.master_volume_type
-  image_name       = var.image_name
-  flavor_name      = var.master_flavor_name
-  public_net_name  = var.fip_net
-  nodes_count      = var.num_masters
-  manifests_path   = "./manifests"
-  server_group_affinity = "affinity"
+  source                 = "git::https://github.com/compendius/terraform-openstack-rke2.git"
+  cluster_name           = var.cluster_name
+  write_kubeconfig       = true
+  boot_from_volume       = true
+  boot_volume_size       = var.master_volume_size
+  boot_volume_type       = var.master_volume_type
+  image_name             = var.image_name
+  flavor_name            = var.master_flavor_name
+  public_net_name        = var.fip_net
+  nodes_count            = var.num_masters
+  manifests_path         = "./manifests"
+  server_group_affinity  = "affinity"
   containerd_config_file = local.containerd_config_b64
-  rke2_config      = file("server.yaml")
+  rke2_config            = file("server.yaml")
   manifests_gzb64 = {
     "cinder-csi-plugin" : local.os_cinder_b64
     "openstack-controller-manager" : local.os_ccm_b64
   }
 }
 module "worker" {
-  source           = "git::https://github.com/compendius/terraform-openstack-rke2.git//modules/agent"
-  boot_from_volume = true
-  boot_volume_size = var.worker_volume_size
-  boot_volume_type = var.worker_volume_type
-  image_name       = var.image_name
-  nodes_count      = var.num_workers
-  name_prefix      = "worker"
+  source                 = "git::https://github.com/compendius/terraform-openstack-rke2.git//modules/agent"
+  boot_from_volume       = true
+  boot_volume_size       = var.worker_volume_size
+  boot_volume_type       = var.worker_volume_type
+  image_name             = var.image_name
+  nodes_count            = var.num_workers
+  name_prefix            = "worker"
   containerd_config_file = local.containerd_config_b64
-  flavor_name      = var.worker_flavor_name
-  server_group_affinity = "affinity"
-  node_config      = module.controlplane.node_config
+  flavor_name            = var.worker_flavor_name
+  server_group_affinity  = "affinity"
+  node_config            = module.controlplane.node_config
 }
