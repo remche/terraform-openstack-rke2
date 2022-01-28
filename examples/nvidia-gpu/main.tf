@@ -51,7 +51,7 @@ resource "openstack_networking_secgroup_rule_v2" "nodeport" {
 
 
 module "controlplane" {
-  source                 = "git::https://github.com/compendius/terraform-openstack-rke2.git"
+  source                 = "remche/rke2/openstack"
   cluster_name           = var.cluster_name
   write_kubeconfig       = true
   boot_from_volume       = true
@@ -71,7 +71,7 @@ module "controlplane" {
   }
 }
 module "worker" {
-  source                 = "git::https://github.com/compendius/terraform-openstack-rke2.git//modules/agent"
+  source                 = "remche/rke2/openstack"
   boot_from_volume       = true
   boot_volume_size       = var.worker_volume_size
   boot_volume_type       = var.worker_volume_type
