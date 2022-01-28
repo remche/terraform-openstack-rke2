@@ -49,6 +49,7 @@
 | <a name="input_boot_volume_size"></a> [boot\_volume\_size](#input\_boot\_volume\_size) | The size of the boot volume | `number` | `20` | no |
 | <a name="input_boot_volume_type"></a> [boot\_volume\_type](#input\_boot\_volume\_type) | The type of the boot volume | `string` | `""` | no |
 | <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | Name of the cluster | `string` | `"rke2"` | no |
+| <a name="input_containerd_config_file"></a> [containerd\_config\_file](#input\_containerd\_config\_file) | containerd config file for servers | `string` | `""` | no |
 | <a name="input_dns_domain"></a> [dns\_domain](#input\_dns\_domain) | DNS domain for DNS integration. DNS domain names must have a dot at the end | `string` | `null` | no |
 | <a name="input_dns_servers"></a> [dns\_servers](#input\_dns\_servers) | DNS servers | `list(string)` | `null` | no |
 | <a name="input_do_upgrade"></a> [do\_upgrade](#input\_do\_upgrade) | Trigger upgrade provisioner | `bool` | `false` | no |
@@ -64,7 +65,6 @@
 | <a name="input_public_net_name"></a> [public\_net\_name](#input\_public\_net\_name) | External network name | `string` | n/a | yes |
 | <a name="input_registries_conf"></a> [registries\_conf](#input\_registries\_conf) | Containerd registries config in gz+b64 | `string` | `""` | no |
 | <a name="input_rke2_config"></a> [rke2\_config](#input\_rke2\_config) | RKE2 config contents | `string` | `""` | no |
-| <a name="input_containerd_config_file"></a> [containerd_config_file](#input\_containerd\_config\_file) | Containerd config in b64 | `string` | `""` | no |
 | <a name="input_rke2_version"></a> [rke2\_version](#input\_rke2\_version) | RKE2 version | `string` | `""` | no |
 | <a name="input_secgroup_rules"></a> [secgroup\_rules](#input\_secgroup\_rules) | Security group rules | `list(any)` | <pre>[<br>  {<br>    "port": 22,<br>    "protocol": "tcp",<br>    "source": "0.0.0.0/0"<br>  },<br>  {<br>    "port": 6443,<br>    "protocol": "tcp",<br>    "source": "0.0.0.0/0"<br>  },<br>  {<br>    "port": 80,<br>    "protocol": "tcp",<br>    "source": "0.0.0.0/0"<br>  },<br>  {<br>    "port": 443,<br>    "protocol": "tcp",<br>    "source": "0.0.0.0/0"<br>  }<br>]</pre> | no |
 | <a name="input_server_group_affinity"></a> [server\_group\_affinity](#input\_server\_group\_affinity) | Server group affinity | `string` | `"soft-anti-affinity"` | no |
