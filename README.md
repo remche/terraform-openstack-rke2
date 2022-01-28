@@ -54,15 +54,15 @@ You can set [affinity policy](https://www.terraform.io/docs/providers/openstack/
 
 > :warning: `soft-anti-affinity` and `soft-affinity` needs Compute service API 2.15 or above.
 
-#### Boot from volume
+## Boot from volume
 
 Some providers require to boot the instances from an attached boot volume instead of the nova ephemeral volume.
-To enable this feature, provide the variables to the config file:
+To enable this feature, provide the variables to the config file. You can use  different value for server and agent nodes.
 
 ```hcl
 boot_from_volume = true
 boot_volume_size = 20
-
+boot_volume_type = "rbd-1"
 ```
 
 ### Kubernetes version
