@@ -22,8 +22,9 @@ locals {
     registries_conf    = var.registries_conf
   }
   tmpdir           = "${path.root}/.terraform/tmp/rke2"
-  ssh              = "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
-  scp              = "scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
+  ssh_key_arg      = var.use_ssh_agent ? "" : "-i ${var.ssh_key_file}"
+  ssh              = "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${local.ssh_key_arg}"
+  scp              = "scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ${local.ssh_key_arg}"
   remote_rke2_yaml = "${var.system_user}@${module.server.floating_ip[0]}:/etc/rancher/rke2/rke2-remote.yaml"
 }
 
