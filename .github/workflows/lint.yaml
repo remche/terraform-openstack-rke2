@@ -28,7 +28,7 @@ jobs:
     - uses: hashicorp/setup-terraform@v1
       with:
         terraform_version: 1.0.0
-    - uses: terraform-linters/setup-tflint@v1
+    - uses: terraform-linters/setup-tflint@v2
       name: Setup TFLint
     - name: Run terraform init
       run: terraform init
