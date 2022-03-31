@@ -1,6 +1,4 @@
-# Usage
-
-<!--- BEGIN_TF_DOCS --->
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
@@ -84,6 +82,4 @@
 | <a name="output_kubernetes_config"></a> [kubernetes\_config](#output\_kubernetes\_config) | Kubernetes config to feed Kubernetes or Helm provider |
 | <a name="output_node_config"></a> [node\_config](#output\_node\_config) | Nodes config |
 | <a name="output_subnet_id"></a> [subnet\_id](#output\_subnet\_id) | Nodes Subnet ID |
-
-<!--- END_TF_DOCS --->
-
+<!-- END_TF_DOCS -->
