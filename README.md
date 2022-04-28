@@ -12,7 +12,7 @@ Unlike [RKE version](https://github.com/remche/terraform-openstack-rke) this mod
 
 - [Terraform](https://www.terraform.io/) 0.13+
 - [OpenStack](https://docs.openstack.org/zh_CN/user-guide/common/cli-set-environment-variables-using-openstack-rc.html) environment properly sourced
-- A Openstack image fullfiling [RKE2 requirements](https://docs.rke2.io/install/requirements/) and featuring curl and nc
+- A Openstack image fullfiling [RKE2 requirements](https://docs.rke2.io/install/requirements/) and featuring curl
 - At least one Openstack floating IP
 
 ## Features
