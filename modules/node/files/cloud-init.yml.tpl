@@ -78,7 +78,7 @@ runcmd:
   - /usr/local/bin/install-or-upgrade-rke2.sh
   %{~ if is_server ~}
     %{~ if bootstrap_server != "" ~}
-  - [ sh,  -c, 'until (nc -z ${bootstrap_server} 6443); do echo Wait for master node && sleep 10; done;']
+  - [ sh,  -c, 'until (curl -ksS -m 5 -o /dev/null https://${bootstrap_server}:6443); do echo Wait for master node && sleep 10; done;']
     %{~ endif ~}
   - systemctl enable rke2-server.service
   - systemctl start rke2-server.service
