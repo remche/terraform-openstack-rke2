@@ -1,4 +1,9 @@
 #cloud-config
+packages:
+ - cifs-utils
+ - nfs-common
+ - nfs-kernel-server
+
 write_files:
 - path: /usr/local/bin/wait-for-node-ready.sh
   permissions: "0755"
