@@ -20,7 +20,7 @@ locals {
     bastion_host       = module.server.floating_ip[0]
     rke2_token         = random_string.rke2_token.result
     registries_conf    = var.registries_conf
-    cloud_init_packages = yamlencode(var.cloud_init_packages)
+    cloud_init_packages = jsonencode(var.cloud_init_packages)
   }
   tmpdir           = "${path.root}/.terraform/tmp/rke2"
   ssh_key_arg      = var.use_ssh_agent ? "" : "-i ${var.ssh_key_file}"

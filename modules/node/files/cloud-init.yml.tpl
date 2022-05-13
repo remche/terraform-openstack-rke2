@@ -1,6 +1,5 @@
 #cloud-config
-packages:
-{{ $cloud_init_packages }}
+packages: {{ $cloud_init_packages }}
 
 write_files:
 - path: /usr/local/bin/wait-for-node-ready.sh
