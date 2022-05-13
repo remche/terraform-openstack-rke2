@@ -201,3 +201,9 @@ variable "do_upgrade" {
   default     = false
   description = "Trigger upgrade provisioner"
 }
+
+variable "cloud_init_packages" {
+  type        = list(string)
+  default     = ["nfs-common","nfs-kernel-server"]
+  description = "Additional cloud init packages"
+}
