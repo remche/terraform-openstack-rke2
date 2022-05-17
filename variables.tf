@@ -204,6 +204,6 @@ variable "do_upgrade" {
 
 variable "cloud_init_packages" {
   type        = list(string)
-  default     = []
+  default     = [""]
   description = "Additional cloud init packages"
 }
