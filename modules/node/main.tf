@@ -22,7 +22,9 @@ resource "openstack_compute_instance_v2" "instance" {
   flavor_name  = var.flavor_name
   key_pair     = var.keypair_name
   config_drive = var.config_drive
-  user_data = base64encode(templatefile(("${path.module}/files/cloud-init.yml.tpl"),
+  # This is a bit ugly but we cant use locals here because of count.index.
+  # It allows to merge custom_cloud_config with ours
+  user_data = var.custom_cloud_config == "" ? base64encode(templatefile(("${path.module}/files/cloud-init.yml.tpl"),
     { cluster_name     = var.cluster_name
       bootstrap_server = var.is_server && count.index != 0 ? openstack_networking_port_v2.port[0].all_fixed_ips[0] : var.bootstrap_server
       public_address   = var.is_server ? openstack_networking_floatingip_v2.floating_ip[count.index].address : ""
@@ -36,7 +38,22 @@ resource "openstack_compute_instance_v2" "instance" {
       additional_san   = var.additional_san
       manifests_files  = var.manifests_path != "" ? [for f in fileset(var.manifests_path, "*.{yml,yaml}") : [f, base64gzip(file("${var.manifests_path}/${f}"))]] : []
       manifests_gzb64  = var.manifests_gzb64
-  }))
+      })) : base64encode(join("\n", ["#cloud-config", yamlencode(merge(yamldecode(file(var.custom_cloud_config)), yamldecode(templatefile(("${path.module}/files/cloud-init.yml.tpl"),
+        { cluster_name     = var.cluster_name
+          bootstrap_server = var.is_server && count.index != 0 ? openstack_networking_port_v2.port[0].all_fixed_ips[0] : var.bootstrap_server
+          public_address   = var.is_server ? openstack_networking_floatingip_v2.floating_ip[count.index].address : ""
+          rke2_token       = var.rke2_token
+          is_server        = var.is_server
+          san              = openstack_networking_floatingip_v2.floating_ip[*].address
+          system_user      = var.system_user
+          rke2_conf        = var.rke2_config
+          containerd_conf  = var.containerd_config_file
+          registries_conf  = var.registries_conf
+          additional_san   = var.additional_san
+          manifests_files  = var.manifests_path != "" ? [for f in fileset(var.manifests_path, "*.{yml,yaml}") : [f, base64gzip(file("${var.manifests_path}/${f}"))]] : []
+          manifests_gzb64  = var.manifests_gzb64
+  }))))]))
+
   metadata = {
     rke2_version = var.rke2_version
     rke2_role    = var.is_server ? "server" : "agent"

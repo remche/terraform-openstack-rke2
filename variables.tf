@@ -154,6 +154,12 @@ variable "availability_zones" {
   description = "The list of AZs to deploy nodes into"
 }
 
+variable "custom_cloud_config" {
+  type        = string
+  default     = ""
+  description = "Custom cloud init file"
+}
+
 variable "rke2_version" {
   type        = string
   default     = ""

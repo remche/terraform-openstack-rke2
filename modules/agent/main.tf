@@ -22,6 +22,7 @@ module "agent" {
   boot_volume_size       = var.boot_volume_size
   boot_volume_type       = var.boot_volume_type
   availability_zones     = var.node_config.availability_zones
+  custom_cloud_config    = var.node_config.custom_cloud_config
   bootstrap_server       = var.node_config.bootstrap_server
   bastion_host           = var.node_config.bastion_host
   is_server              = false

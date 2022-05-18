@@ -1,25 +1,26 @@
 locals {
   node_config = {
-    cluster_name       = var.cluster_name
-    keypair_name       = module.keypair.keypair_name
-    ssh_key_file       = var.ssh_key_file
-    system_user        = var.system_user
-    use_ssh_agent      = var.use_ssh_agent
-    network_id         = module.network.nodes_net_id
-    subnet_id          = module.network.nodes_subnet_id
-    secgroup_id        = module.secgroup.secgroup_id
-    server_affinity    = var.server_group_affinity
-    config_drive       = var.nodes_config_drive
-    floating_ip_pool   = var.public_net_name
-    user_data          = var.user_data_file != null ? file(var.user_data_file) : null
-    boot_from_volume   = var.boot_from_volume
-    boot_volume_size   = var.boot_volume_size
-    boot_volume_type   = var.boot_volume_type
-    availability_zones = var.availability_zones
-    bootstrap_server   = module.server.internal_ip[0]
-    bastion_host       = module.server.floating_ip[0]
-    rke2_token         = random_string.rke2_token.result
-    registries_conf    = var.registries_conf
+    cluster_name        = var.cluster_name
+    keypair_name        = module.keypair.keypair_name
+    ssh_key_file        = var.ssh_key_file
+    system_user         = var.system_user
+    use_ssh_agent       = var.use_ssh_agent
+    network_id          = module.network.nodes_net_id
+    subnet_id           = module.network.nodes_subnet_id
+    secgroup_id         = module.secgroup.secgroup_id
+    server_affinity     = var.server_group_affinity
+    config_drive        = var.nodes_config_drive
+    floating_ip_pool    = var.public_net_name
+    user_data           = var.user_data_file != null ? file(var.user_data_file) : null
+    boot_from_volume    = var.boot_from_volume
+    boot_volume_size    = var.boot_volume_size
+    boot_volume_type    = var.boot_volume_type
+    availability_zones  = var.availability_zones
+    custom_cloud_config = var.custom_cloud_config
+    bootstrap_server    = module.server.internal_ip[0]
+    bastion_host        = module.server.floating_ip[0]
+    rke2_token          = random_string.rke2_token.result
+    registries_conf     = var.registries_conf
   }
   tmpdir           = "${path.root}/.terraform/tmp/rke2"
   ssh_key_arg      = var.use_ssh_agent ? "" : "-i ${var.ssh_key_file}"
@@ -76,6 +77,7 @@ module "server" {
   boot_volume_size       = var.boot_volume_size
   boot_volume_type       = var.boot_volume_type
   availability_zones     = var.availability_zones
+  custom_cloud_config    = var.custom_cloud_config
   rke2_version           = var.rke2_version
   rke2_config            = var.rke2_config
   containerd_config_file = var.containerd_config_file

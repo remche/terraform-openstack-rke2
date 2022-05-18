@@ -1,23 +1,24 @@
 variable "node_config" {
   type = object({
-    cluster_name       = string
-    keypair_name       = string
-    ssh_key_file       = string
-    system_user        = string
-    use_ssh_agent      = bool
-    subnet_id          = string
-    network_id         = string
-    secgroup_id        = string
-    config_drive       = bool
-    floating_ip_pool   = string
-    user_data          = string
-    boot_from_volume   = bool
-    boot_volume_size   = number
-    availability_zones = list(string)
-    bootstrap_server   = string
-    rke2_token         = string
-    registries_conf    = string
-    bastion_host       = string
+    cluster_name        = string
+    keypair_name        = string
+    ssh_key_file        = string
+    system_user         = string
+    use_ssh_agent       = bool
+    subnet_id           = string
+    network_id          = string
+    secgroup_id         = string
+    config_drive        = bool
+    floating_ip_pool    = string
+    user_data           = string
+    boot_from_volume    = bool
+    boot_volume_size    = number
+    availability_zones  = list(string)
+    custom_cloud_config = string
+    bootstrap_server    = string
+    rke2_token          = string
+    registries_conf     = string
+    bastion_host        = string
   })
 
 }

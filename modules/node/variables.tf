@@ -98,6 +98,10 @@ variable "availability_zones" {
   type = list(string)
 }
 
+variable "custom_cloud_config" {
+  type = string
+}
+
 variable "rke2_version" {
   type = string
 }
