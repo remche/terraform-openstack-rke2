@@ -48,6 +48,7 @@
 | <a name="input_boot_volume_type"></a> [boot\_volume\_type](#input\_boot\_volume\_type) | The type of the boot volume | `string` | `""` | no |
 | <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | Name of the cluster | `string` | `"rke2"` | no |
 | <a name="input_containerd_config_file"></a> [containerd\_config\_file](#input\_containerd\_config\_file) | containerd config file for servers | `string` | `""` | no |
+| <a name="input_custom_cloud_config"></a> [custom\_cloud\_config](#input\_custom\_cloud\_config) | Custom cloud init file | `string` | `""` | no |
 | <a name="input_dns_domain"></a> [dns\_domain](#input\_dns\_domain) | DNS domain for DNS integration. DNS domain names must have a dot at the end | `string` | `null` | no |
 | <a name="input_dns_servers"></a> [dns\_servers](#input\_dns\_servers) | DNS servers | `list(string)` | `null` | no |
 | <a name="input_do_upgrade"></a> [do\_upgrade](#input\_do\_upgrade) | Trigger upgrade provisioner | `bool` | `false` | no |
