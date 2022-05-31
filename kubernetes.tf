@@ -18,40 +18,36 @@ resource "null_resource" "write_kubeconfig" {
 }
 
 module "host" {
-  source  = "matti/resource/shell"
-  version = "1.5.0"
-  count   = var.output_kubernetes_config ? 1 : 0
-  command = "${local.ssh} ${var.system_user}@${module.server.floating_ip[0]} sudo KUBECONFIG=/etc/rancher/rke2/rke2-remote.yaml /var/lib/rancher/rke2/bin/kubectl config view --raw=true -o jsonpath='{.clusters[0].cluster.server}'"
+  source       = "Invicton-Labs/shell-resource/external"
+  count        = var.output_kubernetes_config ? 1 : 0
+  command_unix = "${local.ssh} ${var.system_user}@${module.server.floating_ip[0]} sudo KUBECONFIG=/etc/rancher/rke2/rke2-remote.yaml /var/lib/rancher/rke2/bin/kubectl config view --raw=true -o jsonpath='{.clusters[0].cluster.server}'"
   depends_on = [
     null_resource.write_kubeconfig
   ]
 }
 
 module "client_certificate" {
-  source  = "matti/resource/shell"
-  version = "1.5.0"
-  count   = var.output_kubernetes_config ? 1 : 0
-  command = "${local.ssh} ${var.system_user}@${module.server.floating_ip[0]} sudo KUBECONFIG=/etc/rancher/rke2/rke2-remote.yaml /var/lib/rancher/rke2/bin/kubectl config view --raw=true -o jsonpath='{.users[0].user.client-certificate-data}'"
+  source       = "Invicton-Labs/shell-resource/external"
+  count        = var.output_kubernetes_config ? 1 : 0
+  command_unix = "${local.ssh} ${var.system_user}@${module.server.floating_ip[0]} sudo KUBECONFIG=/etc/rancher/rke2/rke2-remote.yaml /var/lib/rancher/rke2/bin/kubectl config view --raw=true -o jsonpath='{.users[0].user.client-certificate-data}'"
   depends_on = [
     null_resource.write_kubeconfig
   ]
 }
 
 module "client_key" {
-  source  = "matti/resource/shell"
-  version = "1.5.0"
-  count   = var.output_kubernetes_config ? 1 : 0
-  command = "${local.ssh} ${var.system_user}@${module.server.floating_ip[0]} sudo KUBECONFIG=/etc/rancher/rke2/rke2-remote.yaml /var/lib/rancher/rke2/bin/kubectl config view --raw=true -o jsonpath='{.users[0].user.client-key-data}'"
+  source       = "Invicton-Labs/shell-resource/external"
+  count        = var.output_kubernetes_config ? 1 : 0
+  command_unix = "${local.ssh} ${var.system_user}@${module.server.floating_ip[0]} sudo KUBECONFIG=/etc/rancher/rke2/rke2-remote.yaml /var/lib/rancher/rke2/bin/kubectl config view --raw=true -o jsonpath='{.users[0].user.client-key-data}'"
   depends_on = [
     null_resource.write_kubeconfig
   ]
 }
 
 module "cluster_ca_certificate" {
-  source  = "matti/resource/shell"
-  version = "1.5.0"
-  count   = var.output_kubernetes_config ? 1 : 0
-  command = "${local.ssh} ${var.system_user}@${module.server.floating_ip[0]} sudo KUBECONFIG=/etc/rancher/rke2/rke2-remote.yaml /var/lib/rancher/rke2/bin/kubectl config view --raw=true -o jsonpath='{.clusters[0].cluster.certificate-authority-data}'"
+  source       = "Invicton-Labs/shell-resource/external"
+  count        = var.output_kubernetes_config ? 1 : 0
+  command_unix = "${local.ssh} ${var.system_user}@${module.server.floating_ip[0]} sudo KUBECONFIG=/etc/rancher/rke2/rke2-remote.yaml /var/lib/rancher/rke2/bin/kubectl config view --raw=true -o jsonpath='{.clusters[0].cluster.certificate-authority-data}'"
   depends_on = [
     null_resource.write_kubeconfig
   ]
