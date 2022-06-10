@@ -13,6 +13,7 @@ spec:
      enabled: true
      create: true
      name: cinder-csi-cloud-config
+     filename: cloud.conf
      data:
        cloud-config: |-
          [Global]
