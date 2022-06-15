@@ -8,6 +8,11 @@ output "internal_ip" {
   description = "Nodes internal IP"
 }
 
+output "router_ip" {
+  value = module.network.router_ip
+  description = "Router external_ip"
+}
+
 output "node_config" {
   value       = local.node_config
   sensitive   = true
