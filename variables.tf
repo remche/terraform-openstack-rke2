@@ -201,3 +201,9 @@ variable "do_upgrade" {
   default     = false
   description = "Trigger upgrade provisioner"
 }
+
+variable "cloud_init_packages" {
+  type        = list(string)
+  default     = [""]
+  description = "Additional cloud init packages"
+}
