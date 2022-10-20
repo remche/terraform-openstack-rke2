@@ -9,7 +9,7 @@ output "internal_ip" {
 }
 
 output "router_ip" {
-  value = module.network.router_ip
+  value       = module.network.router_ip
   description = "Router external_ip"
 }
 

@@ -23,6 +23,11 @@ variable "image_name" {
   type = string
 }
 
+variable "instance_tags" {
+  type    = list(any)
+  default = []
+}
+
 variable "flavor_name" {
   type = string
 }

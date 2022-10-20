@@ -59,6 +59,7 @@ module "server" {
   nodes_count            = var.nodes_count
   image_name             = var.image_name
   image_id               = var.image_id
+  instance_tags          = var.instance_tags
   flavor_name            = var.flavor_name
   keypair_name           = module.keypair.keypair_name
   ssh_key_file           = var.ssh_key_file

@@ -101,6 +101,12 @@ variable "image_name" {
   description = "ID of image nodes (must fullfill [RKE2 requirements](https://docs.rke2.io/install/requirements/))"
 }
 
+variable "instance_tags" {
+  type        = list(any)
+  default     = []
+  description = "Tags added to the instance"
+}
+
 variable "nodes_count" {
   type        = number
   default     = 1
