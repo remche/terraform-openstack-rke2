@@ -16,8 +16,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: hashicorp/setup-terraform@v2
-      with:
-        terraform_version: 1.0.0
     - name: Terraform fmt
       run: terraform fmt
       continue-on-error: true
@@ -32,6 +30,8 @@ jobs:
         key: ${{ matrix.os }}-tflint-${{ hashFiles('.tflint.hcl') }}
     - uses: terraform-linters/setup-tflint@v2
       name: Setup TFLint
+    - name: Init Terraform
+      run: terraform init
     - name: Init TFLint
       run: tflint --init
     - name: Run TFLint
