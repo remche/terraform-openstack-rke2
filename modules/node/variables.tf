@@ -4,7 +4,7 @@ variable "node_depends_on" {
 }
 
 variable "nodes_count" {
-  type = string
+  type = number
 }
 
 variable "cluster_name" {
@@ -45,7 +45,7 @@ variable "system_user" {
 
 variable "use_ssh_agent" {
   type        = bool
-  default     = "true"
+  default     = true
   description = "Whether to use ssh agent"
 }
 
@@ -71,7 +71,7 @@ variable "secgroup_id" {
 
 variable "assign_floating_ip" {
   type    = bool
-  default = "false"
+  default = false
 }
 
 variable "floating_ip_pool" {

@@ -16,8 +16,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: hashicorp/setup-terraform@v2
-      with:
-        terraform_version: 1.0.0
     - name: Terraform fmt
       run: terraform fmt
       continue-on-error: true
@@ -25,12 +23,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - uses: hashicorp/setup-terraform@v2
+    - uses: actions/cache@v2
+      name: Cache plugin dir
       with:
-        terraform_version: 1.0.0
+        path: ~/.tflint.d/plugins
+        key: ${{ matrix.os }}-tflint-${{ hashFiles('.tflint.hcl') }}
     - uses: terraform-linters/setup-tflint@v2
       name: Setup TFLint
-    - name: Run terraform init
+    - name: Init Terraform
       run: terraform init
+    - name: Init TFLint
+      run: tflint --init
     - name: Run TFLint
       run: tflint -f compact
