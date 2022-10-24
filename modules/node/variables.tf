@@ -24,7 +24,7 @@ variable "image_name" {
 }
 
 variable "instance_tags" {
-  type    = list(any)
+  type    = list(string)
   default = []
 }
 
