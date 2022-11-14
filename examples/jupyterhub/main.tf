@@ -3,7 +3,7 @@ module "controlplane" {
   cluster_name     = var.cluster_name
   write_kubeconfig = true
   image_name       = "ubuntu-20.04-focal-x86_64"
-  flavor_name      = "cpuX2"
+  flavor_name      = "genX1"
   public_net_name  = "dmz"
   rke2_config      = file("server.yaml")
   manifests_path   = "./manifests"
@@ -16,6 +16,6 @@ module "worker" {
   image_name  = "ubuntu-20.04-focal-x86_64"
   nodes_count = 2
   name_prefix = "worker"
-  flavor_name = "cpuX2"
+  flavor_name = "genX1"
   node_config = module.controlplane.node_config
 }

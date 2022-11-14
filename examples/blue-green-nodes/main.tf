@@ -4,7 +4,7 @@ module "controlplane" {
   nodes_count      = 3
   write_kubeconfig = true
   image_name       = "ubuntu-20.04-focal-x86_64"
-  flavor_name      = "cpuX2"
+  flavor_name      = "genX1"
   public_net_name  = "dmz"
   rke2_config      = file("server.yaml")
   manifests_path   = "./manifests"
@@ -15,7 +15,7 @@ module "blue_node" {
   image_name  = "ubuntu-20.04-focal-x86_64"
   nodes_count = 1
   name_prefix = "blue"
-  flavor_name = "cpuX2"
+  flavor_name = "genX1"
   node_config = module.controlplane.node_config
   rke2_config = templatefile("${path.module}/agent.yaml.tpl", {
     app_name = "blue"
@@ -27,7 +27,7 @@ module "green_node" {
   image_name  = "ubuntu-20.04-focal-x86_64"
   nodes_count = 1
   name_prefix = "green"
-  flavor_name = "cpuX2"
+  flavor_name = "genX1"
   node_config = module.controlplane.node_config
   rke2_config = templatefile("${path.module}/agent.yaml.tpl", {
     app_name = "green"
