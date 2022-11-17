@@ -69,7 +69,9 @@ boot_volume_type = "rbd-1"
 
 You can specify rke2 version with `rke2_version` variables. Refer to RKE2 supported version.
 
-Upgrade by setting the new version and `do_upgrade = true`. It will upgrade the nodes one-by-one. Upgrade the controlplane first, then the nodes pools.
+Upgrade by setting the target version via `rke2_version` and `do_upgrade = true`. It will upgrade the nodes one-by-one, server nodes first.
+
+> :warning: In-place upgrade mechanism is not battle-tested and relies on Terraform provisioners.
 
 ### Addons
 
