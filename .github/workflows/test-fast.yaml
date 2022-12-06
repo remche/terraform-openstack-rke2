@@ -52,7 +52,7 @@ jobs:
         K8S_API_SERVER=$(terraform output -raw server_ip)
         until (nc -z $K8S_API_SERVER 6443); do echo Wait for master node && sleep 10; done;
       working-directory: ${{ env.WORKING_DIR }}
-    - uses: azure/setup-kubectl@v3.0
+    - uses: azure/setup-kubectl@v3.1
     - name: Wait for nodes to be ready
       run: kubectl wait nodes --all --for=condition=ready --kubeconfig $(pwd)/rke2.yaml --timeout -1s
       working-directory: ${{ env.WORKING_DIR }}
