@@ -114,3 +114,6 @@ provider "kubernetes" {
   cluster_ca_certificate = data.terraform_remote_state.rke2.outputs.kubernetes_config.cluster_ca_certificate
 }
 ```
+
+### Availability Zones
+Changes to a module's `availability_zones` will intentionally *not* cause the recreation of instances. You must manually `taint` the `module.controlplane.module.server.openstack_compute_instance_v2.instance` for force the recreation of the resource.
