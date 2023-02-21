@@ -26,7 +26,6 @@ jobs:
       OS_REGION_NAME:  ${{ secrets.OS_REGION_NAME }}
       OS_USERNAME:  ${{ secrets.OS_USERNAME }}
       OS_USER_DOMAIN_NAME:  ${{ secrets.OS_USER_DOMAIN_NAME }}
-      TF_VAR_dns_servers:  ${{ secrets.TF_VAR_DNS_SERVERS }}
     environment: nova
     steps:
     - uses: actions/checkout@v3
