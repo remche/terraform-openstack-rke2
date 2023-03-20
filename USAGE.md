@@ -20,10 +20,10 @@
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_client_certificate"></a> [client\_certificate](#module\_client\_certificate) | Invicton-Labs/shell-resource/external | 0.3.3 |
-| <a name="module_client_key"></a> [client\_key](#module\_client\_key) | Invicton-Labs/shell-resource/external | 0.3.3 |
-| <a name="module_cluster_ca_certificate"></a> [cluster\_ca\_certificate](#module\_cluster\_ca\_certificate) | Invicton-Labs/shell-resource/external | 0.3.3 |
-| <a name="module_host"></a> [host](#module\_host) | Invicton-Labs/shell-resource/external | 0.3.3 |
+| <a name="module_client_certificate"></a> [client\_certificate](#module\_client\_certificate) | Invicton-Labs/shell-resource/external | 0.4.0 |
+| <a name="module_client_key"></a> [client\_key](#module\_client\_key) | Invicton-Labs/shell-resource/external | 0.4.0 |
+| <a name="module_cluster_ca_certificate"></a> [cluster\_ca\_certificate](#module\_cluster\_ca\_certificate) | Invicton-Labs/shell-resource/external | 0.4.0 |
+| <a name="module_host"></a> [host](#module\_host) | Invicton-Labs/shell-resource/external | 0.4.0 |
 | <a name="module_keypair"></a> [keypair](#module\_keypair) | ./modules/keypair | n/a |
 | <a name="module_network"></a> [network](#module\_network) | ./modules/network | n/a |
 | <a name="module_secgroup"></a> [secgroup](#module\_secgroup) | ./modules/secgroup | n/a |
