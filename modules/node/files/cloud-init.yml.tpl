@@ -15,7 +15,7 @@ write_files:
     # Install jq if not available
     JQ_URL=https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64
     JQ_BIN=/usr/local/bin/jq
-    which jq 2>&1 > /dev/null || sudo curl -sfL $JQ_URL -o $JQ_BIN && sudo chmod +x $JQ_BIN
+    which jq 2>&1 > /dev/null || { sudo curl -sfL $JQ_URL -o $JQ_BIN && sudo chmod +x $JQ_BIN ; }
 
     # Fetch target and actual version if already installed
     export INSTALL_RKE2_VERSION=$(curl -s http://169.254.169.254/openstack/2012-08-10/meta_data.json|jq -r '.meta.rke2_version')
