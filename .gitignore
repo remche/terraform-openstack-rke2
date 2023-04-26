@@ -1,3 +1,6 @@
+# SSH keys
+id_rsa*
+
 rke2.yaml
 test
 

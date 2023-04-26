@@ -2,7 +2,6 @@ locals {
   tmpdir = "${path.root}/.terraform/tmp/rke2"
 }
 
-
 resource "openstack_compute_servergroup_v2" "servergroup" {
   name     = "${var.name_prefix}-servergroup"
   policies = [var.server_affinity]
@@ -11,6 +10,10 @@ resource "openstack_compute_servergroup_v2" "servergroup" {
 data "openstack_images_image_v2" "image" {
   name        = var.image_name
   most_recent = true
+}
+
+data "openstack_networking_network_v2" "existing_network" {
+  name = var.existing_network_name
 }
 
 resource "openstack_compute_instance_v2" "instance" {
@@ -23,19 +26,19 @@ resource "openstack_compute_instance_v2" "instance" {
   key_pair     = var.keypair_name
   config_drive = var.config_drive
   user_data = base64encode(templatefile(("${path.module}/files/cloud-init.yml.tpl"),
-    { cluster_name     = var.cluster_name
-      bootstrap_server = var.is_server && count.index != 0 ? openstack_networking_port_v2.port[0].all_fixed_ips[0] : var.bootstrap_server
-      public_address   = var.is_server ? openstack_networking_floatingip_v2.floating_ip[count.index].address : ""
-      rke2_token       = var.rke2_token
-      is_server        = var.is_server
-      san              = openstack_networking_floatingip_v2.floating_ip[*].address
-      system_user      = var.system_user
-      rke2_conf        = var.rke2_config
-      containerd_conf  = var.containerd_config_file
-      registries_conf  = var.registries_conf
-      additional_san   = var.additional_san
-      manifests_files  = var.manifests_path != "" ? [for f in fileset(var.manifests_path, "*.{yml,yaml}") : [f, base64gzip(file("${var.manifests_path}/${f}"))]] : []
-      manifests_gzb64  = var.manifests_gzb64
+    { cluster_name      = var.cluster_name
+      bootstrap_server  = var.is_server && count.index != 0 ? openstack_networking_port_v2.port[0].all_fixed_ips[0] : var.bootstrap_server
+      public_address = var.assign_floating_ip ? (var.is_server ? openstack_networking_floatingip_v2.floating_ip[count.index].address : "") : (var.is_server ? openstack_networking_port_v2.port[0].all_fixed_ips[0] : "")
+      rke2_token        = var.rke2_token
+      is_server         = var.is_server
+      san               = var.assign_floating_ip ? openstack_networking_floatingip_v2.floating_ip[*].address : openstack_networking_port_v2.port[*].all_fixed_ips[0]
+      system_user       = var.system_user
+      rke2_conf         = var.rke2_config
+      containerd_conf   = var.containerd_config_file
+      registries_conf   = var.registries_conf
+      additional_san    = var.additional_san
+      manifests_files   = var.manifests_path != "" ? [for f in fileset(var.manifests_path, "*.{yml,yaml}") : [f, base64gzip(file("${var.manifests_path}/${f}"))]] : []
+      manifests_gzb64   = var.manifests_gzb64
   }))
   metadata = {
     rke2_version = var.rke2_version
@@ -85,14 +88,18 @@ resource "openstack_networking_port_v2" "port" {
 }
 
 resource "openstack_networking_floatingip_v2" "floating_ip" {
+  # Create resource if assign_floating_ip is true
   count = var.assign_floating_ip ? var.nodes_count : 0
+
   pool  = var.floating_ip_pool
 }
 
 resource "openstack_compute_floatingip_associate_v2" "associate_floating_ip" {
+  # Create resource if assign_floating_ip is true
   count       = var.assign_floating_ip ? var.nodes_count : 0
-  floating_ip = openstack_networking_floatingip_v2.floating_ip[count.index].address
-  instance_id = openstack_compute_instance_v2.instance[count.index].id
+
+  floating_ip = openstack_networking_floatingip_v2.floating_ip[0].address
+  instance_id = openstack_compute_instance_v2.instance[0].id
 }
 
 resource "null_resource" "upgrade" {
@@ -103,8 +110,8 @@ resource "null_resource" "upgrade" {
   }
 
   connection {
-    bastion_host = var.assign_floating_ip ? "" : var.bastion_host
-    host         = var.assign_floating_ip ? openstack_networking_floatingip_v2.floating_ip[count.index].address : openstack_compute_instance_v2.instance[0].access_ip_v4
+    bastion_host = var.bastion_host
+    host         = var.assign_floating_ip ? openstack_networking_floatingip_v2.floating_ip[0].address : openstack_compute_instance_v2.instance[0].access_ip_v4
     user         = var.system_user
     private_key  = var.use_ssh_agent ? null : file(var.ssh_key_file)
     agent        = var.use_ssh_agent
@@ -125,5 +132,4 @@ resource "null_resource" "upgrade" {
   provisioner "local-exec" {
     command = "touch ${local.tmpdir}/upgrade-${openstack_compute_instance_v2.instance[count.index].id}-${var.rke2_version}"
   }
-
 }

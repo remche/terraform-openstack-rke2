@@ -1,3 +1,8 @@
+variable "existing_network_name" {
+  type        = string
+  description = "The existing network name to use for the instance"
+}
+
 variable "node_depends_on" {
   type    = any
   default = null
