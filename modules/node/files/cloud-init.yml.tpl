@@ -102,6 +102,9 @@ write_files:
     # END TERRAFORM MANAGED BLOCK
 %{ endif ~}
 runcmd:
+  - export http_proxy=${proxy_url}
+  - export https_proxy=${proxy_url}
+  - export no_proxy=%{ for s in no_proxy ~}${s},%{ endfor }
   - /usr/local/bin/install-or-upgrade-rke2.sh
   %{~ if is_server ~}
     %{~ if bootstrap_server != "" ~}
