@@ -163,10 +163,10 @@ variable "do_upgrade" {
 
 variable "proxy_url" {
   type    = string
-  default = ""
+  default = null
 }
 
 variable "no_proxy" {
   type    = list(string)
-  default = ["localhost","127.0.0.0/8","10.0.0.0/8","172.16.0.0/12","192.168.0.0/16"]
+  default = []
 }

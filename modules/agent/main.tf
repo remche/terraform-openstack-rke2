@@ -31,4 +31,6 @@ module "agent" {
   registries_conf        = var.node_config.registries_conf
   rke2_token             = var.node_config.rke2_token
   do_upgrade             = var.do_upgrade
+  proxy_url              = var.node_config.proxy_url
+  no_proxy               = var.node_config.no_proxy
 }

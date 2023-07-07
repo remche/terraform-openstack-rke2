@@ -20,6 +20,8 @@ locals {
     bastion_host       = module.server.floating_ip[0]
     rke2_token         = random_string.rke2_token.result
     registries_conf    = var.registries_conf
+    proxy_url          = var.proxy_url
+    no_proxy           = var.no_proxy
   }
   tmpdir           = "${path.root}/.terraform/tmp/rke2"
   ssh_key_arg      = var.use_ssh_agent ? "" : "-i ${var.ssh_key_file}"
@@ -86,6 +88,8 @@ module "server" {
   manifests_path         = var.manifests_path
   manifests_gzb64        = var.manifests_gzb64
   do_upgrade             = var.do_upgrade
+  proxy_url              = var.proxy_url
+  no_proxy               = var.no_proxy
 }
 
 resource "local_file" "tmpdirfile" {

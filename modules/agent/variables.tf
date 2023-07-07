@@ -18,6 +18,8 @@ variable "node_config" {
     rke2_token         = string
     registries_conf    = string
     bastion_host       = string
+    proxy_url          = string
+    no_proxy           = list(string)
   })
 
 }
