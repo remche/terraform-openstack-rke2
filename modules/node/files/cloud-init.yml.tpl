@@ -74,6 +74,17 @@ write_files:
     kube-apiserver-arg: "kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname"
     %{~ endif ~}
     ${indent(4,rke2_conf)}
+%{ if proxy_url != null ~}
+- path: /etc/environment
+  append: true
+  content: |
+    # BEGIN TERRAFORM MANAGED BLOCK
+    http_proxy=${proxy_url}
+    https_proxy=${proxy_url}
+    ftp_proxy=${proxy_url}
+    no_proxy=%{ for s in no_proxy ~}${s},%{ endfor }
+    # END TERRAFORM MANAGED BLOCK
+%{ endif ~}
 runcmd:
   - /usr/local/bin/install-or-upgrade-rke2.sh
   %{~ if is_server ~}

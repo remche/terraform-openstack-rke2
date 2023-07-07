@@ -160,3 +160,13 @@ variable "manifests_gzb64" {
 variable "do_upgrade" {
   type = bool
 }
+
+variable "proxy_url" {
+  type    = string
+  default = ""
+}
+
+variable "no_proxy" {
+  type    = list(string)
+  default = ["localhost","127.0.0.0/8","10.0.0.0/8","172.16.0.0/12","192.168.0.0/16"]
+}
