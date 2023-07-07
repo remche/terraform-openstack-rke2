@@ -84,6 +84,22 @@ write_files:
     ftp_proxy=${proxy_url}
     no_proxy=%{ for s in no_proxy ~}${s},%{ endfor }
     # END TERRAFORM MANAGED BLOCK
+- path: /etc/default/rke2-server
+  append: true
+  content: |
+    # BEGIN TERRAFORM MANAGED BLOCK
+    HTTP_PROXY=${proxy_url}
+    HTTPS_PROXY=${proxy_url}
+    NO_PROXY=%{ for s in no_proxy ~}${s},%{ endfor }
+    # END TERRAFORM MANAGED BLOCK
+- path: /etc/default/rke2-agent
+  append: true
+  content: |
+    # BEGIN TERRAFORM MANAGED BLOCK
+    HTTP_PROXY=${proxy_url}
+    HTTPS_PROXY=${proxy_url}
+    NO_PROXY=%{ for s in no_proxy ~}${s},%{ endfor }
+    # END TERRAFORM MANAGED BLOCK
 %{ endif ~}
 runcmd:
   - /usr/local/bin/install-or-upgrade-rke2.sh
