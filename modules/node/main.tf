@@ -36,6 +36,8 @@ resource "openstack_compute_instance_v2" "instance" {
       additional_san   = var.additional_san
       manifests_files  = var.manifests_path != "" ? [for f in fileset(var.manifests_path, "*.{yml,yaml}") : [f, base64gzip(file("${var.manifests_path}/${f}"))]] : []
       manifests_gzb64  = var.manifests_gzb64
+      proxy_url        = var.proxy_url
+      no_proxy         = var.no_proxy
   }))
   metadata = {
     rke2_version = var.rke2_version
