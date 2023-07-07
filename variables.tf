@@ -44,6 +44,18 @@ variable "output_kubernetes_config" {
   description = "Output Kubernetes config to state (for use with Kubernetes provider)"
 }
 
+variable "proxy_url" {
+  type        = string
+  default     = null
+  description = "URL of proxy server"
+}
+
+variable "no_proxy" {
+  type        = list(string)
+  default     = ["localhost","127.0.0.0/8","10.0.0.0/8","172.16.0.0/12","192.168.0.0/16"]
+  description = "Hosts that should not be proxied"
+}
+
 ######################
 # Secgroup variables #
 ######################
