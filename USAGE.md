@@ -73,7 +73,8 @@
 | <a name="input_use_ssh_agent"></a> [use\_ssh\_agent](#input\_use\_ssh\_agent) | Whether to use ssh agent | `bool` | `"true"` | no |
 | <a name="input_user_data_file"></a> [user\_data\_file](#input\_user\_data\_file) | User data file to provide when launching the instance | `string` | `null` | no |
 | <a name="input_write_kubeconfig"></a> [write\_kubeconfig](#input\_write\_kubeconfig) | Write kubeconfig file to disk | `bool` | `"false"` | no |
-
+| <a name="input_proxy_url"></a> [proxy\_url](#input\_proxy\_url) | URL like "http://user:pass@host:port" when deploying behind a proxy | `string` | `""` | no |
+| <a name="input_no_proxy"></a> [no\_proxy](#input\_no\_proxy) | Hosts to exclude from proxy (private addresses ranges are already excluded) | `list(string)` | `[]` | no |
 ## Outputs
 
 | Name | Description |
