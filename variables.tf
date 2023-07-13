@@ -2,10 +2,14 @@
 # Global variables #
 ####################
 
+variable "assign_floating_ip" {
+  description = "Boolean to determine whether or not use a floating ip for this cluster"
+  type        = bool
+}
+
 variable "cluster_name" {
-  type        = string
-  default     = "rke2"
-  description = "Name of the cluster"
+  type    = string
+  default = "minimal"
 }
 
 variable "ssh_keypair_name" {
@@ -62,6 +66,36 @@ variable "secgroup_rules" {
 # Network variables #
 #####################
 
+variable "network_id" {
+  type        = string
+  description = "OpenStack network ID"
+}
+
+variable "subnet_id" {
+  type        = string
+  description = "OpenStack subnet ID"
+}
+
+variable "network_name" {
+  type    = string
+  default = "default"
+}
+
+variable "subnet_name" {
+  type    = string
+  default = "default-ipv4"
+}
+
+variable "router_name" {
+  type    = string
+  default = "default"
+}
+
+variable "existing_network_name" {
+  type        = string
+  description = "Already existing network name"
+}
+
 variable "nodes_net_cidr" {
   type        = string
   default     = "192.168.42.0/24"
@@ -71,6 +105,7 @@ variable "nodes_net_cidr" {
 variable "public_net_name" {
   type        = string
   description = "External network name"
+  default     = "default"
 }
 
 variable "dns_servers" {

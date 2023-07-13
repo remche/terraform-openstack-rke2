@@ -2,7 +2,9 @@ resource "null_resource" "write_kubeconfig" {
   count = var.write_kubeconfig ? 1 : 0
 
   connection {
-    host        = module.server.floating_ip[0]
+    # If assign_floating_ip is set to true, the provisioner will try to connect to the floating_ip of the module.server resource 
+    # If assign_floating_ip is set to false, the provisioner will try to connect to the internal_ip of the module.server resource (ie the first instance's ip)
+    host        = var.assign_floating_ip ? module.server.floating_ip[0] : module.server.internal_ip[0]
     user        = var.system_user
     private_key = var.use_ssh_agent ? null : file(var.ssh_key_file)
     agent       = var.use_ssh_agent
@@ -15,13 +17,14 @@ resource "null_resource" "write_kubeconfig" {
   provisioner "local-exec" {
     command = var.use_ssh_agent ? "${local.scp} ${local.remote_rke2_yaml} rke2.yaml" : "${local.scp} -i ${var.ssh_key_file} ${local.remote_rke2_yaml} rke2.yaml"
   }
+
 }
 
 module "host" {
   source       = "Invicton-Labs/shell-resource/external"
   version      = "0.4.1"
   count        = var.output_kubernetes_config ? 1 : 0
-  command_unix = "${local.ssh} ${var.system_user}@${module.server.floating_ip[0]} sudo KUBECONFIG=/etc/rancher/rke2/rke2-remote.yaml /var/lib/rancher/rke2/bin/kubectl config view --raw=true -o jsonpath='{.clusters[0].cluster.server}'"
+  command_unix = "${local.ssh} ${var.system_user}@${var.assign_floating_ip ? module.server.floating_ip[0] : module.server.internal_ip[0]} sudo KUBECONFIG=/etc/rancher/rke2/rke2-remote.yaml /var/lib/rancher/rke2/bin/kubectl config view --raw=true -o jsonpath='{.clusters[0].cluster.server}'"
   depends_on = [
     null_resource.write_kubeconfig
   ]
@@ -31,7 +34,7 @@ module "client_certificate" {
   source       = "Invicton-Labs/shell-resource/external"
   version      = "0.4.1"
   count        = var.output_kubernetes_config ? 1 : 0
-  command_unix = "${local.ssh} ${var.system_user}@${module.server.floating_ip[0]} sudo KUBECONFIG=/etc/rancher/rke2/rke2-remote.yaml /var/lib/rancher/rke2/bin/kubectl config view --raw=true -o jsonpath='{.users[0].user.client-certificate-data}'"
+  command_unix = "${local.ssh} ${var.system_user}@${var.assign_floating_ip ? module.server.floating_ip[0] : module.server.internal_ip[0]} sudo KUBECONFIG=/etc/rancher/rke2/rke2-remote.yaml /var/lib/rancher/rke2/bin/kubectl config view --raw=true -o jsonpath='{.users[0].user.client-certificate-data}'"
   depends_on = [
     null_resource.write_kubeconfig
   ]
@@ -41,7 +44,7 @@ module "client_key" {
   source       = "Invicton-Labs/shell-resource/external"
   version      = "0.4.1"
   count        = var.output_kubernetes_config ? 1 : 0
-  command_unix = "${local.ssh} ${var.system_user}@${module.server.floating_ip[0]} sudo KUBECONFIG=/etc/rancher/rke2/rke2-remote.yaml /var/lib/rancher/rke2/bin/kubectl config view --raw=true -o jsonpath='{.users[0].user.client-key-data}'"
+  command_unix = "${local.ssh} ${var.system_user}@${var.assign_floating_ip ? module.server.floating_ip[0] : module.server.internal_ip[0]} sudo KUBECONFIG=/etc/rancher/rke2/rke2-remote.yaml /var/lib/rancher/rke2/bin/kubectl config view --raw=true -o jsonpath='{.users[0].user.client-key-data}'"
   depends_on = [
     null_resource.write_kubeconfig
   ]
@@ -51,7 +54,7 @@ module "cluster_ca_certificate" {
   source       = "Invicton-Labs/shell-resource/external"
   version      = "0.4.1"
   count        = var.output_kubernetes_config ? 1 : 0
-  command_unix = "${local.ssh} ${var.system_user}@${module.server.floating_ip[0]} sudo KUBECONFIG=/etc/rancher/rke2/rke2-remote.yaml /var/lib/rancher/rke2/bin/kubectl config view --raw=true -o jsonpath='{.clusters[0].cluster.certificate-authority-data}'"
+  command_unix = "${local.ssh} ${var.system_user}@${var.assign_floating_ip ? module.server.floating_ip[0] : module.server.internal_ip[0]} sudo KUBECONFIG=/etc/rancher/rke2/rke2-remote.yaml /var/lib/rancher/rke2/bin/kubectl config view --raw=true -o jsonpath='{.clusters[0].cluster.certificate-authority-data}'"
   depends_on = [
     null_resource.write_kubeconfig
   ]

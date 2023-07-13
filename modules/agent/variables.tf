@@ -5,8 +5,8 @@ variable "node_config" {
     ssh_key_file       = string
     system_user        = string
     use_ssh_agent      = bool
-    subnet_id          = string
     network_id         = string
+    subnet_id          = string
     secgroup_id        = string
     config_drive       = bool
     floating_ip_pool   = string
@@ -20,6 +20,11 @@ variable "node_config" {
     bastion_host       = string
   })
 
+}
+
+variable "existing_network_name" {
+  type        = string
+  description = "The existing network name to use for the instances"
 }
 
 variable "nodes_count" {

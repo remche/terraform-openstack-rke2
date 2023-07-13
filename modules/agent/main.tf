@@ -11,6 +11,7 @@ module "agent" {
   ssh_key_file           = var.node_config.ssh_key_file
   system_user            = var.node_config.system_user
   use_ssh_agent          = var.node_config.use_ssh_agent
+  existing_network_name  = var.existing_network_name
   network_id             = var.node_config.network_id
   subnet_id              = var.node_config.subnet_id
   secgroup_id            = var.node_config.secgroup_id
