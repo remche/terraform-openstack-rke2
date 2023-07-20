@@ -117,3 +117,7 @@ provider "kubernetes" {
 
 ### Availability Zones
 Changes to a module's `availability_zones` will intentionally *not* cause the recreation of instances. You must manually `taint` the `module.controlplane.module.server.openstack_compute_instance_v2.instance` for force the recreation of the resource.
+
+### Proxy
+
+You can specify a proxy via `proxy_url` variable. Private address ranges are automatically excluded, you can add more addresses via `no_proxy` variable. You might want to add you organization's DNS domain (that of the Keystone OpenStack API endpoint).
