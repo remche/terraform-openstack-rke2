@@ -20,10 +20,10 @@
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_client_certificate"></a> [client\_certificate](#module\_client\_certificate) | Invicton-Labs/shell-resource/external | 0.4.0 |
-| <a name="module_client_key"></a> [client\_key](#module\_client\_key) | Invicton-Labs/shell-resource/external | 0.4.0 |
-| <a name="module_cluster_ca_certificate"></a> [cluster\_ca\_certificate](#module\_cluster\_ca\_certificate) | Invicton-Labs/shell-resource/external | 0.4.0 |
-| <a name="module_host"></a> [host](#module\_host) | Invicton-Labs/shell-resource/external | 0.4.0 |
+| <a name="module_client_certificate"></a> [client\_certificate](#module\_client\_certificate) | Invicton-Labs/shell-resource/external | 0.4.1 |
+| <a name="module_client_key"></a> [client\_key](#module\_client\_key) | Invicton-Labs/shell-resource/external | 0.4.1 |
+| <a name="module_cluster_ca_certificate"></a> [cluster\_ca\_certificate](#module\_cluster\_ca\_certificate) | Invicton-Labs/shell-resource/external | 0.4.1 |
+| <a name="module_host"></a> [host](#module\_host) | Invicton-Labs/shell-resource/external | 0.4.1 |
 | <a name="module_keypair"></a> [keypair](#module\_keypair) | ./modules/keypair | n/a |
 | <a name="module_network"></a> [network](#module\_network) | ./modules/network | n/a |
 | <a name="module_secgroup"></a> [secgroup](#module\_secgroup) | ./modules/secgroup | n/a |
@@ -57,10 +57,12 @@
 | <a name="input_instance_tags"></a> [instance\_tags](#input\_instance\_tags) | Tags added to the instance | `list(string)` | `[]` | no |
 | <a name="input_manifests_gzb64"></a> [manifests\_gzb64](#input\_manifests\_gzb64) | RKE2 addons manifests in gz+b64 in the form { "addon\_name": "gzb64\_manifests" } | `map(string)` | `{}` | no |
 | <a name="input_manifests_path"></a> [manifests\_path](#input\_manifests\_path) | RKE2 addons manifests directory | `string` | `""` | no |
+| <a name="input_no_proxy"></a> [no\_proxy](#input\_no\_proxy) | Hosts that should not be proxied | `list(string)` | `[]` | no |
 | <a name="input_nodes_config_drive"></a> [nodes\_config\_drive](#input\_nodes\_config\_drive) | Whether to use the config\_drive feature to configure the instances | `bool` | `"false"` | no |
 | <a name="input_nodes_count"></a> [nodes\_count](#input\_nodes\_count) | Number of server nodes (should be odd number...) | `number` | `1` | no |
 | <a name="input_nodes_net_cidr"></a> [nodes\_net\_cidr](#input\_nodes\_net\_cidr) | Neutron network CIDR | `string` | `"192.168.42.0/24"` | no |
 | <a name="input_output_kubernetes_config"></a> [output\_kubernetes\_config](#input\_output\_kubernetes\_config) | Output Kubernetes config to state (for use with Kubernetes provider) | `bool` | `"false"` | no |
+| <a name="input_proxy_url"></a> [proxy\_url](#input\_proxy\_url) | URL of proxy server | `string` | `null` | no |
 | <a name="input_public_net_name"></a> [public\_net\_name](#input\_public\_net\_name) | External network name | `string` | n/a | yes |
 | <a name="input_registries_conf"></a> [registries\_conf](#input\_registries\_conf) | Containerd registries config in gz+b64 | `string` | `""` | no |
 | <a name="input_rke2_config"></a> [rke2\_config](#input\_rke2\_config) | RKE2 config contents | `string` | `""` | no |
@@ -73,8 +75,7 @@
 | <a name="input_use_ssh_agent"></a> [use\_ssh\_agent](#input\_use\_ssh\_agent) | Whether to use ssh agent | `bool` | `"true"` | no |
 | <a name="input_user_data_file"></a> [user\_data\_file](#input\_user\_data\_file) | User data file to provide when launching the instance | `string` | `null` | no |
 | <a name="input_write_kubeconfig"></a> [write\_kubeconfig](#input\_write\_kubeconfig) | Write kubeconfig file to disk | `bool` | `"false"` | no |
-| <a name="input_proxy_url"></a> [proxy\_url](#input\_proxy\_url) | URL like "http://user:pass@host:port" when deploying behind a proxy | `string` | `""` | no |
-| <a name="input_no_proxy"></a> [no\_proxy](#input\_no\_proxy) | Hosts to exclude from proxy (private addresses ranges are already excluded) | `list(string)` | `[]` | no |
+
 ## Outputs
 
 | Name | Description |
