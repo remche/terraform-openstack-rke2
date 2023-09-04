@@ -28,7 +28,7 @@ jobs:
       OS_USER_DOMAIN_NAME:  ${{ secrets.OS_USER_DOMAIN_NAME }}
     environment: nova
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - uses: hashicorp/setup-terraform@v2
       with:
         terraform_version: 1.0.0
