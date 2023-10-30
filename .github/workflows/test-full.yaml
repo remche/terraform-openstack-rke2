@@ -24,7 +24,7 @@ jobs:
     environment: nova
     steps:
     - uses: actions/checkout@v4
-    - uses: hashicorp/setup-terraform@v2
+    - uses: hashicorp/setup-terraform@v3
       with:
         terraform_version: 1.0.0
         terraform_wrapper: false
