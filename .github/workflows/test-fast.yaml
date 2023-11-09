@@ -16,7 +16,7 @@ jobs:
   minimal:
     runs-on: ubuntu-latest
     env:
-      SONOBUOY_VERSION: 0.51.0
+      SONOBUOY_VERSION: 0.57.0
       WORKING_DIR: "examples/minimal"
       OS_AUTH_URL: ${{ secrets.OS_AUTH_URL }}
       OS_IDENTITY_API_VERSION:  ${{ secrets.OS_IDENTITY_API_VERSION }}

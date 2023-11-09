@@ -12,7 +12,7 @@ jobs:
           - TEST: "edge-node"
           - TEST: "jupyterhub"
     env:
-      SONOBUOY_VERSION: 0.51.0
+      SONOBUOY_VERSION: 0.57.0
       OS_AUTH_URL: ${{ secrets.OS_AUTH_URL }}
       OS_IDENTITY_API_VERSION:  ${{ secrets.OS_IDENTITY_API_VERSION }}
       OS_PASSWORD:  ${{ secrets.OS_PASSWORD }}
