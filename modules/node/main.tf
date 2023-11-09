@@ -70,8 +70,11 @@ resource "openstack_compute_instance_v2" "instance" {
 
   lifecycle {
     ignore_changes = [
-      user_data,
-      availability_zone_hints
+      availability_zone_hints,
+      flavor_name,
+      image_id,
+      image_name,
+      user_data
     ]
   }
 }
