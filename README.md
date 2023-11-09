@@ -115,8 +115,13 @@ provider "kubernetes" {
 }
 ```
 
-### Availability Zones
-Changes to a module's `availability_zones` will intentionally *not* cause the recreation of instances. You must manually `taint` the `module.controlplane.module.server.openstack_compute_instance_v2.instance` for force the recreation of the resource.
+### Node `lifecycle` Assumptions
+> :note: Changes to certain module arguments will intentionally *not* cause the recreation of instances.
+
+To provide users a better and more manageable experience, [several arguments](./modules/node/main.tf#L72) have been included in the instance's `ignore_changes` [lifecycle](https://developer.hashicorp.com/terraform/language/meta-arguments/lifecycle#ignore_changes). You must manually `taint` the instance for force the recreation of the resource.
+
+For example:
+`terraform taint 'module.controlplane.module.server.openstack_compute_instance_v2.instance'`
 
 ### Proxy
 
