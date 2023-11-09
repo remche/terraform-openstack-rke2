@@ -34,7 +34,8 @@ See [USAGE.md](USAGE.md) for all available options.
 
 You can either specify a ssh key file to generate new keypair via `ssh_key_file` (default) or specify already existent keypair via `ssh_keypair_name`.
 
-> :warning: Default config will try to use  [ssh agent](https://linux.die.net/man/1/ssh-agent) for ssh connections to the nodes. Add `use_ssh_agent = false` if you don't use it.
+> [!WARNING]
+> Default config will try to use  [ssh agent](https://linux.die.net/man/1/ssh-agent) for ssh connections to the nodes. Add `use_ssh_agent = false` if you don't use it.
 
 ### Secgroup
 
@@ -52,7 +53,8 @@ secgroup_rules      = [ { "source" = "x.x.x.x", "protocol" = "tcp", "port" = 22 
 
 You can set [affinity policy](https://www.terraform.io/docs/providers/openstack/r/compute_servergroup_v2.html#policies) for controlplane and each nodes pool `server_group_affinity`. Default is `soft-anti-affinity`.
 
-> :warning: `soft-anti-affinity` and `soft-affinity` needs Compute service API 2.15 or above.
+> [!WARNING]
+>  `soft-anti-affinity` and `soft-affinity` needs Compute service API 2.15 or above.
 
 ## Boot from volume
 
@@ -71,7 +73,8 @@ You can specify rke2 version with `rke2_version` variables. Refer to RKE2 suppor
 
 Upgrade by setting the target version via `rke2_version` and `do_upgrade = true`. It will upgrade the nodes one-by-one, server nodes first.
 
-> :warning: In-place upgrade mechanism is not battle-tested and relies on Terraform provisioners.
+> [!WARNING]
+> In-place upgrade mechanism is not battle-tested and relies on Terraform provisioners.
 
 ### Addons
 
@@ -79,7 +82,8 @@ Set the `manifests_path` variable to point out the directory containing your [ma
 
 If you need a template step for your manifests, you can use `manifests_gzb64` (see [cinder-csi-plugin example](./examples/cinder-csi-plugin)).
 
-> :warning: Modifications made to manifests after cluster deployement wont have any effect.
+> [!WARNING]
+> Modifications made to manifests after cluster deployement wont have any effect.
 
 ### Downscale
 
@@ -89,7 +93,8 @@ You need to manually drain and remove node before downscaling a pool nodes.
 
 You can tell the module to output kubernetes config by setting `output_kubernetes_config = true`.
 
-> :warning: **Interpolating provider variables from module output is not the recommended way to achieve integration**. See [here](https://www.terraform.io/docs/providers/kubernetes/index.html) and [here](https://www.terraform.io/docs/configuration/providers.html#provider-configuration).
+> [!WARNING]
+> **Interpolating provider variables from module output is not the recommended way to achieve integration**. See [here](https://www.terraform.io/docs/providers/kubernetes/index.html) and [here](https://www.terraform.io/docs/configuration/providers.html#provider-configuration).
 >
 > Use of a data sources is recommended.
 
@@ -116,12 +121,14 @@ provider "kubernetes" {
 ```
 
 ### Node `lifecycle` Assumptions
-> :note: Changes to certain module arguments will intentionally *not* cause the recreation of instances.
+> [!NOTE]
+> Changes to certain module arguments will intentionally *not* cause the recreation of instances.
 
-To provide users a better and more manageable experience, [several arguments](./modules/node/main.tf#L72) have been included in the instance's `ignore_changes` [lifecycle](https://developer.hashicorp.com/terraform/language/meta-arguments/lifecycle#ignore_changes). You must manually `taint` the instance for force the recreation of the resource.
+To provide users a better and more manageable experience, [several arguments](./modules/node/main.tf#L72) have been included in the instance's `ignore_changes` [lifecycle](https://developer.hashicorp.com/terraform/language/meta-arguments/lifecycle#ignore_changes). You must manually `taint` the instance for force the recreation of the resource : 
 
-For example:
-`terraform taint 'module.controlplane.module.server.openstack_compute_instance_v2.instance'`
+```bash
+terraform taint 'module.controlplane.module.server.openstack_compute_instance_v2.instance'
+```
 
 ### Proxy
 
