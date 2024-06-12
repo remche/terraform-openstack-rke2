@@ -202,6 +202,17 @@ variable "additional_san" {
   description = "RKE2 additional SAN"
 }
 
+variable "additional_configs_path" {
+  type        = string
+  default     = ""
+  description = "RKE2 additional config files"
+}
+
+variable "additional_configs_gzb64" {
+  type        = map(string)
+  default     = {}
+  description = "RKE2 additional configs in gz+b64 in the form { \"config_file_name\": \"gzb64_manifests\" }"
+}
 variable "manifests_path" {
   type        = string
   default     = ""

@@ -85,6 +85,14 @@ If you need a template step for your manifests, you can use `manifests_gzb64` (s
 > [!WARNING]
 > Modifications made to manifests after cluster deployement wont have any effect.
 
+### Additional server config files
+Set the `additional_configs_path` variable to the directory containing your additional rke2 server configs. (see the [Audit Policy example](./examples/audit-policy/))
+
+If you need a template step for your manifests, you can use `additional_configs_gzb64`.
+
+> [!WARNING]
+> Modifications made to manifests after cluster deployement wont have any effect.
+
 ### Downscale
 
 You need to manually drain and remove node before downscaling a pool nodes.
