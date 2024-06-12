@@ -30,7 +30,7 @@ write_files:
     fi
 %{ if bootstrap_server == "" ~}
   %{~ for f in manifests_files ~}
-- path: /var/lib/rancher/rke2/server/manifests/${f[0]}.yaml
+- path: /var/lib/rancher/rke2/server/manifests/${f[0]}
   permissions: "0600"
   owner: root:root
   encoding: gz+b64
