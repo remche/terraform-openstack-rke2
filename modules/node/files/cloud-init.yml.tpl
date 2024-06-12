@@ -74,6 +74,22 @@ write_files:
     kube-apiserver-arg: "kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname"
     %{~ endif ~}
     ${indent(4,rke2_conf)}
+%{ if is_server ~}
+  %{~ for f in additional_config_files ~}
+- path: /etc/rancher/rke2/${f[0]}
+  permissions: "0600"
+  owner: root:root
+  encoding: gz+b64
+  content: ${f[1]}
+  %{~ endfor ~}
+  %{~ for k, v in manifests_gzb64 ~}
+- path: /etc/rancher/rke2/${k}
+  permissions: "0600"
+  owner: root:root
+  encoding: gz+b64
+  content: ${v}
+  %{~ endfor ~}
+%{ endif ~}
 %{ if proxy_url != null ~}
 - path: /etc/environment
   append: true

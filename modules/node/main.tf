@@ -23,21 +23,23 @@ resource "openstack_compute_instance_v2" "instance" {
   key_pair     = var.keypair_name
   config_drive = var.config_drive
   user_data = base64encode(templatefile(("${path.module}/files/cloud-init.yml.tpl"),
-    { cluster_name     = var.cluster_name
-      bootstrap_server = var.is_server && count.index != 0 ? openstack_networking_port_v2.port[0].all_fixed_ips[0] : var.bootstrap_server
-      public_address   = var.is_server ? openstack_networking_floatingip_v2.floating_ip[count.index].address : ""
-      rke2_token       = var.rke2_token
-      is_server        = var.is_server
-      san              = openstack_networking_floatingip_v2.floating_ip[*].address
-      system_user      = var.system_user
-      rke2_conf        = var.rke2_config
-      containerd_conf  = var.containerd_config_file
-      registries_conf  = var.registries_conf
-      additional_san   = var.additional_san
-      manifests_files  = var.manifests_path != "" ? [for f in fileset(var.manifests_path, "*.{yml,yaml}") : [f, base64gzip(file("${var.manifests_path}/${f}"))]] : []
-      manifests_gzb64  = var.manifests_gzb64
-      proxy_url        = var.proxy_url
-      no_proxy         = var.no_proxy
+    { cluster_name             = var.cluster_name
+      bootstrap_server         = var.is_server && count.index != 0 ? openstack_networking_port_v2.port[0].all_fixed_ips[0] : var.bootstrap_server
+      public_address           = var.is_server ? openstack_networking_floatingip_v2.floating_ip[count.index].address : ""
+      rke2_token               = var.rke2_token
+      is_server                = var.is_server
+      san                      = openstack_networking_floatingip_v2.floating_ip[*].address
+      system_user              = var.system_user
+      rke2_conf                = var.rke2_config
+      containerd_conf          = var.containerd_config_file
+      registries_conf          = var.registries_conf
+      additional_san           = var.additional_san
+      manifests_files          = var.manifests_path != "" ? [for f in fileset(var.manifests_path, "*.{yml,yaml}") : [f, base64gzip(file("${var.manifests_path}/${f}"))]] : []
+      manifests_gzb64          = var.manifests_gzb64
+      additional_config_files  = var.additional_configs_path != "" ? [for f in fileset(var.additional_configs_path, "*") : [f, base64gzip(file("${var.additional_configs_path}/${f}"))]] : []
+      additional_configs_gzb64 = var.additional_configs_gzb64
+      proxy_url                = var.proxy_url
+      no_proxy                 = var.no_proxy
   }))
   metadata = {
     rke2_version = var.rke2_version
