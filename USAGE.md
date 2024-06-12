@@ -41,6 +41,8 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_additional_configs_gzb64"></a> [additional\_configs\_gzb64](#input\_additional\_configs\_gzb64) | RKE2 additional configs in gz+b64 in the form { "config\_file\_name": "gzb64\_manifests" } | `map(string)` | `{}` | no |
+| <a name="input_additional_configs_path"></a> [additional\_configs\_path](#input\_additional\_configs\_path) | RKE2 additional config files | `string` | `""` | no |
 | <a name="input_additional_san"></a> [additional\_san](#input\_additional\_san) | RKE2 additional SAN | `list(string)` | `[]` | no |
 | <a name="input_availability_zones"></a> [availability\_zones](#input\_availability\_zones) | The list of AZs to deploy nodes into | `list(string)` | `[]` | no |
 | <a name="input_boot_from_volume"></a> [boot\_from\_volume](#input\_boot\_from\_volume) | Boot nodes from volume | `bool` | `false` | no |
